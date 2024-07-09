@@ -47,7 +47,7 @@ const handStyle: HandStyleInterface = {
   20: { color: jointColor, size: dotSize },
 };
 
-export const drawHand = (predictions, color: string, ctx: CanvasRenderingContext2D): void => {
+export const drawHand = (predictions: any, color: string, ctx: CanvasRenderingContext2D): void => {
   // Check if predictions exist
   if (predictions.length > 0) {
     // Loop through each prediction
@@ -93,7 +93,7 @@ export const drawHand = (predictions, color: string, ctx: CanvasRenderingContext
   }
 };
 
-export const drawPts = (predictions, color: string, ctx: CanvasRenderingContext2D): void => {
+export const drawPts = (predictions: any, color: string, ctx: CanvasRenderingContext2D): void => {
   // Check if we have predictions
   if (predictions.length > 0) {
     // Loop through each prediction

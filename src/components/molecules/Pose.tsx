@@ -55,4 +55,5 @@ export const Pose: FC<PoseProps> = ({
     pullTrigger();
   }, [palmPos]);
 
+  return (<></>)
 }

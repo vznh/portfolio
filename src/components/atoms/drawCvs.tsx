@@ -27,6 +27,8 @@ export const DrawCvs: FC<CvsProps> = ({
   const [lineArray, setLineArray] = useState<Array<[number, number]>>([]);
   
   useEffect(() => {
-    if (lineArray.length !== 0 || drawArray.length !== 0) 
+    if (lineArray.length !== 0 || drawArray.length !== 0) {}
   }, [lineArray, drawArray]);
+
+  return (<></>);
 }
