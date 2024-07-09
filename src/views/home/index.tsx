@@ -7,7 +7,7 @@ import { cn } from '@/utils';
 interface HomeProps {}
 
 export const HomeView: FC<HomeProps> = () => {
-  const hasCameraPermission = useCameraProp();
+  // const hasCameraPermission = useCameraProp();
 
   //? render camera component
   // if (!hasCameraPermission) { };
