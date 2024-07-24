@@ -21,7 +21,7 @@ export const HomeView: FC<HomeProps> = () => {
         <h1><b>Jason Son</b></h1>
         <span className="text-lg"><i>Software <b>@</b> Apple, co-founder of <a href="https://tokn.so"><u>Tokn</u></a>, a Web3 social token analytics platform, and <a href="https://landing-lime-five.vercel.app/"><u>Polyglot</u></a>, a one-stop shop to learn any language you want.</i></span>
         <br />
-        <span className="text-lg"><i>Regent&apos;s Scholar at UC Santa Cruz, Stanford's Startup Cohort of 2024.</i></span>
+        <span className="text-lg"><i>Regent&apos;s Scholar at UC Santa Cruz, Stanford&apos;s Startup Cohort of 2024.</i></span>
         <span className="text-lg"><i>Board on <a href="https://www.instagram.com/ucscsase/"><u>SASE</u></a>, <a href="https://tally.so/r/3E0Y62"><u>Dev Club</u></a>, <a href="https://discord.gg/eD9RN753zt"><u>Lego Club</u></a>.</i></span>
         <br />
         <span className="text-lg"><i>If you&apos;re interested in me or my work, <a href="https://cal.com/hobin/quick-chat"><u>book a call.</u></a></i></span>
