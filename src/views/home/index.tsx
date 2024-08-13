@@ -1,16 +1,11 @@
 // views/home/index.tsx
 import { FC, Fragment } from 'react';
-import { useCameraProp } from '@/hooks/useCameraProp';
 import { cn } from '@/utils';
 
 // this needs permission props for camera
 interface HomeProps {}
 
 export const HomeView: FC<HomeProps> = () => {
-  // const hasCameraPermission = useCameraProp();
-
-  //? render camera component
-  // if (!hasCameraPermission) { };
 
   return (
     <Fragment>
@@ -19,15 +14,13 @@ export const HomeView: FC<HomeProps> = () => {
         "h-full w-full"
       )}>
         <h1><b>Jason Son</b></h1>
-        <span className="text-lg"><i>Software <b>@</b> Apple, co-founder of <a href="https://tokn.so"><u>Tokn</u></a>, a Web3 social token analytics platform, and <a href="https://landing-lime-five.vercel.app/"><u>Polyglot</u></a>, a one-stop shop to learn any language you want.</i></span>
+        <span className="text-lg"><i>Software Engineering Intern at <b>Apple</b>, assistant researcher at <b>Seoul National University</b>, co-founder of <a href="https://tokn.so"><u><b>Tokn</b></u></a>, a cryptocurrency social token analytics platform, and <a href="https://landing-lime-five.vercel.app/"><u><b>Polyglot</b></u></a>, a one-stop shop to learn any language you want.</i></span>
         <br />
         <span className="text-lg"><i>Regent&apos;s Scholar at UC Santa Cruz, Stanford&apos;s Startup Cohort of 2024.</i></span>
-        <span className="text-lg"><i>Board on <a href="https://www.instagram.com/ucscsase/"><u>SASE</u></a>, <a href="https://tally.so/r/3E0Y62"><u>Dev Club</u></a>, <a href="https://discord.gg/eD9RN753zt"><u>Lego Club</u></a>.</i></span>
         <br />
-        <span className="text-lg"><i>If you&apos;re interested in me or my work, <a href="https://cal.com/hobin/quick-chat"><u>book a call.</u></a></i></span>
-        <span className="text-lg"><i>Previous commissions will pop up <u>here.</u></i></span>
-        <h1><b>Related links</b></h1>
-        <div className="flex flex-col">
+        <span className="text-lg"><i>Book a chat <a href="https://cal.com/hobin/quick-chat"><u>here.</u></a> Resume and academic transcripts are not available to public.</i> </span>
+        <h1><b>Related links of the sort</b></h1>
+        <div className="border border-black flex flex-row">
           <ul>
             <li>
               <a href="https://www.instagram.com/jsonvinh/" className="text-lg"><i><u>Instagram</u></i></a>
@@ -39,7 +32,10 @@ export const HomeView: FC<HomeProps> = () => {
               <a href="https://www.github.com/vznh" className="text-lg"><i><u>GitHub</u></i></a>
             </li>
             <li>
-              <a href="https://music.apple.com/profile/jasonson2004" className="text-lg"><i><u>Apple Music</u></i></a>
+              <a href="https://www.reddit.com/user/son-hobin/" className="text-lg"><i><u>Reddit</u></i></a>
+            </li>
+            <li>
+              <a href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4?si=90fbd09d80c146c9" className="text-lg"><i><u>Spotify</u></i></a>
             </li>
           </ul>
         </div>
