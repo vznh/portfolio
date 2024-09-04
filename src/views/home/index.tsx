@@ -18,7 +18,7 @@ export const HomeView: FC<HomeProps> = () => {
         <br />
         <span className="text-lg"><i>Regent&apos;s Scholar at UC Santa Cruz, Stanford&apos;s Startup Cohort of 2024.</i></span>
         <br />
-        <span className="text-lg"><i>Book a chat <a href="https://cal.com/hobin/quick-chat"><u>here.</u></a> Resume and academic transcripts are not available to public.</i> </span>
+        <span className="text-lg"><i>I don&apos;t own any accounts other than the ones linked below.</i></span>
         <h1><b>Related links of the sort</b></h1>
         <div className="border border-black flex flex-row">
           <ul>
