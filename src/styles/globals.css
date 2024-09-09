@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 :root {
-  background-color: #101113;
   color: #ffffff;
   font-family: 'Times New Roman', Times, serif;
+  letter-spacing: 0.01em;
+  font-weight: 200;
 
   h1 {
     font-size: 250%;

@@ -9,37 +9,39 @@ export const HomeView: FC<HomeProps> = () => {
 
   return (
     <Fragment>
-      <div className={cn(
-        "flex flex-col",
-        "h-full w-full"
-      )}>
-        <h1><b>Jason Son</b></h1>
-        <span className="text-lg"><i>Software Engineering Intern at <b>Apple</b>, assistant researcher at <b>Seoul National University</b>, co-founder of <a href="https://tokn.so"><u><b>Tokn</b></u></a>, a cryptocurrency social token analytics platform, and <a href="https://landing-lime-five.vercel.app/"><u><b>Polyglot</b></u></a>, a one-stop shop to learn any language you want.</i></span>
-        <br />
-        <span className="text-lg"><i>Regent&apos;s Scholar at UC Santa Cruz, Stanford&apos;s Startup Cohort of 2024.</i></span>
-        <br />
-        <span className="text-lg"><i>I don&apos;t own any accounts other than the ones linked below.</i></span>
-        <h1><b>Related links of the sort</b></h1>
-        <div className="border border-black flex flex-row">
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/jsonvinh/" className="text-lg"><i><u>Instagram</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/vznh" className="text-lg"><i><u>LinkedIn</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.github.com/vznh" className="text-lg"><i><u>GitHub</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.reddit.com/user/son-hobin/" className="text-lg"><i><u>Reddit</u></i></a>
-            </li>
-            <li>
-              <a href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4?si=90fbd09d80c146c9" className="text-lg"><i><u>Spotify</u></i></a>
-            </li>
-          </ul>
+        <div className={cn(
+          "flex flex-col",
+          "h-full w-full"
+        )}>
+          <h1><b>Jason Son</b></h1>
+          <span className="text-lg italic">
+          <i>Regent&apos;s and Dean&apos;s Scholar <b>@UC Santa Cruz.</b></i>
+          </span>
+          <br />
+          <span className="text-lg"><i>Ex-FAANG, Ex-Research <b>@Seoul National University</b>, <b>@Carnegie Mellon University</b>, <b>@UC Santa Cruz</b>.</i></span>
+          <br />
+          <span className="text-lg"><i>Previously acquired, now a founder <b>@Stanford University.</b></i></span>
+          <h1><b>Related links</b></h1>
+          <div className="border border-black flex flex-row">
+            <ul>
+              <li>
+                <a href="https://www.instagram.com/jsonvinh/" className="text-lg"><i><u>Instagram</u></i></a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/vznh" className="text-lg"><i><u>LinkedIn</u></i></a>
+              </li>
+              <li>
+                <a href="https://www.github.com/vznh" className="text-lg"><i><u>GitHub</u></i></a>
+              </li>
+              <li>
+                <a href="https://www.reddit.com/user/son-hobin/" className="text-lg"><i><u>Reddit</u></i></a>
+              </li>
+              <li>
+                <a href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4?si=90fbd09d80c146c9" className="text-lg"><i><u>Spotify</u></i></a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
     </Fragment>
   )
 }
