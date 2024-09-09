@@ -1,6 +1,6 @@
 // pages/index.tsx
-import { HomeView } from "@/views"; 
-import Head from "next/head"; 
+import { HomeView } from "@/views";
+import Head from "next/head";
 import type { NextPage } from 'next';
 import { cn } from "@/utils";
 
@@ -9,10 +9,6 @@ const HomePage: NextPage = (props) => {
     <div>
       <Head>
         <title>Jason Son</title>
-        <meta
-          name="description"
-          content="Freakiest dude ever"
-        />
       </Head>
       <HomeView />
     </div>

@@ -19,4 +19,9 @@
   span {
     font-size: 120%;
   }
+
+  .blog-header {
+    font-size: 300%;
+    font-weight: 300;
+  }
 }
