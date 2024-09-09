@@ -11,12 +11,12 @@ export function UsePresetMeta() {
       <meta property="og:title" content="Jason Son" />
       <meta property="og:type" content="website" />
       <meta property="og:url" content="https://www.hobin.dev" />
-      <meta property="og:image" content="/cover-image.png" />
-      <link rel="icon" href="/favicon.ico" />
+      <meta property="og:image" content="/images/cover-image.png" />
+      <link rel="icon" href="/images/favicon.ico" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Jason Son - Person" />
       <meta name="twitter:description" content="This website is a brief introduction to myself." />
-      <meta name="twitter:image" content="/cover-image.png" />
+      <meta name="twitter:image" content="/images/cover-image.png" />
     </Head>
   );
 }
