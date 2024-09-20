@@ -33,7 +33,7 @@ export const HomeView: FC<HomeProps> = () => {
         <span className="text-lg"><i>Ex-FAANG, Ex-Research <b>@Seoul National University</b>, <b>@Carnegie Mellon University</b>, <b>@UC Santa Cruz</b>.</i></span>
         <br />
         <span className="text-lg"><i>Previously acquired, now a founder <b>@Stanford University.</b></i></span>
-        <h1><b>Related links</b></h1>
+        <h1><b>Other and only related</b></h1>
         <div className="border border-black flex flex-row">
           <ul>
             <li>
@@ -51,6 +51,9 @@ export const HomeView: FC<HomeProps> = () => {
             <li>
               <a href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4?si=90fbd09d80c146c9" className="text-lg"><i><u>Spotify</u></i></a>
             </li>
+              <li>
+                <a href="https://www.tiktok.com/@buldakgod" className="text-lg"><i><u>TikTok</u></i></a>
+              </li>
           </ul>
         </div>
       </div>
