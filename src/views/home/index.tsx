@@ -1,11 +1,9 @@
 // views/home/index.tsx
-import { FC, Fragment, useEffect, useState } from 'react';
-import { cn } from '@/utils';
+import { useEffect, useState } from "react";
+import { cn } from "@/utils";
+import Link from "next/link";
 
-// this needs permission props for camera
-interface HomeProps {}
-
-export const HomeView: FC<HomeProps> = () => {
+export const HomeView = () => {
   const [opacity, setOpacity] = useState(20);
 
   useEffect(() => {
@@ -16,47 +14,81 @@ export const HomeView: FC<HomeProps> = () => {
   }, []);
 
   return (
-    <Fragment>
-      <div
-        className={cn(
-          "flex flex-col",
-          "h-full w-full",
-          "transition-all duration-1000 ease-in-out",
-        )}
-        style={{ opacity: `${opacity}%` }}
-      >
-        <h1><b>Jason Son</b></h1>
-        <span className="text-lg italic">
-          <i>Regent&apos;s and Dean&apos;s Scholar <b>@UC Santa Cruz.</b></i>
-        </span>
-        <br />
-        <span className="text-lg"><i>Ex-FAANG, Ex-Research <b>@Seoul National University</b>, <b>@Carnegie Mellon University</b>, <b>@UC Santa Cruz</b>.</i></span>
-        <br />
-        <span className="text-lg"><i>Previously acquired, now a founder <b>@Stanford University.</b></i></span>
-        <h1><b>Other and only related</b></h1>
-        <div className="border border-black flex flex-row">
-          <ul>
-            <li>
-              <a href="https://www.instagram.com/jsonvinh/" className="text-lg"><i><u>Instagram</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.linkedin.com/in/vznh" className="text-lg"><i><u>LinkedIn</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.github.com/vznh" className="text-lg"><i><u>GitHub</u></i></a>
-            </li>
-            <li>
-              <a href="https://www.reddit.com/user/son-hobin/" className="text-lg"><i><u>Reddit</u></i></a>
-            </li>
-            <li>
-              <a href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4?si=90fbd09d80c146c9" className="text-lg"><i><u>Spotify</u></i></a>
-            </li>
-              <li>
-                <a href="https://www.tiktok.com/@buldakgod" className="text-lg"><i><u>TikTok</u></i></a>
-              </li>
-          </ul>
-        </div>
+    <div
+      className={cn(
+        "flex flex-col",
+        "h-full w-full",
+        "transition-all duration-1000 ease-in-out",
+      )}
+      style={{ opacity: `${opacity}%` }}
+    >
+      <h1>
+        <b>Jason Son</b>
+      </h1>
+
+      <span className="text-lg opacity-80">
+        The devil is in the details. But so is salvation.
+      </span>
+      <br />
+      <span className="text-lg opacity-80">
+        Currently, I&apos;m an engineer that leverages design to bring ideas to
+        collective alignment.
+      </span>
+      <br />
+      <span className="text-lg opacity-80">
+        Previously a founder at <b>@Stanford</b> doing EdTech, and at {' '}
+        <b>@Apple</b> for constructing system utility tools. Since then,
+        I&apos;ve been pursuing play with pixels, exploring quantitative methods
+        for trading, and experimenting at hackathons.
+      </span>
+
+      <br />
+      <h1>
+        <b>Other and only related</b>
+      </h1>
+
+      <div className="flex space-x-4 opacity-80">
+        <Link
+          href="https://x.com/@vivivinh"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          X/Twitter
+        </Link>
+        <Link
+          href="https://www.linkedin.com/in/vznh"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          LinkedIn
+        </Link>
+        <Link
+          href="https://www.github.com/vznh"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="transition-all duration-1000 hover:underline"
+        >
+          GitHub
+        </Link>
+        <Link
+          href="https://substack.com/@venh?"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Substack
+        </Link>
+        <Link
+          href="https://x.com/@vivivinh"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline"
+        >
+          Resume/CV
+        </Link>
       </div>
-    </Fragment>
-  )
-}
+    </div>
+  );
+};
