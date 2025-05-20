@@ -81,7 +81,7 @@ export const HomeView = () => {
           Substack
         </Link>
         <Link
-          href="https://drive.google.com/file/d/1cYMPCrce8dfauj8eXayiE7QbRPvDTEDY/view?usp=sharing"
+          href="https://drive.google.com/file/d/1YmFJaPbVZI3VblrHa6-jzCFFdrUoMqWi/view?usp=sharing"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:underline"
