@@ -16,7 +16,7 @@ export function UsePresetMeta() {
       <meta property="og:description" content="Engineer pursuing alignment." />
       <meta property="og:url" content={siteUrl} />
       <meta property="og:image" content={`${siteUrl}/images/cover.png`} />
-      <link rel="icon" href="/images/favicon.ico" />
+      <link rel="icon" href="/favicon.ico" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Jason Son - Person" />
       <meta name="twitter:description" content="Engineer pursuing alignment." />

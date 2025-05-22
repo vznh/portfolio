@@ -31,15 +31,19 @@ export const HomeView = () => {
       </span>
       <br />
       <span className="text-lg opacity-80">
-        Currently, I&apos;m an engineer that leverages design to bring ideas to
+        I&apos;m an engineer that leverages design to bring ideas to
         collective alignment.
       </span>
       <br />
       <span className="text-lg opacity-80">
-        Previously a founder at <b>@Stanford</b> doing EdTech, and at {' '}
-        <b>@Apple</b> for constructing system utility tools. Since then,
+        Previously a founder <b>@Stanford</b> doing EdTech, and {' '}
+        <b>@Apple</b> for designing and constructing system utility tools. Since then,
         I&apos;ve been pursuing play with pixels, exploring quantitative methods
         for trading, and experimenting at hackathons.
+      </span>
+      <br />
+      <span className="text-sm opacity-20">
+        Currently experimenting with computer vision and great design. <Link href="https://x.com/@vivivinh" target="_blank" className="underline underline-offset-4">Want in?</Link>
       </span>
 
       <br />
@@ -86,7 +90,7 @@ export const HomeView = () => {
           rel="noopener noreferrer"
           className="hover:underline"
         >
-          Resume/CV
+          Resume
         </Link>
       </div>
     </div>

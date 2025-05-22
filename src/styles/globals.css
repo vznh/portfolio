@@ -20,8 +20,8 @@
     font-size: 120%;
   }
 
-  .blog-header {
-    font-size: 300%;
-    font-weight: 300;
+  ::selection {
+    background-color: #002FA7;
+    color: #FF6F00;
   }
 }
