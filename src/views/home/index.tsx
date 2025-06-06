@@ -22,7 +22,7 @@ export const HomeView = () => {
       )}
       style={{ opacity: `${opacity}%` }}
     >
-      <h1 className="font-heuristica">
+      <h1>
         <b>Jason Son</b>
       </h1>
 
@@ -31,42 +31,19 @@ export const HomeView = () => {
       </span>
       <br />
       <span className="text-lg opacity-80">
-        I&apos;m an engineer that leverages design to bring ideas to collective
-        alignment.
+        I&apos;m an engineer that leverages design to bring ideas to
+        collective alignment.
       </span>
       <br />
       <span className="text-lg opacity-80">
-        Previously a founder <b>@Stanford</b> doing EdTech, and <b>@Apple</b>{" "}
-        for designing and constructing system utility tools. Since then,
+        Previously a founder <b>@Stanford</b> doing EdTech, and {' '}
+        <b>@Apple</b> for designing and constructing system utility tools. Since then,
         I&apos;ve been pursuing play with pixels, exploring quantitative methods
         for trading, and experimenting at hackathons.
       </span>
       <br />
-      <span className="text-md opacity-60">
-        Currently{" "}
-        <Link
-          href="https://x.com/@vivivinh"
-          target="_blank"
-          className="hover:underline hover:text-[#39ff14] underline-offset-4 decoration-dotted"
-        >
-          experimenting with computer vision and great design
-        </Link>
-        ;{" "}
-        <Link
-          href="https://x.com/@vivivinh"
-          target="_blank"
-          className="hover:underline hover:text-yellow-400 underline-offset-4 decoration-dotted"
-        >
-          enabling language learning to be easily consumable
-        </Link>
-        ; and {" "}
-        <Link
-          href="https://x.com/@vivivinh"
-          target="_blank"
-          className="hover:underline hover:text-[#ff000d] underline-offset-4 decoration-dotted"
-        >
-          balancing detail with simplicity in product management.
-        </Link>
+      <span className="text-sm opacity-50">
+        Try my new experiments <Link href="https://tally.so/r/wgxdK1" target="_blank" className="underline underline-offset-4">if you&apos;d like.</Link>
       </span>
 
       <br />
