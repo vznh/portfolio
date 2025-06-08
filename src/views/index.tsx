@@ -1,6 +1,7 @@
 // views/
-
+import ProjectSection from "@/components/ProjectSection";
 import WorkSection from "@/components/WorkSection";
+import { upcoming, projects } from "@/presets/work";
 
 const IndexView = () => {
   return (
@@ -11,26 +12,25 @@ const IndexView = () => {
 
       <div>
         <span className="text-xl opacity-80 tracking-tight">
-          The devil is in the details. But so is salvation.
-        </span>
-
-        <br />
-
-        <span className="text-xl opacity-80 tracking-tight">
-          I&apos;m an engineer leveraging design to bring ideas to collective alignment.
+          Currently leveraging design to bring ideas to collective alignment.
         </span>
       </div>
 
       <br />
-
       <span className="tracking-tight opacity-30">PREVIOUSLY</span>
       <WorkSection />
 
       <br />
-
-      <span className="tracking-tight opacity-30">WORK</span>
+      <span className="tracking-tight opacity-30">PROJECTS</span>
       { /* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
+      <ProjectSection src={projects} />
 
+      <br />
+      <span className="tracking-tight opacity-30">UPCOMING</span>
+      <ProjectSection src={upcoming} />
+
+
+      { /* Stretch effect at the bottom distorting, and when clicked goes back up. */ }
     </div>
   );
 };
