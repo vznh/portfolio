@@ -31,7 +31,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
     <div className="flex-grow h-px bg-black opacity-20" aria-hidden="true" />
 
     { /* Role goes here! */ }
-    <span className="text-2xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right">{ role }</span>
+    <span className="opacity-60 text-2xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right">{ role }</span>
   </div>
 };
 
