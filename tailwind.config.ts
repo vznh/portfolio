@@ -14,6 +14,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        "holla": ["Holla", "serif"],
+        "tiempos": ["Tiempos", "serif"],
+        "geist": ["Geist", "sans-serif"],
+        "jb": ["JB", "sans-serif"],
+        "hina": ["Hina", "serif"],
+      },
     },
   },
   plugins: [],
