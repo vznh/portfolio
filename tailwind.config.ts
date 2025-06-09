@@ -19,7 +19,7 @@ const config: Config = {
         "tiempos": ["Tiempos", "serif"],
         "geist": ["Geist", "sans-serif"],
         "jb": ["JB", "sans-serif"],
-        "hina": ["Hina", "serif"],
+        "khmer": ["khmer", "sans-serif"],
       },
     },
   },

@@ -1,7 +1,7 @@
 // views/
 import ProjectSection from "@/components/ProjectSection";
 import WorkSection from "@/components/WorkSection";
-import { upcoming, projects } from "@/presets/work";
+import { upcoming, projects, other } from "@/presets/work";
 import Link from "next/link";
 
 const IndexView = () => {
@@ -19,13 +19,13 @@ const IndexView = () => {
         <div className="font-jb tracking-tighter opacity-30 flex flex-row gap-x-2 items-center">
           <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">X</Link>
           <span className="text-sm">\</span>
-          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">LinkedIn</Link>
+          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://linkedin.com/in/vznh">LinkedIn</Link>
           <span className="text-sm">\</span>
-          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">Substack</Link>
+          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://venh.substack.com">Substack</Link>
           <span className="text-sm">\</span>
-          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">Spotify</Link>
+          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4">Spotify</Link>
           <span className="text-sm">\</span>
-          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">GitHub</Link>
+          <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://github.com/vznh">GitHub</Link>
           <span className="text-sm">\</span>
           <Link className="hover:underline underline-offset-4 decoration-dashed" href="https://x.com/@vivivinh">CV</Link>
         </div>
@@ -47,6 +47,9 @@ const IndexView = () => {
       <span className="font-jb tracking-tight opacity-30">UPCOMING</span>
       <ProjectSection src={upcoming} />
 
+      <br />
+      <span className="font-jb tracking-tight opacity-30">OTHER</span>
+      <ProjectSection src={other} />
 
       { /* Stretch effect at the bottom distorting, and when clicked goes back up. */ }
     </div>
