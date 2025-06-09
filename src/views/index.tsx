@@ -6,7 +6,7 @@ import { upcoming, projects } from "@/presets/work";
 const IndexView = () => {
   return (
     <div className="flex flex-col px-[5%] py-[5%] md:px-[20%] gap-y-2">
-      <h1 className="text-4xl tracking-tight">
+      <h1 className="font-tiempos text-4xl tracking-tight">
         Jason Son
       </h1>
 
@@ -17,7 +17,10 @@ const IndexView = () => {
       </div>
 
       <br />
-      <span className="tracking-tight opacity-30">PREVIOUSLY</span>
+      <div className="flex justify-between">
+        <span className="tracking-tight opacity-30">PREVIOUSLY</span>
+        <span className="tracking-tight opacity-30">TYPE</span>
+      </div>
       <WorkSection />
 
       <br />
