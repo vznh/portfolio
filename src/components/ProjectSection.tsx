@@ -1,7 +1,6 @@
 // components/ProjectSection
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { projects, upcoming } from "@/presets/work";
 
 export interface ProjectRowProps {
   key: number;
@@ -75,6 +74,7 @@ const ProjectSection: React.FC<{ src: ProjectRowProps[] }> = ({ src }) => {
             title={p.title}
             imgPaths={p.imgPaths}
             accent={p.accent}
+            className=""
           />
         ))}
       </div>

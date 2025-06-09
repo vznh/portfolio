@@ -2,9 +2,9 @@
 
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
-  { key: 1, company: "Apple", role: "System", img: "/images/apple.png"},
-  { key: 2, company: "Stanford Launchpad",  role: "Edtech", img: "/images/stanford.png" },
-  { key: 3, company: "ETALYC",  role: "Fullstack", img: "/images/etalyc.png" },
+  { key: 1, company: "Apple", role: "System", img: "/images/apple.png", date: "2024"},
+  { key: 2, company: "Stanford Launchpad",  role: "Edtech", img: "/images/stanford.png", date: "2024" },
+  { key: 3, company: "ETALYC",  role: "Fullstack", img: "/images/etalyc.png", date: "2023" },
 ];
 
 import { ProjectRowProps } from "@/components/ProjectSection";
@@ -23,13 +23,7 @@ export const projects: ProjectRowProps[] = [
     ],
     accent: "bg-white",
   },
-  {
-    key: 3,
-    title: "Making 2hollis beats with Strudel",
-    imgPaths: [
-    ],
-    accent: "bg-white",
-  },
+
   {
     key: 4,
     title: "Bay Area fashion insufferability test",
