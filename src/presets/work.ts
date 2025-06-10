@@ -13,7 +13,7 @@ import { ProjectRowProps } from "@/components/ProjectSection";
 export const projects: ProjectRowProps[] = [
   {
     key: 2,
-    title: "Making campus accessible again",
+    title: "Campus navigation tool focused on precise navigation and club interaction",
     categories: ["web", "utility", "education", "design"],
     imgPaths: [
       "/images/projects/pathfinder/1.png",
@@ -48,7 +48,7 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 7,
-    title: "CLI to contextually debug within your codebase",
+    title: "CLI to contextually debug off of your traceback",
     imgPaths: [
       "/images/projects/splat/1.png",
       "/images/projects/splat/2.png",
@@ -61,7 +61,7 @@ export const projects: ProjectRowProps[] = [
   {
     key: 8,
     url: "https://github.com/yamadashy/repomix",
-    title: "Pack your codebase instantly",
+    title: "Pack your codebase instantly into XML, TXT, or MD files",
     imgPaths: [
       "/images/projects/repomix/1.png"
     ],
@@ -70,7 +70,7 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 9,
-    title: "Open-source wealth management software",
+    title: "Wealth management software",
     url: "https://github.com/ghostfolio/ghostfolio",
     imgPaths: [
       "/images/projects/ghostfolio/2.png",
@@ -103,8 +103,8 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 3,
-    title: "Modular and purposely designed component library",
-    categories: ["react", "npm"],
+    title: "Modular and purposely designed React component library",
+    categories: ["npm", "library"],
     imgPaths: [
       "/images/projects/placeholder.png"
     ],
