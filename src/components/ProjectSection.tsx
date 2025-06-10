@@ -7,11 +7,11 @@ export interface ProjectRowProps {
   key: number;
   title: string;
   imgPaths: string[]; // in format { public/images/[].png } with always 16:9 aspect ratio
-  accent: string;     // in format { #XXXXXX } for hex color
+  accent: string; // in format { #XXXXXX } for hex color
   url?: string;
   categories?: string[];
   className?: string;
-};
+}
 
 const ProjectEntity: React.FC<ProjectRowProps> = ({
   title,
@@ -19,15 +19,21 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   accent,
   url = "",
   categories = [],
-  className = ""
+  className = "",
 }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [hovered, setHovered] = useState<boolean>(false);
 
   // custom mobile states
-  const [titleSize, setCustomTitleSize] = useState<"text-4xl" | "text-3xl">("text-4xl");
-  const [blurState, setCustomBlurState] = useState<"backdrop-blur-sm" | "backdrop-blur-xs">("backdrop-blur-sm");
-  const [backdropState, setCustomBackdropState] = useState<"bg-white/60" | "bg-white/80">("bg-white/60");
+  const [titleSize, setCustomTitleSize] = useState<"text-4xl" | "text-3xl">(
+    "text-4xl",
+  );
+  const [blurState, setCustomBlurState] = useState<
+    "backdrop-blur-sm" | "backdrop-blur-xs"
+  >("backdrop-blur-sm");
+  const [backdropState, setCustomBackdropState] = useState<
+    "bg-white/60" | "bg-white/80"
+  >("bg-white/60");
 
   useEffect(() => {
     if (imgPaths && imgPaths.length > 1) {
@@ -41,88 +47,99 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   // attach hook that checks if you can't hover
   useEffect(() => {
     if (
-      typeof window !== 'undefined' &&
+      typeof window !== "undefined" &&
       window.matchMedia("(hover: none)").matches
-    )
+    ) {
       setHovered(true);
       setCustomTitleSize("text-3xl");
       setCustomBlurState("backdrop-blur-xs");
       setCustomBackdropState("bg-white/80");
+    }
   }, []);
 
-  const currentImageURL = (imgPaths && imgPaths.length > 0) ? imgPaths[currentImageIndex] : null;
+  const currentImageURL =
+    imgPaths && imgPaths.length > 0 ? imgPaths[currentImageIndex] : null;
 
-  return <a
-    href={url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="block"
-  >
-    <div
-      className={`relative rounded-sm border border-black/20 overflow-hidden ${className}`}
-      onMouseOver={() => setHovered(true)}
-      onMouseOut={() => setHovered(false)}
-      style={{ backgroundColor: accent }}
-    >
-      <div className="relative w-full pt-[56.25%]">
-        <div className="absolute inset-0">
-          {imgPaths && imgPaths.length > 0 && currentImageURL && (
-            <div
-              key={currentImageURL}
-              className="absolute inset-0 w-full h-full"
-            >
-              <Image
-                src={currentImageURL}
-                alt={`${title} - Image ${currentImageIndex + 1}`}
-                fill
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover"
-                priority={currentImageIndex === 0}
-              />
-            </div>
-          )}
-
-          <AnimatePresence>
-          {hovered && (
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15, ease: "easeInOut" }}
-                className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}>
-              <div className="flex flex-row gap-1">
-                {categories.map((category, index) => (
-                  <span key={index} className="font-jb underline underline-offset-4 uppercase">{category}</span>
-                ))}
+  return (
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+      <div
+        className={`relative rounded-sm border border-black/20 overflow-hidden ${className}`}
+        onMouseOver={() => setHovered(true)}
+        onMouseOut={() => setHovered(false)}
+        style={{ backgroundColor: accent }}
+      >
+        <div className="relative w-full pt-[56.25%]">
+          <div className="absolute inset-0">
+            {imgPaths && imgPaths.length > 0 && currentImageURL && (
+              <div
+                key={currentImageURL}
+                className="absolute inset-0 w-full h-full"
+              >
+                <Image
+                  src={currentImageURL}
+                  alt={`${title} - Image ${currentImageIndex + 1}`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                  priority={currentImageIndex === 0}
+                />
               </div>
-                <h3 className={`font-khmer tracking-tight ${titleSize} font-semibold`}>{title}</h3>
-            </motion.div>
-          )}
-          </AnimatePresence>
+            )}
+
+            <AnimatePresence>
+              {hovered && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15, ease: "easeInOut" }}
+                  className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}
+                >
+                  <div className="flex flex-row gap-1">
+                    {categories.map((category, index) => (
+                      <span
+                        key={index}
+                        className="font-jb underline underline-offset-4 uppercase"
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                  <h3
+                    className={`font-khmer tracking-tight ${titleSize} font-semibold`}
+                  >
+                    {title}
+                  </h3>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
-    </div>
-  </a>
-}
+    </a>
+  );
+};
 
 const ProjectSection: React.FC<{ src: ProjectRowProps[] }> = ({ src }) => {
-  return <section className="">
-    <div className="c">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-        {src.map((p) => (
-          <ProjectEntity
-            key={p.key}
-            title={p.title}
-            url={p.url}
-            categories={p.categories}
-            imgPaths={p.imgPaths}
-            accent={p.accent}
-            className=""
-          />
-        ))}
+  return (
+    <section className="">
+      <div className="c">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+          {src.map((p) => (
+            <ProjectEntity
+              key={p.key}
+              title={p.title}
+              url={p.url}
+              categories={p.categories}
+              imgPaths={p.imgPaths}
+              accent={p.accent}
+              className=""
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-}
+    </section>
+  );
+};
 
 export default ProjectSection;
