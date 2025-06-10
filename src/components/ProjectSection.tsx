@@ -60,8 +60,16 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const currentImageURL =
     imgPaths && imgPaths.length > 0 ? imgPaths[currentImageIndex] : null;
 
+  const Wrapper = (url
+    ? "a"
+    : "div");
+  const wrapperProps = url
+    ? { href: url, target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
+
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="block">
+    <Wrapper {...wrapperProps} className="block">
       <div
         className={`relative rounded-sm border border-black/20 overflow-hidden ${className}`}
         onMouseOver={() => setHovered(true)}
@@ -116,7 +124,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
           </div>
         </div>
       </div>
-    </a>
+    </Wrapper>
   );
 };
 
