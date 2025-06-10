@@ -94,17 +94,17 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 2,
-    title: "Modular and purposely designed component library",
-    categories: ["react", "npm"],
+    title: "Language learning through assimilation",
+    categories: ["edtech", "ai", "venture"],
     imgPaths: [
-      "/images/projects/placeholder.png"
+      "/images/projects/rhetoric/1.png"
     ],
     accent: "bg-black",
   },
   {
     key: 3,
-    title: "Language learning through assimilation",
-    categories: ["edtech", "ai", "venture"],
+    title: "Modular and purposely designed component library",
+    categories: ["react", "npm"],
     imgPaths: [
       "/images/projects/placeholder.png"
     ],
