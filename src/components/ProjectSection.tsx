@@ -28,7 +28,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
     if (imgPaths && imgPaths.length > 1) {
       const intervalId = setInterval(() => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % imgPaths.length);
-      }, 5000);
+      }, 3000);
       return () => clearInterval(intervalId);
     }
   }, [imgPaths]);
