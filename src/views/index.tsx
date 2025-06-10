@@ -2,6 +2,7 @@
 import ProjectSection from "@/components/ProjectSection";
 import WorkSection from "@/components/WorkSection";
 import { upcoming, projects, other } from "@/presets/work";
+import { MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 
 const IndexView = () => {
@@ -53,8 +54,10 @@ const IndexView = () => {
 
       <br />
       <div className="flex flex-row justify-between gap-y-2">
-        <span className="font-jb text-xs tracking-tight opacity-30">DON&apos;T BE SO AFRAID TO BE CURIOUS</span>
-        <span className="font-jb text-xs tracking-tight opacity-30">Version 1</span>
+        <div className="flex flex-row items-center space-x-2">
+          <Link href="mailto:im@hobin.dev" className="font-jb text-xs tracking-tight opacity-30">DON&apos;T BE AFRAID TO BE CURIOUS</Link> <span className="opacity-30"><MailIcon /></span>
+        </div>
+        <Link href="https://github.com/vznh/mole/releases/" className="font-jb text-xs tracking-tight opacity-30 hover:underline decoration-dashed underline-offset-4">Version 1 <span className="text-[11px]">/</span> June 2025 ↗</Link>
       </div>
     </div>
   );
