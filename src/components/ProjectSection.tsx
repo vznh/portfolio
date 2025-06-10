@@ -34,6 +34,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const [backdropState, setCustomBackdropState] = useState<
     "bg-white/60" | "bg-white/80"
   >("bg-white/60");
+  const [fontSelection, setCustomFontSelection] = useState<"font-khmer" | "font-geist">("font-khmer");
 
   useEffect(() => {
     if (imgPaths && imgPaths.length > 1) {
@@ -54,6 +55,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
       setCustomTitleSize("text-3xl");
       setCustomBlurState("backdrop-blur-xs");
       setCustomBackdropState("bg-white/80");
+      setCustomFontSelection("font-geist");
     }
   }, []);
 
@@ -114,7 +116,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                     ))}
                   </div>
                   <h3
-                    className={`font-khmer tracking-tight ${titleSize} font-semibold`}
+                    className={`${fontSelection} tracking-tight ${titleSize}`}
                   >
                     {title}
                   </h3>
