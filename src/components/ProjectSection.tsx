@@ -24,6 +24,11 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [hovered, setHovered] = useState<boolean>(false);
 
+  // custom mobile states
+  const [titleSize, setCustomTitleSize] = useState<"text-4xl" | "text-3xl">("text-4xl");
+  const [blurState, setCustomBlurState] = useState<"backdrop-blur-sm" | "backdrop-blur-xs">("backdrop-blur-sm");
+  const [backdropState, setCustomBackdropState] = useState<"bg-white/60" | "bg-white/80">("bg-white/60");
+
   useEffect(() => {
     if (imgPaths && imgPaths.length > 1) {
       const intervalId = setInterval(() => {
@@ -32,6 +37,18 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
       return () => clearInterval(intervalId);
     }
   }, [imgPaths]);
+
+  // attach hook that checks if you can't hover
+  useEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia("(hover: none)").matches
+    )
+      setHovered(true);
+      setCustomTitleSize("text-3xl");
+      setCustomBlurState("backdrop-blur-xs");
+      setCustomBackdropState("bg-white/80");
+  }, []);
 
   const currentImageURL = (imgPaths && imgPaths.length > 0) ? imgPaths[currentImageIndex] : null;
 
@@ -68,17 +85,17 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
           <AnimatePresence>
           {hovered && (
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15, ease: "easeInOut" }}
-              className="h-full bg-white/60 backdrop-blur-sm absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between">
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15, ease: "easeInOut" }}
+                className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}>
               <div className="flex flex-row gap-1">
                 {categories.map((category, index) => (
                   <span key={index} className="font-jb underline underline-offset-4 uppercase">{category}</span>
                 ))}
               </div>
-              <h3 className="font-khmer tracking-tight text-4xl font-semibold">{title}</h3>
+                <h3 className={`font-khmer tracking-tight ${titleSize} font-semibold`}>{title}</h3>
             </motion.div>
           )}
           </AnimatePresence>
