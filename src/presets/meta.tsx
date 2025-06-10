@@ -12,7 +12,7 @@ const HeadPreset = () => {
       {/* Open Graph / Facebook */}
       <meta property="og:title" content="Jason Son" />
       <meta property="og:description" content="Personal website of Jason Son." />
-      <meta property="og:image" content="/cover.png" />
+      <meta property="og:image" content="/images/cover.png" />
       <meta property="og:url" content="https://hobin.dev" />
       <meta property="og:type" content="website" />
 
