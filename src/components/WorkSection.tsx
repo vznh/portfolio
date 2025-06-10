@@ -22,16 +22,16 @@ const WorkRow: React.FC<WorkRowProps> = ({
     <Image src={img} alt={`Icon for company ${company}`} width={32} height={32} className="rounded-md border border-opacity-5 border-black" />
 
     { /* Company goes here! */ }
-    <span className="font-geist opacity-80 text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{ company }</span>
+    <span className="font-geist opacity-80 text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">{ company }</span>
 
     { /* Date goes here! */ }
-    <span className="font-geist text-xl text-black min-w-0 overflow-hidden opacity-20 whitespace-nowrap">{ date }</span>
+    <span className="font-geist text-lg md:text-xl text-black min-w-0 overflow-hidden opacity-20 whitespace-nowrap">{ date }</span>
 
     { /* Line component is here - don't change. */}
     <div className="flex-grow h-px bg-black opacity-10" aria-hidden="true" />
 
     { /* Role goes here! */ }
-    <span className="font-geist opacity-80 text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right">{ role }</span>
+    <span className="font-geist opacity-80 text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right">{ role }</span>
   </div>
 };
 
