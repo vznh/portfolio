@@ -13,7 +13,7 @@ import { ProjectRowProps } from "@/components/ProjectSection";
 export const projects: ProjectRowProps[] = [
   {
     key: 2,
-    title: "Campus navigation tool focused on precise navigation and club interaction",
+    title: "Student tool for precise nav and club interactions",
     categories: ["web", "utility", "education", "design"],
     imgPaths: [
       "/images/projects/pathfinder/1.png",
