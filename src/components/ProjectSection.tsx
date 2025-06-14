@@ -106,14 +106,15 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                   className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}
                 >
                   <div className="flex flex-row gap-1">
-                    {categories.map((category, index) => (
-                      <span
-                        key={index}
-                        className="font-jb underline underline-offset-4 uppercase"
-                      >
-                        {category}
-                      </span>
-                    ))}
+                      {categories.map((category, index) => (
+                        <span
+                          key={index}
+                          className="font-jb underline underline-offset-4 uppercase"
+                        >
+                          {category}
+                        </span>
+                      ))}
+                    {url && <span className="">↗</span>}
                   </div>
                   <h3
                     className={`${fontSelection} tracking-tight ${titleSize}`}
