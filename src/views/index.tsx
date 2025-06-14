@@ -1,12 +1,15 @@
 // views/
 import ProjectSection from "@/components/ProjectSection";
 import WorkSection from "@/components/WorkSection";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import { motion } from "framer-motion";
 import { upcoming, projects, other } from "@/presets/work";
 import { MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 
 const IndexView = () => {
+  const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
+
   return (
     <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2">
       <h1 className="font-geist text-4xl tracking-tight">Jason Son</h1>
@@ -14,8 +17,7 @@ const IndexView = () => {
       <span className="font-geist text-xl opacity-80 tracking-tight">
         Currently leveraging design to bring ideas to collective alignment.
       </span>
-      <div
-      >
+      <div>
         <div className="font-jb tracking-tighter opacity-30 flex flex-wrap gap-x-2 items-center">
           <Link
             className="hover:underline underline-offset-4 decoration-dashed"
@@ -61,30 +63,29 @@ const IndexView = () => {
 
       <br />
       <motion.div
-        className="flex justify-between"
+        ref={registerSection("work")}
+        data-section="work"
+        className="flex flex-col gap-y-3"
         initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: getOpacity("work") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: 1, duration: 0.4, ease: "easeInOut" }}
+        transition={getTransition({ delay: 1, duration: 0.4, ease: "easeInOut" })}
       >
-        <span className="font-jb tracking-tight opacity-30">PREVIOUSLY</span>
-        <span className="font-jb tracking-tight opacity-30">TYPE</span>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ delay: 1, duration: 0.4, ease: "easeInOut" }}
-      >
+        <div className="flex flex-row justify-between">
+          <span className="font-jb tracking-tight opacity-30">PREVIOUSLY</span>
+          <span className="font-jb tracking-tight opacity-30">TYPE</span>
+        </div>
         <WorkSection />
       </motion.div>
 
       <br />
       <motion.div
+        ref={registerSection("projects")}
+        data-section="projects"
         initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: getOpacity("projects") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: 1.5, duration: 0.4, ease: "easeInOut" }}
+        transition={getTransition({ delay: 1.5, duration: 0.4, ease: "easeInOut" })}
       >
         <span className="font-jb tracking-tight opacity-30">PROJECTS</span>
         {/* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
@@ -93,10 +94,12 @@ const IndexView = () => {
 
       <br />
       <motion.div
+        ref={registerSection("upcoming")}
+        data-section="upcoming"
         initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: getOpacity("upcoming") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: 2, duration: 0.4, ease: "easeInOut" }}
+        transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
       >
         <span className="font-jb tracking-tight opacity-30">UPCOMING</span>
         <ProjectSection src={upcoming} />
@@ -104,14 +107,16 @@ const IndexView = () => {
 
       <br />
       <motion.div
+        ref={registerSection("other")}
+        data-section="other"
         initial={{ opacity: 0.2 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: getOpacity("other") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={{ delay: 2.5, duration: 0.4, ease: "easeInOut" }}>
+        transition={getTransition({ delay: 2.5, duration: 0.4, ease: "easeInOut" })}
+      >
         <span className="font-jb tracking-tight opacity-30">OTHER</span>
         <ProjectSection src={other} />
       </motion.div>
-
 
       {/* Stretch effect at the bottom distorting, and when clicked goes back up. */}
       {/* This section should lowkey typewrite out itself */}
