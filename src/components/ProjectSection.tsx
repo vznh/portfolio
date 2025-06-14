@@ -25,7 +25,8 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const [hovered, setHovered] = useState<boolean>(false);
 
   // custom mobile states
-  const [titleSize, setCustomTitleSize] = useState<"text-4xl" | "text-3xl">(
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [titleSize, setCustomTitleSize] = useState<"text-4xl" | "text-2xl">(
     "text-4xl",
   );
   const [blurState, setCustomBlurState] = useState<
@@ -34,7 +35,9 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const [backdropState, setCustomBackdropState] = useState<
     "bg-white/60" | "bg-white/80"
   >("bg-white/60");
-  const [fontSelection, setCustomFontSelection] = useState<"font-khmer" | "font-geist">("font-khmer");
+  const [fontSelection, setCustomFontSelection] = useState<
+    "font-khmer" | "font-geist"
+  >("font-khmer");
 
   useEffect(() => {
     if (imgPaths && imgPaths.length > 1) {
@@ -52,7 +55,8 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
       window.matchMedia("(hover: none)").matches
     ) {
       setHovered(true);
-      setCustomTitleSize("text-3xl");
+      setIsMobile(true);
+      setCustomTitleSize("text-2xl");
       setCustomBlurState("backdrop-blur-xs");
       setCustomBackdropState("bg-white/80");
       setCustomFontSelection("font-geist");
@@ -62,20 +66,17 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   const currentImageURL =
     imgPaths && imgPaths.length > 0 ? imgPaths[currentImageIndex] : null;
 
-  const Wrapper = (url
-    ? "a"
-    : "div");
+  const Wrapper = url ? "a" : "div";
   const wrapperProps = url
     ? { href: url, target: "_blank", rel: "noopener noreferrer" }
     : {};
-
 
   return (
     <Wrapper {...wrapperProps} className="block">
       <div
         className={`relative rounded-sm border border-black/20 overflow-hidden ${className}`}
-        onMouseOver={() => setHovered(true)}
-        onMouseOut={() => setHovered(false)}
+        onMouseOver={() => !isMobile && setHovered(true)}
+        onMouseOut={() => !isMobile && setHovered(false)}
         style={{ backgroundColor: accent }}
       >
         <div className="relative w-full pt-[56.25%]">
@@ -105,7 +106,8 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                   transition={{ duration: 0.15, ease: "easeInOut" }}
                   className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}
                 >
-                  <div className="flex flex-row gap-1">
+                  <div className="flex flex-col gap-1">
+                    <div className="flex flex-row gap-1.5">
                       {categories.map((category, index) => (
                         <span
                           key={index}
@@ -114,7 +116,10 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                           {category}
                         </span>
                       ))}
-                    {url && <span className="">↗</span>}
+                    </div>
+                    {url && (
+                      <span className="font-jb text-xs">VIEW LIVE PROJECT↗</span>
+                    )}
                   </div>
                   <h3
                     className={`${fontSelection} tracking-tight ${titleSize}`}
