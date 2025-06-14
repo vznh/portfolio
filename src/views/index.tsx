@@ -86,6 +86,7 @@ const IndexView = () => {
         animate={{ opacity: getOpacity("projects") ?? 1 }}
         exit={{ opacity: 0 }}
         transition={getTransition({ delay: 1.5, duration: 0.4, ease: "easeInOut" })}
+        className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-30">PROJECTS</span>
         {/* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
@@ -100,6 +101,7 @@ const IndexView = () => {
         animate={{ opacity: getOpacity("upcoming") ?? 1 }}
         exit={{ opacity: 0 }}
         transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
+        className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-30">UPCOMING</span>
         <ProjectSection src={upcoming} />
@@ -113,6 +115,7 @@ const IndexView = () => {
         animate={{ opacity: getOpacity("other") ?? 1 }}
         exit={{ opacity: 0 }}
         transition={getTransition({ delay: 2.5, duration: 0.4, ease: "easeInOut" })}
+        className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-30">OTHER</span>
         <ProjectSection src={other} />
