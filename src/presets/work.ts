@@ -85,7 +85,7 @@ export const upcoming: ProjectRowProps[] = [
   {
     key: 1,
     title: "Creating a new layer of interactibility",
-    categories: ["computer vision", "design"],
+    categories: ["computer vision", "design", "web experience"],
     url: "https://permanence.vercel.app",
     imgPaths: [
       "/images/projects/permanence/1.png"
@@ -144,7 +144,7 @@ export const other: ProjectRowProps[] = [
   {
     key: 3,
     title: "Remaking 2hollis unreleased beats with Strudel",
-    categories: ["recreational", "i love you 2"],
+    categories: ["recreational", "ily2hollis"],
     imgPaths: [
       "/images/projects/strudel/2hollis.png"
     ],
