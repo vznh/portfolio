@@ -112,7 +112,7 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 4,
-    title: "Autonomous product management for shipping fast",
+    title: "Cursor for product management",
     categories: ["design", "ai", "venture"],
     imgPaths: [
       "/images/projects/placeholder.png"
