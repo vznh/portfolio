@@ -3,9 +3,10 @@ import ProjectSection from "@/components/ProjectSection";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { motion } from "framer-motion";
-import { upcoming, projects, other } from "@/presets/work";
+import { upcoming, projects, open, other } from "@/presets/work";
 import { MailIcon } from "@/presets/svgs";
 import Link from "next/link";
+import Image from "next/image";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
@@ -18,7 +19,7 @@ const IndexView = () => {
         Currently leveraging design to bring ideas to collective alignment.
       </span>
       <div>
-        <div className="font-jb tracking-tighter opacity-30 flex flex-wrap gap-x-2 items-center">
+        <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
           <Link
             className="hover:underline underline-offset-4 decoration-dashed"
             target="_blank"
@@ -72,8 +73,8 @@ const IndexView = () => {
         transition={getTransition({ delay: 1, duration: 0.4, ease: "easeInOut" })}
       >
         <div className="flex flex-row justify-between">
-          <span className="font-jb tracking-tight opacity-30">PREVIOUSLY</span>
-          <span className="font-jb tracking-tight opacity-30">TYPE</span>
+          <span className="font-jb tracking-tight opacity-50">PREVIOUSLY</span>
+          <span className="font-jb tracking-tight opacity-50">TYPE</span>
         </div>
         <WorkSection />
       </motion.div>
@@ -88,7 +89,7 @@ const IndexView = () => {
         transition={getTransition({ delay: 1.5, duration: 0.4, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-30">PROJECTS</span>
+        <span className="font-jb tracking-tight opacity-50">PROJECTS</span>
         {/* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
         <ProjectSection src={projects} />
       </motion.div>
@@ -103,8 +104,22 @@ const IndexView = () => {
         transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-30">UPCOMING</span>
+        <span className="font-jb tracking-tight opacity-50">UPCOMING</span>
         <ProjectSection src={upcoming} />
+      </motion.div>
+
+      <br/>
+      <motion.div
+        ref={registerSection("open-source")}
+        data-section="open-source"
+        initial={{ opacity: 0.2 }}
+        animate={{ opacity: getOpacity("open-source") ?? 1 }}
+        exit={{ opacity: 0 }}
+        transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
+        className="flex flex-col gap-y-4"
+      >
+        <span className="font-jb tracking-tight opacity-50">OPEN-SOURCE</span>
+        <ProjectSection src={open} />
       </motion.div>
 
       <br />
@@ -117,31 +132,64 @@ const IndexView = () => {
         transition={getTransition({ delay: 2.5, duration: 0.4, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-30">OTHER</span>
+        <span className="font-jb tracking-tight opacity-50">OTHER</span>
         <ProjectSection src={other} />
       </motion.div>
 
       {/* Stretch effect at the bottom distorting, and when clicked goes back up. */}
       {/* This section should lowkey typewrite out itself */}
       <br />
-      <div className="flex flex-col md:flex-row justify-between gap-y-2 md:gap-y-0">
-        <div className="flex flex-row items-center space-x-2">
+      <div className="relative flex flex-col md:flex-row justify-between gap-y-2 md:gap-y-0">
+        <motion.div
+          className="flex flex-row items-center space-x-2 group"
+          initial={{ opacity: 0.5 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
           <Link
             href="mailto:im@hobin.dev"
-            className="font-jb text-xs tracking-tight opacity-30"
+            className="font-jb text-xs tracking-tight"
           >
             DON&apos;T BE AFRAID TO BE CURIOUS
           </Link>{" "}
-          <span className="opacity-30">
-            <MailIcon />
+          <span className="relative flex items-center">
+            <motion.span
+              className="absolute inset-0 rounded-full pointer-events-none z-20"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0 }}
+              whileHover={{ opacity: 0.7, scale: 1.2 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              style={{
+                boxShadow: "0 0 16px 8px rgba(255, 255, 255, 0.5)",
+                filter: "blur(4px)",
+              }}
+            />
+            <div className="relative z-10">
+              <MailIcon />
+            </div>
           </span>
-        </div>
-        <Link
-          href="https://github.com/vznh/mole/releases/"
-          className="font-jb text-xs tracking-tight opacity-30 hover:underline decoration-dashed underline-offset-4"
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0.5 }}
+          whileHover={{ opacity: 0.7 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
         >
-          Version 1 <span className="text-[11px]">/</span> June 2025 ↗
-        </Link>
+          <Link
+            href="https://github.com/vznh/mole/releases/"
+            className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4"
+          >
+            Version 2 <span className="text-[11px]">/</span> June 2025 ↗
+          </Link>
+        </motion.div>
+        <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
+          <Image 
+            src="/images/mole.png" 
+            alt="Mole" 
+            width={52} 
+            height={52} 
+            className="h-14 w-auto object-contain"
+          />
+        </div>
       </div>
     </div>
   );
