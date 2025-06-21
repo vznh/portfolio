@@ -13,7 +13,8 @@ import { ProjectRowProps } from "@/components/ProjectSection";
 export const projects: ProjectRowProps[] = [
   {
     key: 2,
-    title: "Student tool for precise nav and club interactions",
+    title: "Pathfinder",
+    desc: "Student tool for precise nav and club interactions",
     categories: ["web", "utility", "education", "design"],
     imgPaths: [
       "/images/projects/pathfinder/1.png",
@@ -26,7 +27,8 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 5,
-    title: "Brutalist-inspired calendar planning utility",
+    title: "Brutal",
+    desc: "Brutalist-inspired calendar planning utility",
     url: "",
     categories: ["web", "design", "consumer"],
     imgPaths: [
@@ -39,7 +41,8 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 6,
-    title: "TikTok to feedthepudge converter",
+    title: "Hungry",
+    desc: "TikTok to feedthepudge converter",
     imgPaths: [
       "/images/projects/feedthepudge/1.png"
     ],
@@ -48,7 +51,8 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 7,
-    title: "CLI to contextually debug off of your traceback",
+    title: "Splat",
+    desc: "CLI to contextually debug off of your traceback",
     imgPaths: [
       "/images/projects/splat/1.png",
       "/images/projects/splat/2.png",
@@ -58,10 +62,14 @@ export const projects: ProjectRowProps[] = [
     categories: ["devtools", "hackathon"],
     accent: "bg-white",
   },
+]
+
+export const open: ProjectRowProps[] = [
   {
-    key: 8,
+    key: 1,
     url: "https://github.com/yamadashy/repomix",
-    title: "Pack your codebase instantly into XML, TXT, or MD files",
+    title: "Repomix",
+    desc: "Pack your codebase instantly into XML, TXT, or MD files",
     imgPaths: [
       "/images/projects/repomix/1.png"
     ],
@@ -69,8 +77,9 @@ export const projects: ProjectRowProps[] = [
     accent: "bg-white",
   },
   {
-    key: 9,
-    title: "Wealth management software",
+    key: 2,
+    title: "Ghostfolio",
+    desc: "Wealth management software",
     url: "https://github.com/ghostfolio/ghostfolio",
     imgPaths: [
       "/images/projects/ghostfolio/2.png",
@@ -84,17 +93,19 @@ export const projects: ProjectRowProps[] = [
 export const upcoming: ProjectRowProps[] = [
   {
     key: 1,
-    title: "Creating a new layer of interactibility",
+    title: "Permanence",
+    desc: "Creating a new layer of interactibility",
     categories: ["cv", "design", "web"],
     url: "https://permanence.vercel.app",
     imgPaths: [
-      "/images/projects/permanence/1.png"
+      "/images/projects/permanence/cover.png"
     ],
     accent: "bg-white",
   },
   {
     key: 2,
-    title: "Language learning through assimilation",
+    title: "Polyglot",
+    desc: "Language learning through assimilation",
     categories: ["edtech", "ai", "venture"],
     imgPaths: [
       "/images/projects/rhetoric/1.png"
@@ -103,22 +114,34 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 3,
-    title: "Modular and purposely designed React component library",
+    title: "Devour",
+    desc: "Modular and purposely designed React component library",
     categories: ["npm", "library"],
     imgPaths: [
-      "/images/projects/placeholder.png"
+      "/images/projects/devour/devour_cover.png"
     ],
     accent: "bg-black",
   },
   {
     key: 4,
-    title: "Cursor for product management",
+    title: "Pantheon",
+    desc: "Cursor for product management",
     categories: ["design", "ai", "venture"],
+    imgPaths: [
+      "/images/projects/pantheon/pantheon_cover.png"
+    ],
+    accent: "bg-black",
+  },
+  {
+    key: 5,
+    title: "Newtor",
+    desc: "Generated newsletters about emergent topics in tech, from sources such as X.",
+    categories: ["commission"],
     imgPaths: [
       "/images/projects/placeholder.png"
     ],
     accent: "bg-black",
-  },
+  }
 ]
 
 export const other: ProjectRowProps[] = [
@@ -134,7 +157,7 @@ export const other: ProjectRowProps[] = [
   },
   {
     key: 2,
-    title: "A Family Guy remake of Peter Griffin cutting up in traffic",
+    title: "Peter Griffin cutting up in traffic",
     categories: ["game design", "classwork", "exploration"],
     imgPaths: [
       "/images/projects/familyguy/1.png"
@@ -143,7 +166,7 @@ export const other: ProjectRowProps[] = [
   },
   {
     key: 3,
-    title: "Remaking 2hollis unreleased beats with Strudel",
+    title: "Remaking 2hollis beats with Strudel",
     categories: ["recreational", "ily2hollis"],
     imgPaths: [
       "/images/projects/strudel/2hollis.png"
@@ -152,7 +175,7 @@ export const other: ProjectRowProps[] = [
   },
   {
     key: 4,
-    title: "Bay Area fashion y2k chronically online test",
+    title: "Fashion y2k chronically online test",
     url: "https://grandiose-five.vercel.app",
     categories: ["stupid", "open-source", "consumer"],
     imgPaths: [
