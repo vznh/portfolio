@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export interface ProjectRowProps {
   key: number;
   title: string;
+  desc?: string; // Optional description text
   imgPaths: string[]; // in format { public/images/[].png } with always 16:9 aspect ratio
   accent: string; // in format { #XXXXXX } for hex color
   url?: string;
@@ -15,6 +16,7 @@ export interface ProjectRowProps {
 
 const ProjectEntity: React.FC<ProjectRowProps> = ({
   title,
+  desc,
   imgPaths,
   accent,
   url = "",
@@ -100,32 +102,45 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
             <AnimatePresence>
               {hovered && (
                 <motion.div
-                  initial={{ opacity: 0 }}
+                  initial={false}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.15, ease: "easeInOut" }}
-                  className={`h-full ${backdropState} ${blurState} absolute bottom-0 left-0 w-full p-2 sm:p-3 md:p-4 flex flex-col justify-between`}
+                  // Black gradient overlay, covers about 70% of the height, white text
+                  className="absolute left-0 bottom-0 w-full flex flex-col justify-end"
+                  style={{
+                    height: "70%",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.0) 100%)",
+                    color: "#fff",
+                    padding: "0.5rem 0.75rem 1rem 0.75rem",
+                  }}
                 >
-                  <div className="flex flex-col gap-1">
+                  <h3
+                    className={`${fontSelection} tracking-tight ${titleSize} text-2xl text-white`}
+                  >
+                    {title}
+                  </h3>
+                  {desc && (
+                    <p className="font-geist text-sm text-white/80 leading-relaxed">
+                      {desc}
+                    </p>
+                  )}
+                  <div className="flex flex-col md:flex-row gap-0.5 md:gap-1.5 md:items-center md:justify-between mt-2">
                     <div className="flex flex-row gap-1.5">
                       {categories.map((category, index) => (
                         <span
                           key={index}
-                          className="font-jb underline underline-offset-4 uppercase"
+                          className="font-jb underline underline-offset-4 uppercase text-white text-xs"
                         >
                           {category}
                         </span>
                       ))}
                     </div>
                     {url && (
-                      <span className="font-jb text-xs">VIEW LIVE PROJECT↗</span>
+                      <span className="font-jb text-xs text-white">VIEW LIVE PROJECT↗</span>
                     )}
                   </div>
-                  <h3
-                    className={`${fontSelection} tracking-tight ${titleSize}`}
-                  >
-                    {title}
-                  </h3>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -145,6 +160,7 @@ const ProjectSection: React.FC<{ src: ProjectRowProps[] }> = ({ src }) => {
             <ProjectEntity
               key={p.key}
               title={p.title}
+              desc={p.desc}
               url={p.url}
               categories={p.categories}
               imgPaths={p.imgPaths}
