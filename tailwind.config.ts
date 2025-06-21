@@ -20,6 +20,7 @@ const config: Config = {
         "geist": ["Geist", "sans-serif"],
         "jb": ["JB", "sans-serif"],
         "khmer": ["khmer", "sans-serif"],
+        "newsreader": ["Newsreader", "serif"],
       },
     },
   },
