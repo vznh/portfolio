@@ -86,7 +86,30 @@ export const projects: ProjectRowProps[] = [
     url: "https://aihack-mu.vercel.app",
     categories: ["design", "hackathon"],
     accent: "bg-black"
+  },
+  {
+    key: 10,
+    title: "Conundrum",
+    desc: "Escape room generator that allowed community-driven contributions for infinite possibility of escape rooms.",
+    imgPaths: [
+      "/images/projects/conundrum/1.png"
+    ],
+    categories: ["VR", "hackathon", "gamedev"],
+    accent: "bg-black"
+  },
+  {
+    key: 11, 
+    title: "Simply",
+    desc: "Tool to optimize reduction of small, medium, or big business expenses through analyzed POS + receipt data.",
+    imgPaths: [
+      "/images/projects/simply/1.png",
+      "/images/projects/simply/2.png",
+      "/images/projects/simply/3.png",
+    ],
+    categories: ["hackathon", "web"],
+    accent: "bg-black"
   }
+
 ]
 
 export const open: ProjectRowProps[] = [
