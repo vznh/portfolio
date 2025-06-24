@@ -8,7 +8,7 @@ const Background = () => {
         <Image 
           src="/images/bg/rs.png" 
           alt="background" 
-          className="opacity-30" 
+          className="opacity-45" 
           fill 
           style={{ objectFit: 'cover' }}
         />

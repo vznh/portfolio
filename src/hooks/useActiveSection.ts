@@ -34,7 +34,7 @@ export function useActiveSection(initialDelay = 3000) {
 
   // Get opacity for a specific section
   const getOpacity = useCallback(
-    (sectionId: string, activeOpacity = 1, inactiveOpacity = 0.3) => {
+    (sectionId: string, activeOpacity = 1, inactiveOpacity = 0.6) => {
       if (!isEnabled) return undefined // Let initial animations handle opacity
       return activeSection === sectionId ? activeOpacity : inactiveOpacity
     },
