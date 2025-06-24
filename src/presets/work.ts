@@ -83,6 +83,7 @@ export const projects: ProjectRowProps[] = [
       "/images/projects/dreamscape/4.png",
       "/images/projects/dreamscape/5.png",
     ], 
+    url: "https://aihack-mu.vercel.app",
     categories: ["design", "hackathon"],
     accent: "bg-black"
   }
