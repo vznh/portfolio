@@ -62,6 +62,30 @@ export const projects: ProjectRowProps[] = [
     categories: ["devtools", "hackathon"],
     accent: "bg-white",
   },
+  {
+    key: 8, 
+    title: "Mechanic",
+    desc: "Tool to automatically review and analyze code for PRs like a senior engineer. We didn't know what Greptile was at the time.",
+    imgPaths: [
+      "/images/projects/placeholder.png",
+    ],
+    categories: ["devtools", "hackathon"],
+    accent: "bg-black"
+  }, 
+  {
+    key: 9,
+    title: "Dreamscape",
+    desc: "Speak your dreams into reality.",
+    imgPaths: [
+      "/images/projects/dreamscape/1.png",
+      "/images/projects/dreamscape/2.png",
+      "/images/projects/dreamscape/3.png",
+      "/images/projects/dreamscape/4.png",
+      "/images/projects/dreamscape/5.png",
+    ], 
+    categories: ["design", "hackathon"],
+    accent: "bg-black"
+  }
 ]
 
 export const open: ProjectRowProps[] = [
@@ -141,7 +165,7 @@ export const upcoming: ProjectRowProps[] = [
       "/images/projects/placeholder.png"
     ],
     accent: "bg-black",
-  }
+  }, 
 ]
 
 export const other: ProjectRowProps[] = [
