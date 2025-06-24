@@ -106,7 +106,7 @@ export const projects: ProjectRowProps[] = [
       "/images/projects/simply/2.png",
       "/images/projects/simply/3.png",
     ],
-    categories: ["hackathon", "web"],
+    categories: ["consumer", "hackathon", "web"],
     accent: "bg-black"
   }
 
