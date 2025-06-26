@@ -10,6 +10,10 @@
     color: #002fa7;
     background-color: #fff;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Gradient overlay */
