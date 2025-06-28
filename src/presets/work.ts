@@ -190,6 +190,16 @@ export const upcoming: ProjectRowProps[] = [
     ],
     accent: "bg-black",
   }, 
+  {
+    key: 6,
+    title: "Entanglement",
+    desc: "Connect with your friends through shared favorite artists, mapping relationships to the Nth degree.",
+    categories: ["web", "leisure"],
+    imgPaths: [
+      "/images/projects/placeholder.png",
+    ],
+    accent: "bg-black"
+  }
 ]
 
 export const other: ProjectRowProps[] = [
