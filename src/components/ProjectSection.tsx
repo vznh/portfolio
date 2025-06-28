@@ -126,7 +126,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                       {desc}
                     </p>
                   )}
-                  <div className="flex flex-col md:flex-row gap-0.5 md:gap-1.5 md:items-center md:justify-between mt-2">
+                  <div className="flex flex-row md:flex-row gap-0.5 md:gap-1.5 md:items-center md:justify-between justify-between mt-2">
                     <div className="flex flex-row gap-1.5">
                       {categories.map((category, index) => (
                         <span
@@ -138,7 +138,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                       ))}
                     </div>
                     {url && (
-                      <span className="font-jb text-xs text-white">VIEW LIVE PROJECT↗</span>
+                      <span className="font-jb text-xs text-white">MORE INFO{" "}↗</span>
                     )}
                   </div>
                 </motion.div>

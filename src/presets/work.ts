@@ -2,9 +2,8 @@
 
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
-  { key: 1, company: "Apple", role: "System", img: "/images/apple.png", date: "2024"},
-  { key: 2, company: "Stanford Launchpad",  role: "Edtech", img: "/images/stanford.png", date: "2024" },
-  { key: 3, company: "ETALYC",  role: "Fullstack", img: "/images/etalyc.png", date: "2023" },
+  { key: 1, company: "Apple", role: "Software", img: "/images/apple.png", date: "2024"},
+  { key: 3, company: "ETALYC",  role: "Software", img: "/images/etalyc.png", date: "2023" },
   { key: 4, company: "Carnegie Mellon",  role: "Research", img: "/images/cmu.png", date: "2022" },
   { key: 5, company: "UC Santa Cruz",  role: "Research", img: "/images/ucsc.png", date: "2022" },
 ];
@@ -15,7 +14,7 @@ export const projects: ProjectRowProps[] = [
     key: 2,
     title: "Pathfinder",
     desc: "Student tool for precise nav and club interactions",
-    categories: ["web", "utility", "education", "design"],
+    categories: ["WEB", "DESIGN", "ACADEMIC"],
     imgPaths: [
       "/images/projects/pathfinder/1.png",
       "/images/projects/pathfinder/2.png",
@@ -28,9 +27,9 @@ export const projects: ProjectRowProps[] = [
   {
     key: 5,
     title: "Brutal",
-    desc: "Brutalist-inspired calendar planning utility",
+    desc: "Use natural language to easily create, read, update, or delete your events for Google Calendar.",
     url: "",
-    categories: ["web", "design", "consumer"],
+    categories: ["WEB", "DESIGN", "HACKATHON"],
     imgPaths: [
       "/images/projects/brutal/1.png",
       "/images/projects/brutal/2.png",
@@ -46,7 +45,7 @@ export const projects: ProjectRowProps[] = [
     imgPaths: [
       "/images/projects/feedthepudge/1.png"
     ],
-    categories: ["web", "consumer", "genai"],
+    categories: ["WEB", "AI", "PERSONAL"],
     accent: "bg-white",
   },
   {
@@ -59,19 +58,19 @@ export const projects: ProjectRowProps[] = [
       "/images/projects/splat/3.png",
     ],
     url: "https://github.com/ehcaw/splat",
-    categories: ["devtools", "hackathon"],
+    categories: ["TOOLS", "HACKATHON"],
     accent: "bg-white",
   },
   {
-    key: 8, 
+    key: 8,
     title: "Mechanic",
     desc: "Tool to automatically review and analyze code for PRs like a senior engineer. We didn't know what Greptile was at the time.",
     imgPaths: [
       "/images/projects/placeholder.png",
     ],
-    categories: ["devtools", "hackathon"],
+    categories: ["TOOLS", "AI", "HACKATHON"],
     accent: "bg-black"
-  }, 
+  },
   {
     key: 9,
     title: "Dreamscape",
@@ -82,9 +81,9 @@ export const projects: ProjectRowProps[] = [
       "/images/projects/dreamscape/3.png",
       "/images/projects/dreamscape/4.png",
       "/images/projects/dreamscape/5.png",
-    ], 
+    ],
     url: "https://aihack-mu.vercel.app",
-    categories: ["design", "hackathon"],
+    categories: ["DESIGN", "AI", "HACKATHON"],
     accent: "bg-black"
   },
   {
@@ -94,11 +93,11 @@ export const projects: ProjectRowProps[] = [
     imgPaths: [
       "/images/projects/conundrum/1.png"
     ],
-    categories: ["VR", "hackathon", "gamedev"],
+    categories: ["WEB", "HACKATHON"],
     accent: "bg-black"
   },
   {
-    key: 11, 
+    key: 11,
     title: "Simply",
     desc: "Tool to optimize reduction of small, medium, or big business expenses through analyzed POS + receipt data.",
     imgPaths: [
@@ -106,7 +105,7 @@ export const projects: ProjectRowProps[] = [
       "/images/projects/simply/2.png",
       "/images/projects/simply/3.png",
     ],
-    categories: ["consumer", "hackathon", "web"],
+    categories: ["WEB", "AI", "HACKATHON"],
     accent: "bg-black"
   }
 
@@ -121,7 +120,7 @@ export const open: ProjectRowProps[] = [
     imgPaths: [
       "/images/projects/repomix/1.png"
     ],
-    categories: ["devtools", "open-source"],
+    categories: ["TOOLS", "OPEN-SOURCE"],
     accent: "bg-white",
   },
   {
@@ -133,7 +132,7 @@ export const open: ProjectRowProps[] = [
       "/images/projects/ghostfolio/2.png",
       "/images/projects/ghostfolio/3.png",
     ],
-    categories: ["quant", "web", "open-source"], // + web
+    categories: ["WEB", "OPEN-SOURCE"],
     accent: "bg-white",
   },
 ]
@@ -143,8 +142,8 @@ export const upcoming: ProjectRowProps[] = [
     key: 1,
     title: "Permanence",
     desc: "Creating a new layer of interactibility",
-    categories: ["cv", "design", "web"],
-    url: "https://permanence.vercel.app",
+    categories: ["WEB", "DESIGN", "COMMERCIAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/permanence/cover.png"
     ],
@@ -152,9 +151,10 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 2,
-    title: "Polyglot",
-    desc: "Language learning through assimilation",
-    categories: ["edtech", "ai", "venture"],
+    title: "Rhetoric",
+    desc: "Language learning through assimilation. Part of Stanford Launchpad C/O 2024.",
+    categories: ["WEB", "AI", "COMMERCIAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/rhetoric/1.png"
     ],
@@ -164,7 +164,8 @@ export const upcoming: ProjectRowProps[] = [
     key: 3,
     title: "Devour",
     desc: "Modular and purposely designed React component library",
-    categories: ["npm", "library"],
+    categories: ["LIBRARY", "DESIGN", "COMMERCIAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/devour/devour_cover.png"
     ],
@@ -174,7 +175,8 @@ export const upcoming: ProjectRowProps[] = [
     key: 4,
     title: "Pantheon",
     desc: "Cursor for product management",
-    categories: ["design", "ai", "venture"],
+    categories: ["WEB", "AI", "COMMERCIAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/pantheon/pantheon_cover.png"
     ],
@@ -184,17 +186,19 @@ export const upcoming: ProjectRowProps[] = [
     key: 5,
     title: "Newtor",
     desc: "Generated newsletters about emergent topics in tech, from sources such as X.",
-    categories: ["commission"],
+    categories: ["WEB", "AI", "COMMERCIAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/placeholder.png"
     ],
     accent: "bg-black",
-  }, 
+  },
   {
     key: 6,
     title: "Entanglement",
     desc: "Connect with your friends through shared favorite artists, mapping relationships to the Nth degree.",
-    categories: ["web", "leisure"],
+    categories: ["WEB", "PERSONAL"],
+    url: "https://tally.so/r/wgxdK1",
     imgPaths: [
       "/images/projects/placeholder.png",
     ],
@@ -206,7 +210,7 @@ export const other: ProjectRowProps[] = [
   {
     key: 1,
     title: "Predicting returns on short-term market data",
-    categories: ["quant", "classwork", "ptf"],
+    categories: ["RESEARCH", "ACADEMIC"],
     imgPaths: [
       "/images/projects/veil/1.png",
       "/images/projects/veil/2.png"
@@ -216,7 +220,7 @@ export const other: ProjectRowProps[] = [
   {
     key: 2,
     title: "Peter Griffin cutting up in traffic",
-    categories: ["game design", "classwork", "exploration"],
+    categories: ["WEB", "ACADEMIC"],
     imgPaths: [
       "/images/projects/familyguy/1.png"
     ],
@@ -225,7 +229,7 @@ export const other: ProjectRowProps[] = [
   {
     key: 3,
     title: "Remaking 2hollis beats with Strudel",
-    categories: ["recreational", "ily2hollis"],
+    categories: ["TOOLS", "PERSONAL"],
     imgPaths: [
       "/images/projects/strudel/2hollis.png"
     ],
@@ -235,7 +239,7 @@ export const other: ProjectRowProps[] = [
     key: 4,
     title: "Fashion y2k chronically online test",
     url: "https://grandiose-five.vercel.app",
-    categories: ["stupid", "open-source", "consumer"],
+    categories: ["WEB", "PERSONAL", "OPEN-SOURCE"],
     imgPaths: [
       "/images/projects/grandiose/1.png"
     ],
