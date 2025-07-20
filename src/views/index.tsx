@@ -16,7 +16,7 @@ const IndexView = () => {
       <h1 className="font-geist text-4xl tracking-tight">Jason Son</h1>
 
       <span className="font-geist text-xl opacity-80 tracking-tight">
-        Currently leveraging design to bring ideas to collective alignment.
+        Fullstack builder creating with design driven solutions.
       </span>
       <div>
         <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
@@ -178,15 +178,15 @@ const IndexView = () => {
             href="https://github.com/vznh/mole/releases/"
             className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4"
           >
-            Version 2 <span className="text-[11px]">/</span> June 2025 ↗
+            Version 3 <span className="text-[11px]">/</span> July 2025 ↗
           </Link>
         </motion.div>
         <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
-          <Image 
-            src="/images/mole.png" 
-            alt="Mole" 
-            width={52} 
-            height={52} 
+          <Image
+            src="/images/mole.png"
+            alt="Mole"
+            width={52}
+            height={52}
             className="h-14 w-auto object-contain"
           />
         </div>
