@@ -26,7 +26,7 @@ export const projects: ProjectRowProps[] = [
   },
   {
     key: 5,
-    title: "Brutal",
+    title: "Chronolex",
     desc: "Use natural language to easily create, read, update, or delete your events for Google Calendar.",
     url: "",
     categories: ["WEB", "DESIGN", "HACKATHON"],
@@ -64,7 +64,7 @@ export const projects: ProjectRowProps[] = [
   {
     key: 8,
     title: "Mechanic",
-    desc: "Tool to automatically review and analyze code for PRs like a senior engineer. We didn't know what Greptile was at the time.",
+    desc: "Tool to automatically review and analyze code for PRs like a senior engineer.",
     imgPaths: [
       "/images/projects/placeholder.png",
     ],
@@ -141,7 +141,7 @@ export const upcoming: ProjectRowProps[] = [
   {
     key: 1,
     title: "Permanence",
-    desc: "Creating a new layer of interactibility",
+    desc: "Creating a new layer of interactibility.",
     categories: ["WEB", "DESIGN", "COMMERCIAL"],
     url: "https://tally.so/r/wgxdK1",
     imgPaths: [
@@ -163,7 +163,7 @@ export const upcoming: ProjectRowProps[] = [
   {
     key: 3,
     title: "Devour",
-    desc: "Modular and purposely designed React component library",
+    desc: "Modular and purposely designed React component library.",
     categories: ["LIBRARY", "DESIGN", "COMMERCIAL"],
     url: "https://tally.so/r/wgxdK1",
     imgPaths: [
@@ -203,8 +203,19 @@ export const upcoming: ProjectRowProps[] = [
       "/images/projects/placeholder.png",
     ],
     accent: "bg-black"
-  }
-]
+  },
+  {
+    key: 7,
+    title: "Relic",
+    desc: "A graph depiction of all historic events that could be related to each other.",
+    categories: ["WEB"],
+    url: "https://tally.so/r/wgxdK1",
+    imgPaths: [
+      "/images/projects/placeholder.png",
+    ],
+    accent: "bg-black"
+  },
+];
 
 export const other: ProjectRowProps[] = [
   {
