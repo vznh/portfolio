@@ -16,6 +16,40 @@
   }
 }
 
+/* MORE INFO text */
+@keyframes pulse {
+  0% {
+    text-decoration-color: #ff5f6d; /* red-pink */
+  }
+  16% {
+    text-decoration-color: #ffc371; /* orange-yellow */
+  }
+  33% {
+    text-decoration-color: #47cf73; /* green */
+  }
+  50% {
+    text-decoration-color: #38a1db; /* blue */
+  }
+  66% {
+    text-decoration-color: #7d5fff; /* purple */
+  }
+  83% {
+    text-decoration-color: #ff5fd2; /* magenta */
+  }
+  100% {
+    text-decoration-color: #ff5f6d; /* red-pink */
+  }
+}
+
+.subtle {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  animation: pulse 6s infinite;
+}
+
+
+
 /* Gradient overlay */
 body::before {
   content: '';
@@ -83,6 +117,14 @@ body::after {
 @font-face {
   font-family: 'Newsreader';
   src: url('/fonts/Newsreader.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Covik';
+  src: url('/fonts/Covik.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

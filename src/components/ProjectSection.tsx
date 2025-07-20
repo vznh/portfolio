@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 export interface ProjectRowProps {
   key: number;
   title: string;
-  desc?: string; // Optional description text
+  desc?: string;
   imgPaths: string[]; // in format { public/images/[].png } with always 16:9 aspect ratio
   accent: string; // in format { #XXXXXX } for hex color
   url?: string;
@@ -76,7 +76,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
   return (
     <Wrapper {...wrapperProps} className="block">
       <div
-        className={`relative rounded-sm border border-black/20 overflow-hidden ${className}`}
+        className={`project relative rounded-sm border border-black/20 overflow-hidden ${className}`}
         onMouseOver={() => !isMobile && setHovered(true)}
         onMouseOut={() => !isMobile && setHovered(false)}
         style={{ backgroundColor: accent }}
@@ -106,7 +106,6 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.15, ease: "easeInOut" }}
-                  // Black gradient overlay, covers about 70% of the height, white text
                   className="absolute left-0 bottom-0 w-full flex flex-col justify-end"
                   style={{
                     height: "70%",
@@ -117,7 +116,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                   }}
                 >
                   <h3
-                    className={`${fontSelection} tracking-tight ${titleSize} text-2xl text-white`}
+                    className={`font-covik tracking-tighter ${titleSize} text-2xl text-white`}
                   >
                     {title}
                   </h3>
@@ -138,7 +137,7 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                       ))}
                     </div>
                     {url && (
-                      <span className="font-jb text-xs text-white">MORE INFO{" "}↗</span>
+                      <span className="subtle font-jb text-xs text-white">MORE INFO{" "}↗</span>
                     )}
                   </div>
                 </motion.div>
