@@ -209,7 +209,7 @@ export const upcoming: ProjectRowProps[] = [
 export const other: ProjectRowProps[] = [
   {
     key: 1,
-    title: "Predicting returns on short-term market data",
+    title: "Trading like Nancy Pelosi",
     categories: ["RESEARCH", "ACADEMIC"],
     imgPaths: [
       "/images/projects/veil/1.png",
