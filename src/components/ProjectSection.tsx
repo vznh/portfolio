@@ -135,10 +135,10 @@ const ProjectEntity: React.FC<ProjectRowProps> = ({
                           {category}
                         </span>
                       ))}
+                      {url && (
+                        <span className="subtle font-jb text-xs text-white">EXPLORE{" "}↗</span>
+                      )}
                     </div>
-                    {url && (
-                      <span className="subtle font-jb text-xs text-white">MORE INFO{" "}↗</span>
-                    )}
                   </div>
                 </motion.div>
               )}

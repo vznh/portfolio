@@ -19,12 +19,12 @@ const WorkRow: React.FC<WorkRowProps> = ({
   className = ""
 }) => {
   return <div className={`flex items-center w-full tracking-tighter gap-x-1 sm:gap-x-2 ${className}`}>
-    <Image 
-      src={img} 
-      alt={`Icon for company ${company}`} 
-      width={24} 
-      height={24} 
-      className="rounded-md border border-opacity-5 border-black w-6 h-6 md:w-8 md:h-8" 
+    <Image
+      src={img}
+      alt={`Icon for company ${company}`}
+      width={24}
+      height={24}
+      className="rounded-md border border-opacity-5 border-black w-6 h-6 md:w-8 md:h-8"
     />
 
     { /* Company goes here! */ }
