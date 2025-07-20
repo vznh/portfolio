@@ -22,6 +22,7 @@ const config: Config = {
         "khmer": ["khmer", "sans-serif"],
         "newsreader": ["Newsreader", "serif"],
         "covik": ["Covik", "sans-serif"],
+        "lora": ["Lora", "serif"],
       },
     },
   },
