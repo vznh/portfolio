@@ -7,59 +7,66 @@ import { upcoming, projects, open, other } from "@/presets/work";
 import { MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 import Image from "next/image";
+import Logo from "@/components/Logo";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
 
   return (
     <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2">
-      { /* I want to change the font here! */}
-      <h1 className="font-lora text-4xl tracking-tight">Jason Son</h1>
-
-      <span className="font-geist text-xl opacity-80 tracking-tight">
-        Fullstack builder crafting with design driven solutions.
-      </span>
-      <div>
-        <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
-          <Link
-            className="hover:underline underline-offset-4 decoration-dashed"
-            target="_blank"
-            href="https://x.com/@vivivinh"
-          >
-            X
-          </Link>
-          <span className="text-sm">\</span>
-          <Link
-            className="hover:underline underline-offset-4 decoration-dashed"
-            target="_blank"
-            href="https://linkedin.com/in/vznh"
-          >
-            LinkedIn
-          </Link>
-          <span className="text-sm">\</span>
-          <Link
-            className="hover:underline underline-offset-4 decoration-dashed"
-            target="_blank"
-            href="https://venh.substack.com"
-          >
-            Substack
-          </Link>
-          <span className="text-sm">\</span>
-          <Link
-            className="hover:underline underline-offset-4 decoration-dashed"
-            target="_blank"
-            href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4"
-          >
-            Spotify
-          </Link>
-          <span className="text-sm">\</span>
-          <Link
-            className="hover:underline underline-offset-4 decoration-dashed"
-            target="_blank"
-            href="https://github.com/vznh"
-          >
-            GitHub
-          </Link>
+      <div className="w-full flex flex-row justify-between items-start">
+        {/* Left: Name, description, links */}
+        <div className="flex flex-col gap-y-2">
+          <h1 className="font-lora text-4xl tracking-tight">Jason Son</h1>
+          <span className="font-geist text-xl opacity-80 tracking-tight">
+            Fullstack builder crafting with design driven solutions.
+          </span>
+          <div>
+            <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
+              <Link
+                className="hover:underline underline-offset-4 decoration-dashed"
+                target="_blank"
+                href="https://x.com/@vivivinh"
+              >
+                X
+              </Link>
+              <span className="text-sm">\</span>
+              <Link
+                className="hover:underline underline-offset-4 decoration-dashed"
+                target="_blank"
+                href="https://linkedin.com/in/vznh"
+              >
+                LinkedIn
+              </Link>
+              <span className="text-sm">\</span>
+              <Link
+                className="hover:underline underline-offset-4 decoration-dashed"
+                target="_blank"
+                href="https://venh.substack.com"
+              >
+                Substack
+              </Link>
+              <span className="text-sm">\</span>
+              <Link
+                className="hover:underline underline-offset-4 decoration-dashed"
+                target="_blank"
+                href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4"
+              >
+                Spotify
+              </Link>
+              <span className="text-sm">\</span>
+              <Link
+                className="hover:underline underline-offset-4 decoration-dashed"
+                target="_blank"
+                href="https://github.com/vznh"
+              >
+                GitHub
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="hidden md:flex items-start h-auto ml-8">
+          <Logo width={115} height={115} />
         </div>
       </div>
 
@@ -183,13 +190,7 @@ const IndexView = () => {
           </Link>
         </motion.div>
         <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
-          <Image
-            src="/images/mole.png"
-            alt="Mole"
-            width={52}
-            height={52}
-            className="h-14 w-auto object-contain"
-          />
+          <Logo width={52} height={52} />
         </div>
       </div>
     </div>
