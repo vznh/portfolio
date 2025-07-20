@@ -21,6 +21,7 @@ const config: Config = {
         "jb": ["JB", "sans-serif"],
         "khmer": ["khmer", "sans-serif"],
         "newsreader": ["Newsreader", "serif"],
+        "covik": ["Covik", "sans-serif"],
       },
     },
   },
