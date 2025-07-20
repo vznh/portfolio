@@ -13,10 +13,11 @@ const IndexView = () => {
 
   return (
     <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2">
-      <h1 className="font-geist text-4xl tracking-tight">Jason Son</h1>
+      { /* I want to change the font here! */}
+      <h1 className="font-lora text-4xl tracking-tight">Jason Son</h1>
 
       <span className="font-geist text-xl opacity-80 tracking-tight">
-        Fullstack builder creating with design driven solutions.
+        Fullstack builder crafting with design driven solutions.
       </span>
       <div>
         <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
