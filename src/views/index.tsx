@@ -19,7 +19,7 @@ const IndexView = () => {
         <div className="flex flex-col gap-y-2">
           <h1 className="font-lora text-4xl tracking-tight">Jason Son</h1>
           <span className="font-geist text-xl opacity-80 tracking-tight">
-            Fullstack builder crafting with design driven solutions.
+            Fullstack builder crafting with design-driven solutions.
           </span>
           <div>
             <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
