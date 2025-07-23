@@ -195,12 +195,14 @@ export const upcoming: ProjectRowProps[] = [
   },
   {
     key: 6,
-    title: "Entanglement",
+    title: "Tangled",
     desc: "Connect with your friends through shared favorite artists, mapping relationships to the Nth degree.",
     categories: ["WEB", "PERSONAL"],
     url: "https://tally.so/r/wgxdK1",
     imgPaths: [
-      "/images/projects/placeholder.png",
+      "/images/projects/tangled/1.png",
+      "/images/projects/tangled/2.png",
+      "/images/projects/tangled/3.png",
     ],
     accent: "bg-black"
   },
