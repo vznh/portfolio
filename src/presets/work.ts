@@ -221,6 +221,18 @@ export const upcoming: ProjectRowProps[] = [
 
 export const other: ProjectRowProps[] = [
   {
+    key: 0,
+    title: "Losing money to friends",
+    desc: "If I miss submitting proof, the bot Venmos $20 plus lost days, split among 6 friends.",
+    categories: [],
+    imgPaths: [
+      "/images/projects/75/1.png",
+      "/images/projects/75/2.png",
+      "/images/projects/75/3.png"
+    ],
+    accent: "bg-white",
+  },
+  {
     key: 1,
     title: "Trading like Nancy Pelosi",
     categories: ["RESEARCH", "ACADEMIC"],
