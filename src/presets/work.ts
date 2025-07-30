@@ -11,6 +11,20 @@ export const experiences: WorkRowProps[] = [
 import { ProjectRowProps } from "@/components/ProjectSection";
 export const projects: ProjectRowProps[] = [
   {
+    key: 1,
+    title: "Tokn",
+    desc: "Co-founded Solana token analytics platform with communities that connect in real time. Sold in March 2024.",
+    categories: ["WEB", "CRYPTO", "DESIGN", "VENTURE"],
+    imgPaths: [
+      "/images/projects/tokn/1.png",
+      "/images/projects/tokn/2.png",
+      "/images/projects/tokn/3.png",
+      "/images/projects/tokn/4.png"
+    ],
+    url: "https://tokn.so",
+    accent: "bg-white",
+  },
+  {
     key: 2,
     title: "Pathfinder",
     desc: "Student tool for precise nav and club interactions",
