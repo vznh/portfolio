@@ -26,12 +26,12 @@ const Background = () => {
 
       // Generate sparse random noise
       for (let i = 0; i < data.length; i += 4) {
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.40) {
           const noise = Math.random() * 255;
           data[i] = noise;
           data[i + 1] = noise;
           data[i + 2] = noise;
-          data[i + 3] = Math.random() * 60; // 15% opacity
+          data[i + 3] = Math.random() * 120; // 15% opacity
         }
       }
 
