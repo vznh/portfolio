@@ -31,7 +31,7 @@ const Background = () => {
           data[i] = noise;
           data[i + 1] = noise;
           data[i + 2] = noise;
-          data[i + 3] = Math.random() * 120; // 15% opacity
+          data[i + 3] = Math.random() * 70; // change da opacity here
         }
       }
 
