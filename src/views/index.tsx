@@ -77,10 +77,10 @@ const IndexView = () => {
         ref={registerSection("work")}
         data-section="work"
         className="flex flex-col gap-y-3"
-        initial={{ opacity: 0.2 }}
+        initial={{ opacity: 0.05 }}
         animate={{ opacity: getOpacity("work") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 1, duration: 0.4, ease: "easeInOut" })}
+        transition={getTransition({ delay: 1, duration: 0.8, ease: "easeInOut" })}
       >
         <div className="flex flex-row justify-between">
           <span className="font-jb tracking-tight opacity-50">PREVIOUSLY</span>
@@ -93,10 +93,10 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("projects")}
         data-section="projects"
-        initial={{ opacity: 0.2 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: getOpacity("projects") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 1.5, duration: 0.4, ease: "easeInOut" })}
+        transition={getTransition({ delay: 1.5, duration: 1.2, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-50">PROJECTS</span>
@@ -108,10 +108,10 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("upcoming")}
         data-section="upcoming"
-        initial={{ opacity: 0.2 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: getOpacity("upcoming") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
+        transition={getTransition({ delay: 2, duration: 1.6, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-50">UPCOMING</span>
@@ -122,10 +122,10 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("open-source")}
         data-section="open-source"
-        initial={{ opacity: 0.2 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: getOpacity("open-source") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2, duration: 0.4, ease: "easeInOut" })}
+        transition={getTransition({ delay: 2, duration: 2.0, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-50">OPEN-SOURCE</span>
@@ -136,10 +136,10 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("other")}
         data-section="other"
-        initial={{ opacity: 0.2 }}
+        initial={{ opacity: 0.1 }}
         animate={{ opacity: getOpacity("other") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2.5, duration: 0.4, ease: "easeInOut" })}
+        transition={getTransition({ delay: 2.5, duration: 2.4, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-50">OTHER</span>
@@ -217,7 +217,7 @@ const IndexView = () => {
             href="https://github.com/vznh/mole/releases/"
             className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4"
           >
-            Version 3 <span className="text-[11px]">/</span> July 2025 ↗
+            Version 3 <span className="text-[11px]">/</span> August 2025 ↗
           </Link>
         </motion.div>
         <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
