@@ -26,7 +26,7 @@ const Background = () => {
 
       // Generate sparse random noise
       for (let i = 0; i < data.length; i += 4) {
-        if (Math.random() < 0.40) {
+        if (Math.random() < 0.20) {
           const noise = Math.random() * 255;
           data[i] = noise;
           data[i + 1] = noise;

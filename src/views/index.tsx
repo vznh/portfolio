@@ -4,20 +4,21 @@ import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { motion } from "framer-motion";
 import { upcoming, projects, open, other } from "@/presets/work";
-import { MailIcon } from "@/presets/svgs";
+import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
-import Image from "next/image";
 import Logo from "@/components/Logo";
+import Image from "next/image";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
 
   return (
-    <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2">
+    <div className="relative min-h-screen overflow-hidden">
+    <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px]">
       <div className="w-full flex flex-row justify-between items-start">
         {/* Left: Name, description, links */}
         <div className="flex flex-col gap-y-2">
-          <h1 className="font-lora text-4xl tracking-tight">Jason Son</h1>
+          <h1 className="font-lora text-5xl tracking-tight">Jason Son</h1>
           <span className="font-geist text-xl opacity-80 tracking-tight">
             Fullstack builder crafting with design-driven solutions.
           </span>
@@ -66,11 +67,12 @@ const IndexView = () => {
           </div>
         </div>
         <div className="hidden md:flex items-start h-auto ml-8">
-          <Logo width={115} height={115} />
+          <Image src="/images/logo/hi.png" alt="Main version of my logo." width={140} height={140} />
         </div>
       </div>
 
-      <br />
+      <div className="h-12" />
+
       <motion.div
         ref={registerSection("work")}
         data-section="work"
@@ -87,7 +89,7 @@ const IndexView = () => {
         <WorkSection />
       </motion.div>
 
-      <br />
+      <div className="h-16" />
       <motion.div
         ref={registerSection("projects")}
         data-section="projects"
@@ -102,7 +104,7 @@ const IndexView = () => {
         <ProjectSection src={projects} />
       </motion.div>
 
-      <br />
+      <div className="h-12" />
       <motion.div
         ref={registerSection("upcoming")}
         data-section="upcoming"
@@ -130,7 +132,7 @@ const IndexView = () => {
         <ProjectSection src={open} />
       </motion.div>
 
-      <br />
+      <div className="h-12" />
       <motion.div
         ref={registerSection("other")}
         data-section="other"
@@ -146,7 +148,7 @@ const IndexView = () => {
 
       {/* Stretch effect at the bottom distorting, and when clicked goes back up. */}
       {/* This section should lowkey typewrite out itself */}
-      <br />
+      <div className="h-24" />
       <div className="relative flex flex-col md:flex-row justify-between gap-y-2 md:gap-y-0">
         <motion.div
           className="flex flex-row items-center space-x-2 group"
@@ -155,7 +157,7 @@ const IndexView = () => {
           transition={{ duration: 0.2, ease: "easeInOut" }}
         >
           <Link
-            href="mailto:im@hobin.dev"
+            href="mailto:jasonvinhson@gmail.com"
             className="font-jb text-xs tracking-tight"
           >
             DON&apos;T BE AFRAID TO BE CURIOUS
@@ -178,6 +180,35 @@ const IndexView = () => {
           </span>
         </motion.div>
         <motion.div
+          className="flex flex-row items-center space-x-2 group"
+          initial={{ opacity: 0.5 }}
+          whileHover={{ opacity: 1 }}
+          transition={{ duration: 0.2, ease: "easeInOut" }}
+        >
+          <Link
+            href="https://cal.com/jason-son-suncdj/15min"
+            className="font-jb text-xs tracking-tight"
+          >
+            BOOK A CHAT
+          </Link>{" "}
+          <span className="relative flex items-center">
+            <motion.span
+              className="absolute inset-0 rounded-full pointer-events-none z-20"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 0 }}
+              whileHover={{ opacity: 0.7, scale: 1.2 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              style={{
+                boxShadow: "0 0 16px 8px rgba(255, 255, 255, 0.5)",
+                filter: "blur(4px)",
+              }}
+            />
+            <div className="relative z-10">
+              <EyeIcon />
+            </div>
+          </span>
+        </motion.div>
+        <motion.div
           initial={{ opacity: 0.5 }}
           whileHover={{ opacity: 0.7 }}
           transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -193,6 +224,11 @@ const IndexView = () => {
           <Logo width={52} height={52} />
         </div>
       </div>
+
+      <footer className="relative w-full flex justify-center h-[500px] mb-[-325px]">
+        <Logo width={500} height={400} />
+      </footer>
+    </div>
     </div>
   );
 };
