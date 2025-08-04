@@ -66,9 +66,6 @@ const IndexView = () => {
             </div>
           </div>
         </div>
-        <div className="hidden md:flex items-start h-auto ml-8">
-          <Image src="/images/logo/hi.png" alt="Main version of my logo." width={140} height={140} />
-        </div>
       </div>
 
       <div className="h-12" />
@@ -225,7 +222,7 @@ const IndexView = () => {
         </div>
       </div>
 
-      <footer className="relative w-full flex justify-center h-[500px] mb-[-325px]">
+      <footer className="relative hidden w-full md:flex justify-center md:h-[500px] mb-[-275px]">
         <Logo width={500} height={400} />
       </footer>
     </div>

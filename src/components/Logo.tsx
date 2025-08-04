@@ -9,7 +9,7 @@ const images = [
   "/images/logo/frame4.png",
 ];
 
-const Logo: React.FC<{ width: number, height: number }> = ({ width, height }) => {
+const Logo: React.FC<{ width: number, height: number, className?: string }> = ({ width, height, className = ""}) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -23,6 +23,7 @@ const Logo: React.FC<{ width: number, height: number }> = ({ width, height }) =>
     <Image
       src={images[index]}
       alt={`logo frame${index + 1}`}
+      className={className}
       width={width}
       height={height}
       priority
