@@ -31,8 +31,6 @@ export const projects: ProjectRowProps[] = [
     categories: ["WEB", "DESIGN", "ACADEMIC"],
     imgPaths: [
       "/images/projects/pathfinder/1.png",
-      "/images/projects/pathfinder/2.png",
-      "/images/projects/pathfinder/3.png",
       "/images/projects/pathfinder/4.png"
     ],
     url: "",
