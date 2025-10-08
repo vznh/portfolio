@@ -7,7 +7,6 @@ import { upcoming, projects, open, other } from "@/presets/work";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import Image from "next/image";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
