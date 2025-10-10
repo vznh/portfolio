@@ -2,7 +2,7 @@
 
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
-  { key: 1, company: "Apple", role: "Software", img: "/images/apple.png", date: "2024"},
+  { key: 1, company: "Apple", role: "Software", img: "/images/apple-logo.png", date: "2024"},
   { key: 3, company: "ETALYC",  role: "Software", img: "/images/etalyc.png", date: "2023" },
   { key: 4, company: "Carnegie Mellon",  role: "Research", img: "/images/cmu.png", date: "2022" },
   { key: 5, company: "UC Santa Cruz",  role: "Research", img: "/images/ucsc.png", date: "2022" },
