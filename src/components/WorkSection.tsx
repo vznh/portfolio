@@ -14,6 +14,10 @@ export interface WorkRowProps {
   role: string;
   img: string;
   className?: string;
+
+  focusDate?: string;
+  focusRole?: string;
+  focusDesc?: string;
 }
 
 const WorkRow: React.FC<WorkRowProps> = ({
@@ -21,7 +25,10 @@ const WorkRow: React.FC<WorkRowProps> = ({
   date = "",
   role,
   img,
-  className = ""
+  className = "",
+  focusDate = "",
+  focusRole = "",
+  focusDesc = ""
 }) => {
   const { hoveredItem, setHoveredItem } = useHoverContext();
   const itemId = useId();
@@ -158,7 +165,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         alt={`Icon for company ${company}`}
         width={24}
         height={24}
-        className="rounded-md border border-opacity-5 border-black w-6 h-6 md:w-8 md:h-8"
+        className="rounded-sm w-6 h-6 md:w-8 md:h-8"
       />
 
       { /* Company goes here! */ }
@@ -168,13 +175,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
 
       { /* Line component is here - don't change. */}
-      <div className={`flex-grow h-px bg-[#1E1919] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out relative`}>
+      <div className={`flex-grow h-px bg-[#1E1919] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
+
+      { /* Overlay box positioned over the line */}
         <Focus
-          isVisible={phase === 'dimming'}
-          role={role}
-          company={company}
+          visible={phase === 'dimming'}
+          date={focusDate}
+          role={focusRole || role}
+          desc={focusDesc}
         />
-      </div>
 
       { /* Role goes here! */ }
       <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[#1E1919]`} style={{
@@ -188,7 +197,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 const WorkSection = () => {
   return <div className="work-section-container flex flex-col gap-y-3">
     {experiences.map((i) => (
-      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} />
+      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} />
     ))}
   </div>
 }
