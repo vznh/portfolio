@@ -3,6 +3,17 @@
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
   {
+    key: 0,
+    company: "Independent Design",
+    role: "Design",
+    img: "/images/logo/hi.png",
+    date: "JUN 2025 - PRESENT",
+    images: ["/images/projects/morecompute/logo.png", "/images/projects/morecompute/sidebar.png"],
+    focusDate: "JUN 2025 - PRESENT",
+    focusRole: "DENG",
+    focusDesc: "I currently create brand identities and digital experiences for ambitious founders."
+  },
+  {
     key: 1,
     company: "Apple",
     role: "Software",
