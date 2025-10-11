@@ -91,6 +91,14 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
       const workSection = document.querySelector('.work-section-container');
       if (workSection) {
+        // Dim the headers (PREVIOUSLY and TYPE)
+        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
+        if (headerDiv) {
+          (headerDiv as HTMLElement).style.transition = `opacity ${duration}`;
+          (headerDiv as HTMLElement).style.opacity = '0.1';
+        }
+
+        // Dim other work rows
         const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
         allWorkRows.forEach((row) => {
           const rowElement = row as HTMLElement;
@@ -109,6 +117,14 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
       const workSection = document.querySelector('.work-section-container');
       if (workSection) {
+        // Reset the headers (PREVIOUSLY and TYPE)
+        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
+        if (headerDiv) {
+          (headerDiv as HTMLElement).style.transition = `opacity ${duration}`;
+          (headerDiv as HTMLElement).style.opacity = '';
+        }
+
+        // Reset other work rows
         const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
         allWorkRows.forEach((row) => {
           const rowElement = row as HTMLElement;
@@ -127,6 +143,14 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
       const workSection = document.querySelector('.work-section-container');
       if (workSection) {
+        // Reset the headers (PREVIOUSLY and TYPE)
+        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
+        if (headerDiv) {
+          (headerDiv as HTMLElement).style.opacity = '';
+          (headerDiv as HTMLElement).style.transition = '';
+        }
+
+        // Reset other work rows
         const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
         allWorkRows.forEach((row) => {
           (row as HTMLElement).style.opacity = '';
