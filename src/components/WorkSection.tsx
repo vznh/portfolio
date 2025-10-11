@@ -18,6 +18,7 @@ export interface WorkRowProps {
   focusDate?: string;
   focusRole?: string;
   focusDesc?: string;
+  images?: string[];
 }
 
 const WorkRow: React.FC<WorkRowProps> = ({
@@ -28,7 +29,8 @@ const WorkRow: React.FC<WorkRowProps> = ({
   className = "",
   focusDate = "",
   focusRole = "",
-  focusDesc = ""
+  focusDesc = "",
+  images = []
 }) => {
   const { hoveredItem, setHoveredItem } = useHoverContext();
   const itemId = useId();
@@ -47,7 +49,6 @@ const WorkRow: React.FC<WorkRowProps> = ({
   const handleMouseLeave = () => {
     setExiting(true);
     setHoveredItem(null);
-    // Start exiting animation - will transition back to initial after animations complete
     setPhase('exiting');
   };
 
@@ -183,6 +184,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
           date={focusDate}
           role={focusRole || role}
           desc={focusDesc}
+          images={images}
         />
 
       { /* Role goes here! */ }
@@ -197,7 +199,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 const WorkSection = () => {
   return <div className="work-section-container flex flex-col gap-y-3">
     {experiences.map((i) => (
-      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} />
+      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} images={i.images} />
     ))}
   </div>
 }
