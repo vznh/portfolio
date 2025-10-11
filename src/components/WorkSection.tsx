@@ -5,6 +5,7 @@ import { experiences } from "@/presets/work";
 import Image from "next/image";
 import { useHoverContext } from "@/hooks/useHoverContext";
 import { useId } from "react";
+import Focus from "./Focus";
 
 export interface WorkRowProps {
   key: number;
@@ -24,51 +25,58 @@ const WorkRow: React.FC<WorkRowProps> = ({
 }) => {
   const { hoveredItem, setHoveredItem } = useHoverContext();
   const itemId = useId();
-  const [animationPhase, setAnimationPhase] = React.useState<'initial' | 'growing' | 'dimming'>('initial');
+  const [phase, setPhase] = React.useState<'initial' | 'growing' | 'dimming' | 'exiting'>('initial');
+  const [exiting, setExiting] = React.useState(false);
 
-  const isHovered = hoveredItem === itemId;
+  const hovered = hoveredItem === itemId;
+  const active = hovered && !exiting;
 
   const handleMouseEnter = () => {
+    setExiting(false);
     setHoveredItem(itemId);
-    setAnimationPhase('growing');
+    setPhase('growing');
   };
 
   const handleMouseLeave = () => {
+    setExiting(true);
     setHoveredItem(null);
-    setAnimationPhase('initial');
+    // Start exiting animation - will transition back to initial after animations complete
+    setPhase('exiting');
   };
 
   React.useEffect(() => {
-    if (animationPhase === 'growing' && isHovered) {
+    if (phase === 'growing' && active) {
       // After 1 second of growing, start dimming other elements
       const dimmingTimer = setTimeout(() => {
-        setAnimationPhase('dimming');
+        if (active) { // Double-check we're still hovered before transitioning
+          setPhase('dimming');
+        }
       }, 1000);
 
       return () => clearTimeout(dimmingTimer);
     }
-  }, [animationPhase, isHovered]);
+  }, [phase, active]);
 
   React.useEffect(() => {
-    const animationDuration = '0.5s ease-in-out';
+    const duration = '0.5s ease-in-out';
 
-    if (animationPhase === 'dimming' && isHovered) {
+    if (phase === 'dimming' && active) {
       const headerSection = document.querySelector('.main-content > div:first-child');
       if (headerSection) {
-        (headerSection as HTMLElement).style.transition = `opacity ${animationDuration}`;
+        (headerSection as HTMLElement).style.transition = `opacity ${duration}`;
         (headerSection as HTMLElement).style.opacity = '0.1';
       }
 
       const projectSections = document.querySelectorAll('[data-section="projects"], [data-section="upcoming"], [data-section="open-source"], [data-section="other"]');
       projectSections.forEach((section) => {
-        (section as HTMLElement).style.transition = `opacity ${animationDuration}`;
+        (section as HTMLElement).style.transition = `opacity ${duration}`;
         (section as HTMLElement).style.opacity = '0.1';
       });
 
       const footerSections = document.querySelectorAll('[data-section="other"], .relative.flex.flex-col.md\\:flex-row.justify-between');
       footerSections.forEach((section) => {
         if (!section.hasAttribute('data-section') || section.getAttribute('data-section') !== 'work') {
-          (section as HTMLElement).style.transition = `opacity ${animationDuration}`;
+          (section as HTMLElement).style.transition = `opacity ${duration}`;
           (section as HTMLElement).style.opacity = '0.1';
         }
       });
@@ -79,15 +87,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
         allWorkRows.forEach((row) => {
           const rowElement = row as HTMLElement;
           if (rowElement.getAttribute('data-work-id') !== itemId) {
-            rowElement.style.transition = `opacity ${animationDuration}`;
+            rowElement.style.transition = `opacity ${duration}`;
             rowElement.style.opacity = '0.1';
           }
         });
       }
-    } else if (animationPhase === 'initial' || !isHovered) {
+    } else if (phase === 'initial' || phase === 'exiting' || !active) {
       const elementsToReset = document.querySelectorAll('.main-content > div:first-child, [data-section="projects"], [data-section="upcoming"], [data-section="open-source"], [data-section="other"], .relative.flex.flex-col.md\\:flex-row.justify-between');
       elementsToReset.forEach((element) => {
-        (element as HTMLElement).style.transition = `opacity ${animationDuration}`;
+        (element as HTMLElement).style.transition = `opacity ${duration}`;
         (element as HTMLElement).style.opacity = '';
       });
 
@@ -96,7 +104,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
         allWorkRows.forEach((row) => {
           const rowElement = row as HTMLElement;
-          rowElement.style.transition = `opacity ${animationDuration}`;
+          rowElement.style.transition = `opacity ${duration}`;
           rowElement.style.opacity = '';
         });
       }
@@ -118,21 +126,31 @@ const WorkRow: React.FC<WorkRowProps> = ({
         });
       }
     };
-  }, [animationPhase, isHovered, itemId]);
+  }, [phase, active, itemId]);
+
+  // Handle exiting animation - smoothly transition back to initial after animations complete
+  React.useEffect(() => {
+    if (phase === 'exiting') {
+      const exitTimer = setTimeout(() => {
+        setPhase('initial');
+        setExiting(false);
+      }, 1000); // Match the longest animation duration (1s for growing)
+
+      return () => clearTimeout(exitTimer);
+    }
+  }, [phase]);
 
   return (
     <div
-      className={`flex items-center w-full tracking-tighter gap-x-1 sm:gap-x-2 transition-all ${animationPhase === 'growing' ? 'duration-1000' : 'duration-300'} ease-in-out ${className}`}
+      className={`flex items-center w-full tracking-tighter gap-x-1 sm:gap-x-2 transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out ${className}`}
       data-work-id={itemId}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         opacity: 1, // Always full opacity for work items (they handle their own internal opacity)
-        transition: animationPhase === 'growing' ? 'transform 1s ease-in-out' : 'all 0.4s ease-in-out',
+        transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.3s ease-in-out',
         position: 'relative',
-        zIndex: isHovered ? 20 : 'auto',
-        transform: isHovered ? 'scale(1.01)' : 'scale(1)',
-        cursor: animationPhase === 'growing' ? 'progress' : 'pointer',
+        cursor: phase === 'growing' ? 'wait' : 'pointer',
       }}
     >
       <Image
@@ -144,20 +162,22 @@ const WorkRow: React.FC<WorkRowProps> = ({
       />
 
       { /* Company goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap transition-opacity ${animationPhase === 'growing' ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
+      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
         opacity: 0.8,
       }}>{ company }</span>
 
-      { /* Date goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden whitespace-nowrap transition-opacity ${animationPhase === 'growing' ? 'duration-1000' : 'duration-300'} ease-in-out text-[#1E1919]`} style={{
-        opacity: 0.6,
-      }}>{ date }</span>
 
       { /* Line component is here - don't change. */}
-      <div className={`flex-grow h-px bg-[#1E1919] opacity-0 md:opacity-20 aria-hidden transition-opacity ${animationPhase === 'growing' ? 'duration-1000' : 'duration-300'} ease-in-out`} />
+      <div className={`flex-grow h-px bg-[#1E1919] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out relative`}>
+        <Focus
+          isVisible={phase === 'dimming'}
+          role={role}
+          company={company}
+        />
+      </div>
 
       { /* Role goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right transition-opacity ${animationPhase === 'growing' ? 'duration-1000' : 'duration-300'} ease-in-out text-[#1E1919]`} style={{
+      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-right transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[#1E1919]`} style={{
         opacity: 0.8,
       }}>{ role }</span>
     </div>
