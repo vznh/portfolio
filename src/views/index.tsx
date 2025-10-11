@@ -13,16 +13,15 @@ const IndexView = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-    <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#111111]">
+    <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#F8FBF8]">
       <div className="w-full flex flex-row justify-between items-start">
-        {/* Left: Name, description, links */}
         <div className="flex flex-col gap-y-2">
-          <h1 className="font-lora text-5xl tracking-tight">Jason Son</h1>
-          <span className="font-geist text-xl opacity-80 tracking-tight">
+          <h1 className="font-lora text-5xl tracking-tight text-[#1E1919]">Jason Son</h1>
+          <span className="font-geist text-xl opacity-80 tracking-tight text-[#1E1919]">
             Fullstack builder crafting with design-driven solutions.
           </span>
           <div>
-            <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center">
+            <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[#1E1919]">
               <Link
                 className="hover:underline underline-offset-4 decoration-dashed"
                 target="_blank"
@@ -79,8 +78,8 @@ const IndexView = () => {
         transition={getTransition({ delay: 1, duration: 0.8, ease: "easeInOut" })}
       >
         <div className="flex flex-row justify-between">
-          <span className="font-jb tracking-tight opacity-50">PREVIOUSLY</span>
-          <span className="font-jb tracking-tight opacity-50">TYPE</span>
+          <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">PREVIOUSLY</span>
+          <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">TYPE</span>
         </div>
         <WorkSection />
       </motion.div>
@@ -95,7 +94,7 @@ const IndexView = () => {
         transition={getTransition({ delay: 1.5, duration: 1.2, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-50">PROJECTS</span>
+        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">PROJECTS</span>
         {/* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
         <ProjectSection src={projects} />
       </motion.div>
@@ -110,7 +109,7 @@ const IndexView = () => {
         transition={getTransition({ delay: 2, duration: 1.6, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-50">UPCOMING</span>
+        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">UPCOMING</span>
         <ProjectSection src={upcoming} />
       </motion.div>
 
@@ -124,7 +123,7 @@ const IndexView = () => {
         transition={getTransition({ delay: 2, duration: 2.0, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-50">OPEN-SOURCE</span>
+        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">OPEN-SOURCE</span>
         <ProjectSection src={open} />
       </motion.div>
 
@@ -138,11 +137,10 @@ const IndexView = () => {
         transition={getTransition({ delay: 2.5, duration: 2.4, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
-        <span className="font-jb tracking-tight opacity-50">OTHER</span>
+        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">OTHER</span>
         <ProjectSection src={other} />
       </motion.div>
 
-      {/* Stretch effect at the bottom distorting, and when clicked goes back up. */}
       {/* This section should lowkey typewrite out itself */}
       <div className="h-24" />
       <div className="relative flex flex-col md:flex-row justify-between gap-y-2 md:gap-y-0">
@@ -154,7 +152,7 @@ const IndexView = () => {
         >
           <Link
             href="mailto:jasonvinhson@gmail.com"
-            className="font-jb text-xs tracking-tight"
+            className="font-jb text-xs tracking-tight text-[#1E1919]"
           >
             DON&apos;T BE AFRAID TO BE CURIOUS
           </Link>{" "}
@@ -183,7 +181,7 @@ const IndexView = () => {
         >
           <Link
             href="https://cal.com/jason-son-suncdj/15min"
-            className="font-jb text-xs tracking-tight"
+            className="font-jb text-xs tracking-tight text-[#1E1919]"
           >
             BOOK A CHAT
           </Link>{" "}
@@ -211,9 +209,9 @@ const IndexView = () => {
         >
           <Link
             href="https://github.com/vznh/mole/releases/"
-            className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4"
+            className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[#1E1919]"
           >
-            Version 3 <span className="text-[11px]">/</span> August 2025 ↗
+            Version 3.2 <span className="text-[11px]">/</span> September 2025 ↗
           </Link>
         </motion.div>
         <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
