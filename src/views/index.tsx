@@ -13,7 +13,7 @@ const IndexView = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-    <div className="flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#1E1919]">
+    <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#111111]">
       <div className="w-full flex flex-row justify-between items-start">
         {/* Left: Name, description, links */}
         <div className="flex flex-col gap-y-2">
@@ -72,7 +72,7 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("work")}
         data-section="work"
-        className="flex flex-col gap-y-3"
+        className="work-section-container flex flex-col gap-y-3"
         initial={{ opacity: 0.05 }}
         animate={{ opacity: getOpacity("work") ?? 1 }}
         exit={{ opacity: 0 }}
