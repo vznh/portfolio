@@ -7,8 +7,8 @@
   color: #1E1919;
 
   ::selection {
-    color: #002fa7;
-    background-color: #fff;
+    color: #fff;
+    background-color: #000;
   }
 
   html {
