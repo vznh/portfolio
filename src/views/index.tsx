@@ -2,6 +2,7 @@
 import ExperimentSection from "@/components/ExperimentSection";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useVersion } from "@/hooks/useVersion";
 import { motion } from "framer-motion";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
@@ -9,6 +10,7 @@ import Logo from "@/components/Logo";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
+  const version = useVersion()
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -168,7 +170,7 @@ const IndexView = () => {
             href="https://github.com/vznh/mole/releases/"
             className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[#1E1919]"
           >
-            Version 3.2 <span className="text-[11px]">/</span> September 2025 ↗
+            Version {version} <span className="text-[11px]">/</span> September 2025 ↗
           </Link>
         </motion.div>
         <div className="md:hidden absolute right-0 top-1/2 transform -translate-y-1/2">
