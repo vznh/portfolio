@@ -82,7 +82,7 @@ export const projects: ProjectProps[] = [
     title: "RECHORDED",
     videoPath: "/images/projects/experiments/RECHORDED.mp4",
     accent: "bg-white",
-    leftText: "INTERACTIVITY / RECHORDED (CLOSED ALPHA)",
+    leftText: "INTERACTIVITY / RECHORDED",
     rightText: "NEXT.JS",
   },
   {
