@@ -148,10 +148,12 @@ const IndexView = () => {
       <div className="h-24" />
 
 
-      <footer ref={footerRef} className="relative hidden w-full md:flex justify-center md:h-[500px] mb-[-275px]">
-        <Logo width={500} height={400} />
+      <footer ref={footerRef} className="relative flex w-full justify-center h-[200px] md:h-[500px] mb-[-275px]">
+        <div className="hidden md:block">
+          <Logo width={500} height={400} />
+        </div>
         
-        <div className="absolute top-20 left-0 flex flex-col gap-y-2">
+        <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
           <motion.div
             className="flex flex-row items-center space-x-2 group"
             initial={{ opacity: 0.5 }}
@@ -233,7 +235,38 @@ const IndexView = () => {
           </motion.div>
         </div>
         
-        <div className="absolute top-20 right-0 flex flex-col gap-y-2">
+        <div className="absolute top-20 right-0 hidden md:flex flex-col gap-y-2">
+          <motion.div
+            initial={{ opacity: 0.5 }}
+            whileHover={{ opacity: 0.7 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+          >
+            <Link
+              href="https://github.com/vznh/mole/releases/"
+              className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[#1E1919]"
+            >
+              {showCrypted && currentCryptedIndex >= 2 ? (
+                <>
+                  <Crypted 
+                    text={`Version ${version}`} 
+                    delay={15} 
+                    onComplete={currentCryptedIndex === 2 ? handleCryptedComplete : undefined}
+                  /> <span className="text-[11px]">/</span> <Crypted text="September 2025" delay={15} />
+                </>
+              ) : showCrypted ? (
+                ""
+              ) : (
+                <>
+                  Version {version} <span className="text-[11px]">/</span> September 2025
+                </>
+              )}
+            </Link>{" "}
+            <span className="text-[#1E1919] text-[11px]">↗</span>
+          </motion.div>
+        </div>
+        
+        {/* Mobile version - moved to left side */}
+        <div className="absolute top-16 md:hidden left-0 flex flex-col gap-y-2">
           <motion.div
             initial={{ opacity: 0.5 }}
             whileHover={{ opacity: 0.7 }}

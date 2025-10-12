@@ -16,6 +16,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isTouched, setIsTouched] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
+  const [isInViewport, setIsInViewport] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -33,18 +34,50 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     };
   }, []);
 
-  // Handle video play/pause based on hover (desktop) or touch (mobile)
+  // Handle viewport-based visibility for mobile
+  useEffect(() => {
+    if (isDesktop) return; // Skip viewport detection on desktop
+
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+      
+      // Check if element is within 50% of viewport height from center
+      const elementCenter = rect.top + rect.height / 2;
+      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+      const threshold = viewportHeight * 0.5;
+      
+      setIsInViewport(distanceFromCenter <= threshold);
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, [isDesktop]);
+
+  // Handle video play/pause based on hover (desktop) or viewport (mobile)
   useEffect(() => {
     if (!videoRef.current) return;
 
     if (isDesktop && isHovered) {
       videoRef.current.play().catch(console.error);
-    } else if (!isDesktop && isTouched) {
+    } else if (!isDesktop && isInViewport) {
       videoRef.current.play().catch(console.error);
     } else {
       videoRef.current.pause();
     }
-  }, [isHovered, isTouched, isDesktop]);
+  }, [isHovered, isInViewport, isDesktop]);
 
   const content = (
     <div
@@ -69,7 +102,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
         </video>
 
         <AnimatePresence>
-          {((isDesktop && isHovered) || (!isDesktop && isTouched)) && (
+          {((isDesktop && isHovered) || (!isDesktop && isInViewport)) && (
             <motion.div
               initial={false}
               animate={{ opacity: 1 }}
