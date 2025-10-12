@@ -1,10 +1,8 @@
 // views/
-import ProjectSection from "@/components/ProjectSection";
 import ExperimentSection from "@/components/ExperimentSection";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { motion } from "framer-motion";
-import { projects } from "@/presets/work";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 import Logo from "@/components/Logo";
