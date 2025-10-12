@@ -64,6 +64,7 @@ export interface ProjectProps {
   leftText?: string;
   rightText?: string;
   url?: string;
+  priority?: boolean;
 }
 
 export const projects: ProjectProps[] = [

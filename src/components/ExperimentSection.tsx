@@ -11,26 +11,63 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   leftText,
   rightText,
   url,
+  priority = false,
 }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [isTouched, setIsTouched] = useState<boolean>(false);
+  const [isInViewport, setIsInViewport] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Handle video play/pause based on hover only
+  // Handle viewport-based visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const viewportCenter = viewportHeight / 2;
+      
+      // Check if element is within 40% of viewport height from center
+      const elementCenter = rect.top + rect.height / 2;
+      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+      const threshold = viewportHeight * 0.4;
+      
+      setIsInViewport(distanceFromCenter <= threshold);
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
+  // Handle video play/pause based on hover, touch, or viewport visibility
   useEffect(() => {
     if (!videoRef.current) return;
 
-    if (isHovered) {
+    if (isHovered || isTouched || isInViewport) {
       videoRef.current.play().catch(console.error);
     } else {
       videoRef.current.pause();
     }
-  }, [isHovered]);
+  }, [isHovered, isTouched, isInViewport]);
 
   const content = (
     <div
+      ref={containerRef}
       className={`relative ${url ? 'cursor-pointer' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsTouched(true)}
+      onTouchEnd={() => setIsTouched(false)}
     >
       {/* Video Container - 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xs">
@@ -40,13 +77,13 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
           muted
           loop
           playsInline
-          preload="metadata"
+          preload={priority ? "auto" : "metadata"}
         >
           <source src={videoPath} type="video/mp4" />
         </video>
 
         <AnimatePresence>
-          {isHovered && (
+          {(isHovered || isTouched || isInViewport) && (
             <motion.div
               initial={false}
               animate={{ opacity: 1 }}
@@ -85,7 +122,7 @@ const ExperimentSection = () => {
     <section className="">
       <div className="c">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <ExperimentEntity
               key={project.key}
               title={project.title}
@@ -94,6 +131,7 @@ const ExperimentSection = () => {
               leftText={project.leftText}
               rightText={project.rightText}
               url={project.url}
+              priority={index < 2} // Prioritize first 2 videos (above the fold)
             />
           ))}
         </div>

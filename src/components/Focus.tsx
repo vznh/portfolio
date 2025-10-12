@@ -69,7 +69,7 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
 
   return (
     <div
-      className={`absolute top-1/2 left-1/2 bg-white border-black border-opacity-20 border transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
+      className={`absolute top-1/2 left-1/2 bg-white border-black border-opacity-20 border transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out z-50 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         }`}
       style={{
         width: '288px',
