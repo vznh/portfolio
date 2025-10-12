@@ -1,9 +1,10 @@
 // views/
 import ProjectSection from "@/components/ProjectSection";
+import ExperimentSection from "@/components/ExperimentSection";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { motion } from "framer-motion";
-import { upcoming, projects, open, other } from "@/presets/work";
+import { projects } from "@/presets/work";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 import Logo from "@/components/Logo";
@@ -91,55 +92,13 @@ const IndexView = () => {
         initial={{ opacity: 0.1 }}
         animate={{ opacity: getOpacity("projects") ?? 1 }}
         exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 1.5, duration: 1.2, ease: "easeInOut" })}
+        transition={getTransition({ delay: 1.3, duration: 1.0, ease: "easeInOut" })}
         className="flex flex-col gap-y-4"
       >
         <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">PROJECTS</span>
-        {/* PROJECT LAYOUTS + INDIVIDUAL PROJECT */}
-        <ProjectSection src={projects} />
+        <ExperimentSection />
       </motion.div>
 
-      <div className="h-12" />
-      <motion.div
-        ref={registerSection("upcoming")}
-        data-section="upcoming"
-        initial={{ opacity: 0.1 }}
-        animate={{ opacity: getOpacity("upcoming") ?? 1 }}
-        exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2, duration: 1.6, ease: "easeInOut" })}
-        className="flex flex-col gap-y-4"
-      >
-        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">UPCOMING</span>
-        <ProjectSection src={upcoming} />
-      </motion.div>
-
-      <br/>
-      <motion.div
-        ref={registerSection("open-source")}
-        data-section="open-source"
-        initial={{ opacity: 0.1 }}
-        animate={{ opacity: getOpacity("open-source") ?? 1 }}
-        exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2, duration: 2.0, ease: "easeInOut" })}
-        className="flex flex-col gap-y-4"
-      >
-        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">OPEN-SOURCE</span>
-        <ProjectSection src={open} />
-      </motion.div>
-
-      <div className="h-12" />
-      <motion.div
-        ref={registerSection("other")}
-        data-section="other"
-        initial={{ opacity: 0.1 }}
-        animate={{ opacity: getOpacity("other") ?? 1 }}
-        exit={{ opacity: 0 }}
-        transition={getTransition({ delay: 2.5, duration: 2.4, ease: "easeInOut" })}
-        className="flex flex-col gap-y-4"
-      >
-        <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">OTHER</span>
-        <ProjectSection src={other} />
-      </motion.div>
 
       {/* This section should lowkey typewrite out itself */}
       <div className="h-24" />

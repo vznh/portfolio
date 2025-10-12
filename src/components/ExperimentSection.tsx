@@ -1,9 +1,9 @@
 // components/ExperimentSection
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { experiments, ExperimentProps } from "@/presets/work";
+import { projects, ProjectProps } from "@/presets/work";
 
-const ExperimentEntity: React.FC<ExperimentProps> = ({
+const ExperimentEntity: React.FC<ProjectProps> = ({
   title,
   videoPath,
   accent,
@@ -73,14 +73,14 @@ const ExperimentSection = () => {
     <section className="">
       <div className="c">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-          {experiments.map((experiment) => (
+          {projects.map((project) => (
             <ExperimentEntity
-              key={experiment.key}
-              title={experiment.title}
-              videoPath={experiment.videoPath}
-              accent={experiment.accent}
-              leftText={experiment.leftText}
-              rightText={experiment.rightText}
+              key={project.key}
+              title={project.title}
+              videoPath={project.videoPath}
+              accent={project.accent}
+              leftText={project.leftText}
+              rightText={project.rightText}
             />
           ))}
         </div>
