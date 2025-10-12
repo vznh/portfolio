@@ -133,7 +133,7 @@ const IndexView = () => {
       <motion.div
         ref={registerSection("projects")}
         data-section="projects"
-        initial={{ opacity: 0.8 }}
+        initial={{ opacity: 0.05 }}
         animate={{ opacity: getOpacity("projects") ?? 1 }}
         exit={{ opacity: 0 }}
         transition={getTransition({ delay: 1.3, duration: 1.0, ease: "easeInOut" })}
