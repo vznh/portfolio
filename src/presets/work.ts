@@ -63,6 +63,7 @@ export interface ProjectProps {
   accent: string;
   leftText?: string;
   rightText?: string;
+  url?: string;
 }
 
 export const projects: ProjectProps[] = [
@@ -73,6 +74,7 @@ export const projects: ProjectProps[] = [
     accent: "bg-white",
     leftText: "LED / vznh/@components",
     rightText: "NPM PKG",
+    url: "https://npmjs.com/@vznh/components",
   },
   {
     key: 2,
@@ -105,6 +107,7 @@ export const projects: ProjectProps[] = [
     accent: "bg-white",
     leftText: "WEB EXPERIENCE / TOKN",
     rightText: "NEXT.JS",
+    url: "https://tokn.so",
   },
   {
     key: 6,
@@ -121,5 +124,6 @@ export const projects: ProjectProps[] = [
     accent: "bg-white",
     leftText: "BOT FUNCTIONALITY / 75",
     rightText: "NODE",
+    url: "https://github.com/vznh/75",
   }
 ]

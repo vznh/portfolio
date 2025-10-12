@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects, ProjectProps } from "@/presets/work";
+import Link from "next/link";
 
 const ExperimentEntity: React.FC<ProjectProps> = ({
   title,
@@ -9,6 +10,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   accent,
   leftText,
   rightText,
+  url,
 }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -24,9 +26,9 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     }
   }, [isHovered]);
 
-  return (
+  const content = (
     <div
-      className={`relative`}
+      className={`relative ${url ? 'cursor-pointer' : ''}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -66,6 +68,16 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
       </div>
     </div>
   );
+
+  if (url) {
+    return (
+      <Link href={url} target="_blank" rel="noopener noreferrer">
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 };
 
 const ExperimentSection = () => {
@@ -81,6 +93,7 @@ const ExperimentSection = () => {
               accent={project.accent}
               leftText={project.leftText}
               rightText={project.rightText}
+              url={project.url}
             />
           ))}
         </div>
