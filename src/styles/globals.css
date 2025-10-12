@@ -81,32 +81,9 @@ body::after {
 }
 
 @font-face {
-  font-family: 'Holla';
-  src: url('/fonts/Holla.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Tiempos';
-  src: url('/fonts/Tiempos.otf') format('opentype');
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Geist';
   src: url('/fonts/Geist.otf') format('opentype');
   font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Khmer';
-  src: url('/fonts/Plex.ttf') format('truetype');
-  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
@@ -120,24 +97,16 @@ body::after {
 }
 
 @font-face {
-  font-family: 'Newsreader';
-  src: url('/fonts/Newsreader.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Covik';
-  src: url('/fonts/Covik.otf') format('opentype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
   font-family: 'Lora';
   src: url('/fonts/Lora.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Plex';
+  src: url('/fonts/Plex.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
