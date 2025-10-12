@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { projects, ProjectProps } from "@/presets/work";
 import Link from "next/link";
+import Image from "next/image";
 
 const ExperimentEntity: React.FC<ProjectProps> = ({
   title,
@@ -17,6 +18,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   const [isTouched, setIsTouched] = useState<boolean>(false);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [isInViewport, setIsInViewport] = useState<boolean>(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,6 +68,22 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     };
   }, [isDesktop]);
 
+  // Handle video loading events
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleLoadedData = () => {
+      setIsVideoLoaded(true);
+    };
+
+    video.addEventListener('loadeddata', handleLoadedData);
+    
+    return () => {
+      video.removeEventListener('loadeddata', handleLoadedData);
+    };
+  }, [videoPath]);
+
   // Handle video play/pause based on hover (desktop) or viewport (mobile)
   useEffect(() => {
     if (!videoRef.current) return;
@@ -90,6 +108,27 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     >
       {/* Video Container - 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xs">
+        {/* Placeholder image - always visible until video loads */}
+        <AnimatePresence>
+          {!isVideoLoaded && (
+            <motion.div
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src="/images/projects/PLACEHOLDER.png"
+                alt="Project placeholder"
+                fill
+                className="object-cover"
+                priority={priority}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Video element */}
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
