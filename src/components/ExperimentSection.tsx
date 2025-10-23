@@ -19,8 +19,12 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
   const [isInViewport, setIsInViewport] = useState<boolean>(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState<boolean>(false);
+  const [isGifLoaded, setIsGifLoaded] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Check if the media is a GIF
+  const isGif = videoPath.toLowerCase().endsWith('.gif');
 
   // Detect if we're on desktop (not touch device)
   useEffect(() => {
@@ -68,8 +72,14 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     };
   }, [isDesktop]);
 
-  // Handle video loading events
+  // Handle media loading events
   useEffect(() => {
+    if (isGif) {
+      // For GIFs, we'll handle loading differently
+      setIsGifLoaded(false);
+      return;
+    }
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -82,10 +92,12 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     return () => {
       video.removeEventListener('loadeddata', handleLoadedData);
     };
-  }, [videoPath]);
+  }, [videoPath, isGif]);
 
   // Handle video play/pause based on hover (desktop) or viewport (mobile)
   useEffect(() => {
+    if (isGif) return; // GIFs don't need play/pause control
+    
     if (!videoRef.current) return;
 
     if (isDesktop && isHovered) {
@@ -95,7 +107,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     } else {
       videoRef.current.pause();
     }
-  }, [isHovered, isInViewport, isDesktop]);
+  }, [isHovered, isInViewport, isDesktop, isGif]);
 
   const content = (
     <div
@@ -106,11 +118,11 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
       onTouchStart={() => setIsTouched(true)}
       onTouchEnd={() => setIsTouched(false)}
     >
-      {/* Video Container - 1:1 aspect ratio */}
+      {/* Media Container - 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xs">
-        {/* Placeholder image - always visible until video loads */}
+        {/* Placeholder image - always visible until media loads */}
         <AnimatePresence>
-          {!isVideoLoaded && (
+          {(!isGif && !isVideoLoaded) || (isGif && !isGifLoaded) ? (
             <motion.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -125,20 +137,32 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
                 priority={priority}
               />
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
 
-        {/* Video element */}
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          muted
-          loop
-          playsInline
-          preload={priority ? "auto" : "metadata"}
-        >
-          <source src={videoPath} type="video/mp4" />
-        </video>
+        {/* Video or GIF element */}
+        {isGif ? (
+          <Image
+            src={videoPath}
+            alt={title}
+            fill
+            className="object-cover"
+            priority={priority}
+            onLoadingComplete={() => setIsGifLoaded(true)}
+            unoptimized // Important for GIFs to work properly
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            muted
+            loop
+            playsInline
+            preload={priority ? "auto" : "metadata"}
+          >
+            <source src={videoPath} type="video/mp4" />
+          </video>
+        )}
 
         <AnimatePresence>
           {((isDesktop && isHovered) || (!isDesktop && isInViewport)) && (

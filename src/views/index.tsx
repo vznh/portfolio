@@ -9,9 +9,11 @@ import { motion } from "framer-motion";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import Link from "next/link";
 import Logo from "@/components/Logo";
+import { Substack } from "@/components/Substack";
+import { substackExample } from "@/presets/substack";
 
 const IndexView = () => {
-  const { registerSection, getOpacity, getTransition, activeSection } = useActiveSection(3000)
+  const { registerSection, getOpacity, getTransition } = useActiveSection(3000)
   const version = useVersion()
   const [showCrypted, setShowCrypted] = React.useState(false)
   const [currentCryptedIndex, setCurrentCryptedIndex] = React.useState(0)
@@ -25,18 +27,18 @@ const IndexView = () => {
       const rect = footerRef.current.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
       const viewportCenter = viewportHeight / 2;
-      
+
       const elementCenter = rect.top + rect.height / 2;
       const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
       const threshold = viewportHeight * 0.6;
-      
+
       const shouldShow = distanceFromCenter <= threshold;
-      
+
       if (shouldShow && !hasStarted) {
         setHasStarted(true);
         setShowCrypted(true);
       }
-      
+
       if (hasStarted) {
         setShowCrypted(true);
       }
@@ -45,14 +47,14 @@ const IndexView = () => {
     handleScroll();
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleScroll);
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
-  const handleCryptedComplete = () => {
+  const decrypted = () => {
     setCurrentCryptedIndex(prev => prev + 1);
   };
 
@@ -61,8 +63,8 @@ const IndexView = () => {
     <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#F8FBF8]">
       <div className="w-full flex flex-row justify-between items-start">
         <div className="flex flex-col gap-y-2">
-          <h1 className="font-lora text-5xl tracking-tight text-[#1E1919]">Jason Son</h1>
-          <span className="font-geist text-xl opacity-80 tracking-tight text-[#1E1919]">
+          <h1 className="font-lora text-4xl tracking-tight text-[#1E1919]">Jason Son</h1>
+          <span className="font-plex text-xl opacity-80 tracking-tight text-[#1E1919]">
             Fullstack builder crafting with design-driven solutions.
           </span>
           <div>
@@ -148,11 +150,11 @@ const IndexView = () => {
       <div className="h-24" />
 
 
-      <footer ref={footerRef} className="relative flex w-full justify-center h-[200px] md:h-[500px] mb-[-275px]">
+      <footer ref={footerRef} className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[200px]">
         <div className="hidden md:block">
           <Logo width={500} height={400} />
         </div>
-        
+
         <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
           <motion.div
             className="flex flex-row items-center space-x-2 group"
@@ -165,10 +167,10 @@ const IndexView = () => {
               className="font-jb text-xs tracking-tight text-[#1E1919]"
             >
               {showCrypted && currentCryptedIndex >= 0 ? (
-                <Crypted 
-                  text="REQUEST A RESUME" 
-                  delay={15} 
-                  onComplete={currentCryptedIndex === 0 ? handleCryptedComplete : undefined}
+                <Crypted
+                  text="REQUEST A RESUME"
+                  delay={15}
+                  onComplete={currentCryptedIndex === 0 ? decrypted : undefined}
                 />
               ) : showCrypted ? (
                 ""
@@ -193,7 +195,7 @@ const IndexView = () => {
               </div>
             </span>
           </motion.div>
-          
+
           <motion.div
             className="flex flex-row items-center space-x-2 group"
             initial={{ opacity: 0.5 }}
@@ -205,10 +207,10 @@ const IndexView = () => {
               className="font-jb text-xs tracking-tight text-[#1E1919]"
             >
               {showCrypted && currentCryptedIndex >= 1 ? (
-                <Crypted 
-                  text="BOOK A CALL" 
-                  delay={15} 
-                  onComplete={currentCryptedIndex === 1 ? handleCryptedComplete : undefined}
+                <Crypted
+                  text="BOOK A CALL"
+                  delay={15}
+                  onComplete={currentCryptedIndex === 1 ? decrypted : undefined}
                 />
               ) : showCrypted ? (
                 ""
@@ -234,7 +236,7 @@ const IndexView = () => {
             </span>
           </motion.div>
         </div>
-        
+
         <div className="absolute top-20 right-0 hidden md:flex flex-col gap-y-2">
           <motion.div
             initial={{ opacity: 0.5 }}
@@ -247,10 +249,10 @@ const IndexView = () => {
             >
               {showCrypted && currentCryptedIndex >= 2 ? (
                 <>
-                  <Crypted 
-                    text={`Version ${version}`} 
-                    delay={15} 
-                    onComplete={currentCryptedIndex === 2 ? handleCryptedComplete : undefined}
+                  <Crypted
+                    text={`Version ${version}`}
+                    delay={15}
+                    onComplete={currentCryptedIndex === 2 ? decrypted : undefined}
                   /> <span className="text-[11px]">/</span> <Crypted text="September 2025" delay={15} />
                 </>
               ) : showCrypted ? (
@@ -264,8 +266,7 @@ const IndexView = () => {
             <span className="text-[#1E1919] text-[11px]">↗</span>
           </motion.div>
         </div>
-        
-        {/* Mobile version - moved to left side */}
+
         <div className="absolute top-16 md:hidden left-0 flex flex-col gap-y-2">
           <motion.div
             initial={{ opacity: 0.5 }}
@@ -278,10 +279,10 @@ const IndexView = () => {
             >
               {showCrypted && currentCryptedIndex >= 2 ? (
                 <>
-                  <Crypted 
-                    text={`Version ${version}`} 
-                    delay={15} 
-                    onComplete={currentCryptedIndex === 2 ? handleCryptedComplete : undefined}
+                  <Crypted
+                    text={`Version ${version}`}
+                    delay={15}
+                    onComplete={currentCryptedIndex === 2 ? decrypted : undefined}
                   /> <span className="text-[11px]">/</span> <Crypted text="September 2025" delay={15} />
                 </>
               ) : showCrypted ? (
@@ -296,6 +297,22 @@ const IndexView = () => {
           </motion.div>
         </div>
       </footer>
+
+      {/*
+        on entry of viewport
+        */}
+      <div className="ss">
+        <Substack
+          sections={substackExample.map(item => ({
+            header: item.title,
+            body: item.content?.replace(/<[^>]*>/g, '') || ''
+          }))}
+          page={1}
+          totalPages={Math.ceil(substackExample.length / 6)}
+          title="Latest from Substack"
+        />
+
+      </div>
     </div>
     </div>
   );

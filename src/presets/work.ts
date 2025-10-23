@@ -69,11 +69,20 @@ export interface ProjectProps {
 
 export const projects: ProjectProps[] = [
   {
+    key: 0,
+    title: "REACTIVE",
+    videoPath: "/images/projects/experiments/REACTIVE.gif",
+    accent: "bg-white",
+    leftText: "REACTIVE / @vznh/components",
+    rightText: "NPM PKG",
+    url: "https://npmjs.com/@vznh/components"
+  },
+  {
     key: 1,
     title: "LED",
     videoPath: "/images/projects/experiments/LED.mp4",
     accent: "bg-white",
-    leftText: "LED / vznh/@components",
+    leftText: "LED / @vznh/components",
     rightText: "NPM PKG",
     url: "https://npmjs.com/@vznh/components",
   },
