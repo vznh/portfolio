@@ -58,9 +58,7 @@ export const experiences: WorkRowProps[] = [
 
 export interface ProjectProps {
   key: number;
-  title: string;
   videoPath: string;
-  accent: string;
   leftText?: string;
   rightText?: string;
   url?: string;
@@ -70,68 +68,52 @@ export interface ProjectProps {
 export const projects: ProjectProps[] = [
   {
     key: 0,
-    title: "REACTIVE",
-    videoPath: "/images/projects/experiments/REACTIVE.gif",
-    accent: "bg-white",
+    videoPath: "/images/projects/experiments/REACTIVE.mp4",
     leftText: "REACTIVE / @vznh/components",
     rightText: "NPM PKG",
     url: "https://npmjs.com/@vznh/components"
   },
   {
     key: 1,
-    title: "LED",
     videoPath: "/images/projects/experiments/LED.mp4",
-    accent: "bg-white",
     leftText: "LED / @vznh/components",
     rightText: "NPM PKG",
     url: "https://npmjs.com/@vznh/components",
   },
   {
     key: 2,
-    title: "RECHORDED",
     videoPath: "/images/projects/experiments/RECHORDED.mp4",
-    accent: "bg-white",
     leftText: "INTERACTIVITY / RECHORDED",
     rightText: "NEXT.JS",
   },
   {
     key: 3,
-    title: "PATHFINDER",
     videoPath: "/images/projects/experiments/PATHFINDER.mp4",
-    accent: "bg-white",
     leftText: "MAP NAVIGATION / PATHFINDER",
     rightText: "NEXT.JS",
   },
   {
     key: 4,
-    title: "BRUTAL",
     videoPath: "/images/projects/experiments/BRUTAL.mp4",
-    accent: "bg-white",
     leftText: "DIAL AND INTERACTION / BRUTAL",
     rightText: "NEXT.JS",
   },
   {
     key: 5,
-    title: "TOKN",
     videoPath: "/images/projects/experiments/TOKN.mp4",
-    accent: "bg-white",
     leftText: "WEB EXPERIENCE / TOKN",
     rightText: "NEXT.JS",
     url: "https://tokn.so",
   },
   {
     key: 6,
-    title: "DREAMSCAPE",
     videoPath: "/images/projects/experiments/DREAMSCAPE.mp4",
-    accent: "bg-white",
     leftText: "INTERFACE IMPL / DREAMSCAPE",
     rightText: "NEXT.JS",
   },
   {
     key: 7,
-    title: "75",
     videoPath: "/images/projects/experiments/75.mp4",
-    accent: "bg-white",
     leftText: "BOT FUNCTIONALITY / 75",
     rightText: "NODE",
     url: "https://github.com/vznh/75",
