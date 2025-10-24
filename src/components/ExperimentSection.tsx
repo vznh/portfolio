@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { projects, ProjectProps } from "@/presets/work";
-import Link from "next/link";
+import { ProjectProps, projects } from "@/presets/work";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const ExperimentEntity: React.FC<ProjectProps> = ({
   videoPath,
@@ -21,14 +21,16 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
 
   useEffect(() => {
     const checkDesktop = () => {
-      setDesktop(window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+      setDesktop(
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches,
+      );
     };
 
     checkDesktop();
-    window.addEventListener('resize', checkDesktop);
+    window.addEventListener("resize", checkDesktop);
 
     return () => {
-      window.removeEventListener('resize', checkDesktop);
+      window.removeEventListener("resize", checkDesktop);
     };
   }, []);
 
@@ -51,12 +53,12 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
 
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, [desktop]);
 
@@ -64,14 +66,25 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
     const video = videoRef.current;
     if (!video) return;
 
-    const handleLoadedData = () => {
+    const handleLoadedMetadata = () => {
       setVideoLoaded(true);
+
+      video.currentTime = 0.001;
+      video
+        .play()
+        .then(() => {
+          setTimeout(() => {
+            video.pause();
+            video.currentTime = 0;
+          }, 1);
+        })
+        .catch(console.error);
     };
 
-    video.addEventListener('loadeddata', handleLoadedData);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
 
     return () => {
-      video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
     };
   }, [videoPath]);
 
@@ -90,7 +103,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   const content = (
     <div
       ref={containerRef}
-      className={`relative ${url ? 'cursor-pointer' : ''}`}
+      className={`relative ${url ? "cursor-pointer" : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onTouchStart={() => setTouched(true)}
@@ -122,7 +135,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
           className="w-full h-full object-cover"
           muted
           loop
-                   playsInline
+          playsInline
           preload={priority ? "auto" : "metadata"}
         >
           <source src={videoPath} type="video/mp4" />
