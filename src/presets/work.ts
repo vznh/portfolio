@@ -34,6 +34,17 @@ export const experiences: WorkRowProps[] = [
     focusDesc: "I worked on Hypersafe, a platform for traffic engineers to analyze incident data. I worked on everything from front, back and data. I cut hefty production processing from 2 minutes to averaging sub-10  seconds, and impl. memoization to handle 10K+ HTTP requests with a 99.6% cost drop."
   },
   {
+    key: 6,
+    company: "Stanford University",
+    role: "Founder",
+    img: "/images/stanford.png",
+    imgClassName: "scale-[0.5625]",
+    date: "2024",
+    focusDate: "2024",
+    focusRole: "Founder",
+    focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad."
+  },
+  {
     key: 4,
     company: "Carnegie Mellon",
     role: "Research",
