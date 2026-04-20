@@ -9,7 +9,7 @@ const images = [
   "/images/logo/frame4.png",
 ];
 
-const Logo: React.FC<{ width: number, height: number, className?: string }> = ({ width, height, className = ""}) => {
+const Logo: React.FC<{ width: number, height: number, className?: string, onClick?: () => void }> = ({ width, height, className = "", onClick }) => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -23,10 +23,11 @@ const Logo: React.FC<{ width: number, height: number, className?: string }> = ({
     <Image
       src={images[index]}
       alt={`logo frame${index + 1}`}
-      className={`grayscale ${className}`}
+      className={`grayscale ${onClick ? 'cursor-pointer' : ''} ${className}`}
       width={width}
       height={height}
       priority
+      onClick={onClick}
     />
   );
 }

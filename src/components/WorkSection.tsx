@@ -204,7 +204,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
 
       { /* Line component is here - don't change. */}
-      <div className={`flex-grow h-px bg-[#1E1919] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
+      <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
 
       { /* Overlay box. */}
         <Focus
@@ -216,7 +216,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         />
 
       { /* Role goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[#1E1919]`} style={{
+      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
         opacity: 0.8,
       }}>{ role }</span>
     </div>
