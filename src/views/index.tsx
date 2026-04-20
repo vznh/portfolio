@@ -64,8 +64,8 @@ const IndexView = () => {
             <h1 className="font-lora text-4xl tracking-tight text-[#1E1919]">
               Jason Son
             </h1>
-            <span className="font-plex text-xl opacity-80 tracking-tight text-[#1E1919]">
-              Fullstack builder crafting with design-driven solutions.
+            <span className="font-plex text-xl opacity-50 tracking-tight text-[#1E1919]">
+              Engineer and angel investor. Based in New York City as a researcher and full-stack generalist. I was previously at Santa Cruz and in San Francisco.
             </span>
             <div>
               <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[#1E1919]">
