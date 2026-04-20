@@ -36,13 +36,14 @@ export const experiences: WorkRowProps[] = [
   {
     key: 6,
     company: "Stanford University",
-    role: "Founder",
+    role: "Product",
     img: "/images/stanford.png",
-    imgClassName: "scale-[0.5625]",
+    imgClassName: "scale-[0.65]",
     date: "2024",
     focusDate: "2024",
     focusRole: "Founder",
-    focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad."
+    focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.",
+    images: ["/images/projects/polyglot/Polyglot.png"]
   },
   {
     key: 4,
