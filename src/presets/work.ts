@@ -5,7 +5,7 @@ export const experiences: WorkRowProps[] = [
   {
     key: 0,
     company: "Independent Design",
-    role: "Software",
+    role: "Creative",
     img: "/images/logo/hi.png",
     date: "JUN 2025 - PRESENT",
     images: ["/images/projects/morecompute/logo.png", "/images/projects/morecompute/sidebar.png"],
@@ -35,7 +35,7 @@ export const experiences: WorkRowProps[] = [
   },
   {
     key: 6,
-    company: "Stanford University",
+    company: "Stanford",
     role: "Product",
     img: "/images/stanford.png",
     imgClassName: "scale-[0.65]",
@@ -44,6 +44,17 @@ export const experiences: WorkRowProps[] = [
     focusLocation: "Stanford, California",
     focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.\n\nI co-founded Tokn, a social cryptocurrency analytics platform, owning all technical work. Exited in a multi-six acquisition.",
     images: ["/images/projects/polyglot/Polyglot.png"]
+  },
+  {
+    key: 7,
+    company: "Seoul National",
+    role: "Research",
+    img: "/images/snu.png",
+    imgClassName: "grayscale scale-[0.80]",
+    date: "2023 - 2024",
+    focusDate: "2023 - 2024",
+    focusLocation: "Seoul, South Korea",
+    focusDesc: "I trained a sequence classifier on genomic data to replace a manual labeling pipeline."
   },
   {
     key: 4,
@@ -57,7 +68,7 @@ export const experiences: WorkRowProps[] = [
   },
   {
     key: 5,
-    company: "UC Santa Cruz",
+    company: "Santa Cruz",
     role: "Research",
     img: "/images/ucsc.png",
     date: "2022",
