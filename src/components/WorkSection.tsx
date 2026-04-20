@@ -216,7 +216,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         />
 
       { /* Role goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
+      <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
         opacity: 0.8,
       }}>{ role }</span>
     </div>
