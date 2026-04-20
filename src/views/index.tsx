@@ -18,6 +18,8 @@ const IndexView = () => {
   const [currentCryptedIndex, setCurrentCryptedIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
   const [angelHovered, setAngelHovered] = React.useState(false);
+  const [eyeHovered, setEyeHovered] = React.useState(false);
+  const [mailHovered, setMailHovered] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -196,6 +198,8 @@ const IndexView = () => {
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
+              onMouseEnter={() => setMailHovered(true)}
+              onMouseLeave={() => setMailHovered(false)}
             >
               <Link
                 href="mailto:jasonvinhson@gmail.com"
@@ -228,7 +232,7 @@ const IndexView = () => {
                   }}
                 />
                 <div className="relative z-10">
-                  <MailIcon />
+                  <MailIcon open={mailHovered} />
                 </div>
               </span>
             </motion.div>
@@ -238,6 +242,8 @@ const IndexView = () => {
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
+              onMouseEnter={() => setEyeHovered(true)}
+              onMouseLeave={() => setEyeHovered(false)}
             >
               <Link
                 href="https://cal.com/jason-son-suncdj/15min"
@@ -270,7 +276,7 @@ const IndexView = () => {
                   }}
                 />
                 <div className="relative z-10">
-                  <EyeIcon />
+                  <EyeIcon closed={eyeHovered} />
                 </div>
               </span>
             </motion.div>
