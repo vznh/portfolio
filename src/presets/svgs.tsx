@@ -70,11 +70,11 @@ const EyeClosed = () => (
       fill="none"
       strokeLinecap="round"
     />
-    <line x1="3.3" y1="9.2" x2="2.6" y2="10.2" stroke="currentColor" strokeWidth="0.4" strokeLinecap="round" opacity="0.7" />
-    <line x1="5.3" y1="10.1" x2="5" y2="11.2" stroke="currentColor" strokeWidth="0.4" strokeLinecap="round" opacity="0.7" />
-    <line x1="7.5" y1="10.4" x2="7.5" y2="11.5" stroke="currentColor" strokeWidth="0.4" strokeLinecap="round" opacity="0.7" />
-    <line x1="9.7" y1="10.1" x2="10" y2="11.2" stroke="currentColor" strokeWidth="0.4" strokeLinecap="round" opacity="0.7" />
-    <line x1="11.7" y1="9.2" x2="12.4" y2="10.2" stroke="currentColor" strokeWidth="0.4" strokeLinecap="round" opacity="0.7" />
+    <line x1="3.1" y1="9.2" x2="2.2" y2="10.6" stroke="currentColor" strokeWidth="0.7" strokeLinecap="round" opacity="0.95" />
+    <line x1="5.3" y1="10.1" x2="4.9" y2="11.6" stroke="currentColor" strokeWidth="0.7" strokeLinecap="round" opacity="0.95" />
+    <line x1="7.5" y1="10.4" x2="7.5" y2="12" stroke="currentColor" strokeWidth="0.7" strokeLinecap="round" opacity="0.95" />
+    <line x1="9.7" y1="10.1" x2="10.1" y2="11.6" stroke="currentColor" strokeWidth="0.7" strokeLinecap="round" opacity="0.95" />
+    <line x1="11.9" y1="9.2" x2="12.8" y2="10.6" stroke="currentColor" strokeWidth="0.7" strokeLinecap="round" opacity="0.95" />
   </svg>
 );
 
