@@ -132,7 +132,7 @@ const IndexView = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      <ImageOverlay visible={hoveredAnchor === 'sc'} images={["/images/overlays/santa-cruz.jpg"]} scale={1.25} />
+      <ImageOverlay visible={hoveredAnchor === 'sc'} images={["/images/overlays/santa-cruz.jpg"]} scale={1.25} aspectRatio="16/9" zoom={1.25} objectPosition="center bottom" origin="bottom" />
       <ImageOverlay
         visible={hoveredAnchor === 'sf'}
         images={["/images/overlays/san-francisco.jpg", "/images/overlays/san-francisco-2.jpg"]}
