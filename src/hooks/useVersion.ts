@@ -8,7 +8,7 @@ interface GitHubRelease {
 }
 
 const useVersion = () => {
-  const [version, setVersion] = useState<string>('3.1');
+  const [version, setVersion] = useState<string>('4.2');
 
   useEffect(() => {
     const fetchLatestRelease = async () => {
