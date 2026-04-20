@@ -8,6 +8,7 @@ import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useVersion } from "@/hooks/useVersion";
 import { FEATURES } from "@/presets/features";
+import { THEMES } from "@/presets/theme";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -22,7 +23,19 @@ const IndexView = () => {
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
   const [eyeHovered, setEyeHovered] = React.useState(false);
   const [mailHovered, setMailHovered] = React.useState(false);
+  const [themeIndex, setThemeIndex] = React.useState(0);
   const footerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    const theme = THEMES[themeIndex % THEMES.length];
+    if (!theme) return;
+    const root = document.documentElement;
+    root.style.setProperty('--bg-color', theme.bg);
+    root.style.setProperty('--text-color', theme.text);
+    root.style.setProperty('--highlight', theme.highlight);
+  }, [themeIndex]);
+
+  const cycleTheme = () => setThemeIndex((i) => (i + 1) % THEMES.length);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -115,13 +128,13 @@ const IndexView = () => {
         images={["/images/overlays/san-francisco.jpg", "/images/overlays/san-francisco-2.jpg"]}
         aspectRatio="16/9"
       />
-      <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#F8FBF8]">
+      <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[var(--bg-color)]">
         <div className="w-full flex flex-row justify-between items-start">
           <div className="flex flex-col gap-y-2">
-            <h1 className="font-lora text-4xl tracking-tight text-[#1E1919]">
+            <h1 className="font-lora text-4xl tracking-tight text-[var(--text-color)]">
               Jason Son
             </h1>
-            <span className="font-plex text-xl tracking-tight text-[#1E1919] vc-tagline">
+            <span className="font-plex text-xl tracking-tight text-[var(--text-color)] vc-tagline">
               <span className="opacity-50">Engineer and </span>
               <span
                 className="relative inline-block vc-anchor"
@@ -155,7 +168,7 @@ const IndexView = () => {
               <span className="opacity-50">.</span>
             </span>
             <div>
-              <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[#1E1919]">
+              <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[var(--text-color)]">
                 <Link
                   className="hover:underline underline-offset-4 decoration-dashed"
                   target="_blank"
@@ -218,10 +231,10 @@ const IndexView = () => {
               })}
             >
               <div className="flex flex-row justify-between">
-                <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+                <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
                   Antecedents
                 </span>
-                <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+                <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
                   Discipline
                 </span>
               </div>
@@ -246,7 +259,7 @@ const IndexView = () => {
               })}
               className="flex flex-col gap-y-4"
             >
-              <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+              <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
                 Projects
               </span>
               <ExperimentSection />
@@ -262,7 +275,7 @@ const IndexView = () => {
           className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px]"
         >
           <div className="hidden md:block">
-            <Logo width={500} height={400} className="-rotate-[30deg]" />
+            <Logo width={500} height={400} className="-rotate-[30deg]" onClick={cycleTheme} />
           </div>
 
           <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
@@ -276,7 +289,7 @@ const IndexView = () => {
             >
               <Link
                 href="mailto:jasonvinhson@gmail.com"
-                className="font-jb text-xs tracking-tight text-[#1E1919]"
+                className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               >
                 {showCrypted && currentCryptedIndex >= 0 ? (
                   <Crypted
@@ -320,7 +333,7 @@ const IndexView = () => {
             >
               <Link
                 href="https://cal.com/jason-son-suncdj/15min"
-                className="font-jb text-xs tracking-tight text-[#1E1919]"
+                className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               >
                 {showCrypted && currentCryptedIndex >= 1 ? (
                   <Crypted
@@ -354,10 +367,10 @@ const IndexView = () => {
               </span>
             </motion.div>
 
-            <span className="font-jb text-xs tracking-tight text-[#1E1919] opacity-50 pl-1">-</span>
+            <span className="font-jb text-xs tracking-tight text-[var(--text-color)] opacity-50 pl-1">-</span>
 
             <motion.div
-              className="font-jb text-xs tracking-tight text-[#1E1919]"
+              className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -366,7 +379,7 @@ const IndexView = () => {
             </motion.div>
 
             <motion.div
-              className="font-jb text-xs tracking-tight text-[#1E1919]"
+              className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 1 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -383,7 +396,7 @@ const IndexView = () => {
             >
               <Link
                 href="https://github.com/vznh/mole/releases/"
-                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[#1E1919]"
+                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
               >
                 {showCrypted && currentCryptedIndex >= 2 ? (
                   <>
@@ -406,7 +419,7 @@ const IndexView = () => {
                   </>
                 )}
               </Link>{" "}
-              <span className="text-[#1E1919] text-[11px]">↗</span>
+              <span className="text-[var(--text-color)] text-[11px]">↗</span>
             </motion.div>
           </div>
 
@@ -418,7 +431,7 @@ const IndexView = () => {
             >
               <Link
                 href="https://github.com/vznh/mole/releases/"
-                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[#1E1919]"
+                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
               >
                 {showCrypted && currentCryptedIndex >= 2 ? (
                   <>
@@ -441,7 +454,7 @@ const IndexView = () => {
                   </>
                 )}
               </Link>{" "}
-              <span className="text-[#1E1919] text-[11px]">↗</span>
+              <span className="text-[var(--text-color)] text-[11px]">↗</span>
             </motion.div>
           </div>
         </footer>

@@ -6,7 +6,7 @@ const MailClosed = () => (
     />
     <path
       d="M1 4 L7.5 8.5 L14 4"
-      stroke="#F8FBF8"
+      style={{ stroke: 'var(--bg-color)' }}
       strokeWidth="0.8"
       fill="none"
       strokeLinecap="round"
