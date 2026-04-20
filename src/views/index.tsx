@@ -2,6 +2,7 @@
 import Crypted from "@/components/Crypted";
 import ExperimentSection from "@/components/ExperimentSection";
 import Focus from "@/components/Focus";
+import ImageOverlay from "@/components/ImageOverlay";
 import Logo from "@/components/Logo";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -18,7 +19,7 @@ const IndexView = () => {
   const [showCrypted, setShowCrypted] = React.useState(false);
   const [currentCryptedIndex, setCurrentCryptedIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
-  const [angelHovered, setAngelHovered] = React.useState(false);
+  const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
   const [eyeHovered, setEyeHovered] = React.useState(false);
   const [mailHovered, setMailHovered] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
@@ -61,33 +62,96 @@ const IndexView = () => {
     setCurrentCryptedIndex((prev) => prev + 1);
   };
 
+  React.useEffect(() => {
+    const duration = '0.5s ease-in-out';
+    const targetSelectors = [
+      '.main-content h1',
+      '.main-content .font-jb.tracking-tighter',
+      'footer',
+    ];
+    const targets: HTMLElement[] = [];
+    targetSelectors.forEach((sel) => {
+      document.querySelectorAll(sel).forEach((el) => targets.push(el as HTMLElement));
+    });
+
+    const activeClass = hoveredAnchor ? `${hoveredAnchor}-anchor` : null;
+    const siblings: HTMLElement[] = [];
+    document.querySelectorAll('.vc-tagline > *').forEach((el) => {
+      if (!activeClass || !el.classList.contains(activeClass)) {
+        siblings.push(el as HTMLElement);
+      }
+    });
+
+    const apply = (el: HTMLElement) => {
+      if (hoveredAnchor) {
+        el.style.setProperty('transition', `opacity ${duration}`, 'important');
+        el.style.setProperty('opacity', '0.1', 'important');
+      } else {
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transition');
+      }
+    };
+
+    targets.forEach(apply);
+    siblings.forEach(apply);
+
+    return () => {
+      targets.forEach((el) => {
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transition');
+      });
+      siblings.forEach((el) => {
+        el.style.removeProperty('opacity');
+        el.style.removeProperty('transition');
+      });
+    };
+  }, [hoveredAnchor]);
+
   return (
     <div className="relative min-h-screen overflow-hidden">
+      <ImageOverlay visible={hoveredAnchor === 'sc'} images={["/images/overlays/santa-cruz.jpg"]} scale={1.25} />
+      <ImageOverlay
+        visible={hoveredAnchor === 'sf'}
+        images={["/images/overlays/san-francisco.jpg", "/images/overlays/san-francisco-2.jpg"]}
+        aspectRatio="16/9"
+      />
       <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[#F8FBF8]">
         <div className="w-full flex flex-row justify-between items-start">
           <div className="flex flex-col gap-y-2">
             <h1 className="font-lora text-4xl tracking-tight text-[#1E1919]">
               Jason Son
             </h1>
-            <span className="font-plex text-xl tracking-tight text-[#1E1919]">
+            <span className="font-plex text-xl tracking-tight text-[#1E1919] vc-tagline">
               <span className="opacity-50">Engineer and </span>
               <span
-                className="relative inline-block"
-                onMouseEnter={() => setAngelHovered(true)}
-                onMouseLeave={() => setAngelHovered(false)}
+                className="relative inline-block vc-anchor"
+                onMouseEnter={() => setHoveredAnchor('vc')}
+                onMouseLeave={() => setHoveredAnchor(null)}
               >
-                <Link className="link" href="#" target="_blank">angel investor</Link>
+                <span className="link">venture capitalist</span>
                 <Focus
-                  visible={angelHovered}
-                  date="PLACEHOLDER"
-                  role="Angel Investor"
-                  desc="Placeholder description for angel investing activity."
+                  visible={hoveredAnchor === 'vc'}
+                  date="2026"
+                  role="(1) COMPANY"
+                  desc="I invest in consumer-facing apps or artificial intelligence labs."
                 />
               </span>
               <span className="opacity-50">. Based in New York City as a researcher and full-stack generalist. I was previously at </span>
-              <Link className="link" href="#" target="_blank">Santa Cruz</Link>
+              <span
+                className="link sc-anchor"
+                onMouseEnter={() => setHoveredAnchor('sc')}
+                onMouseLeave={() => setHoveredAnchor(null)}
+              >
+                Santa Cruz
+              </span>
               <span className="opacity-50"> and in </span>
-              <Link className="link" href="#" target="_blank">San Francisco</Link>
+              <span
+                className="link sf-anchor"
+                onMouseEnter={() => setHoveredAnchor('sf')}
+                onMouseLeave={() => setHoveredAnchor(null)}
+              >
+                San Francisco
+              </span>
               <span className="opacity-50">.</span>
             </span>
             <div>
@@ -145,9 +209,9 @@ const IndexView = () => {
               data-section="work"
               className="work-section-container flex flex-col gap-y-3"
               initial={{ opacity: 0.05 }}
-              animate={{ opacity: getOpacity("work") ?? 1 }}
+              animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("work") ?? 1) }}
               exit={{ opacity: 0 }}
-              transition={getTransition({
+              transition={hoveredAnchor ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1,
                 duration: 0.8,
                 ease: "easeInOut",
@@ -173,9 +237,9 @@ const IndexView = () => {
               ref={registerSection("projects")}
               data-section="projects"
               initial={{ opacity: 0.05 }}
-              animate={{ opacity: getOpacity("projects") ?? 1 }}
+              animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("projects") ?? 1) }}
               exit={{ opacity: 0 }}
-              transition={getTransition({
+              transition={hoveredAnchor ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1.3,
                 duration: 1.0,
                 ease: "easeInOut",

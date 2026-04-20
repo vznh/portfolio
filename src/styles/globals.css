@@ -62,6 +62,7 @@
   text-decoration-color: var(--highlight);
   text-decoration-thickness: 0.8px;
   opacity: 1;
+  cursor: pointer;
 }
 
 
