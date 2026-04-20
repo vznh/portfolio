@@ -187,7 +187,7 @@ const IndexView = () => {
           className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px]"
         >
           <div className="hidden md:block">
-            <Logo width={500} height={400} />
+            <Logo width={500} height={400} className="-rotate-[30deg]" />
           </div>
 
           <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
