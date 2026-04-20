@@ -7,12 +7,15 @@ interface ImageOverlayProps {
   images: string[];
   aspectRatio?: string;
   scale?: number;
+  zoom?: number;
+  objectPosition?: string;
+  origin?: string;
 }
 
 const BASE_WIDTH_PX = 640;
 const BASE_MAX_HEIGHT_VH = 40;
 
-const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRatio, scale = 1 }) => {
+const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRatio, scale = 1, zoom = 1, objectPosition = 'center', origin = 'center' }) => {
   const widthPx = Math.round(BASE_WIDTH_PX * scale);
   const maxHeightVh = BASE_MAX_HEIGHT_VH * scale;
 
@@ -27,10 +30,16 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
           return (
             <div
               key={i}
-              className="relative border border-black/20"
+              className="relative overflow-hidden border border-[#222]"
               style={{ width: `min(${widthPx}px, 80vw)`, aspectRatio }}
             >
-              <Image src={src} alt="" fill className="object-cover" />
+              <Image
+                src={src}
+                alt=""
+                fill
+                className="object-cover"
+                style={{ objectPosition, transformOrigin: origin, transform: `scale(${zoom})` }}
+              />
             </div>
           );
         }
@@ -41,7 +50,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
             alt=""
             width={widthPx}
             height={Math.round(widthPx * 0.75)}
-            className="object-contain border border-black/20"
+            className="object-contain border border-[#222]"
             style={{ maxWidth: `min(${widthPx}px, 80vw)`, maxHeight: `${maxHeightVh}vh` }}
           />
         );
