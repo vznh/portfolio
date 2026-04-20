@@ -353,6 +353,26 @@ const IndexView = () => {
                 </div>
               </span>
             </motion.div>
+
+            <span className="font-jb text-xs tracking-tight text-[#1E1919] opacity-50 pl-1">-</span>
+
+            <motion.div
+              className="font-jb text-xs tracking-tight text-[#1E1919]"
+              initial={{ opacity: 0.5 }}
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              <Link href="https://x.com/@vivivinh" target="_blank">X</Link>, <Link href="https://linkedin.com/in/vznh" target="_blank">LinkedIn</Link>
+            </motion.div>
+
+            <motion.div
+              className="font-jb text-xs tracking-tight text-[#1E1919]"
+              initial={{ opacity: 0.5 }}
+              whileHover={{ opacity: 1 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              <Link href="https://github.com/vznh" target="_blank">GitHub</Link>, <Link href="https://venh.substack.com" target="_blank">Substack</Link>
+            </motion.div>
           </div>
 
           <div className="absolute top-20 right-0 hidden md:flex flex-col gap-y-2">
