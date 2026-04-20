@@ -54,7 +54,7 @@ export const experiences: WorkRowProps[] = [
     date: "2023 - 2024",
     focusDate: "2023 - 2024",
     focusLocation: "Seoul, South Korea",
-    focusDesc: "I trained a sequence classifier on genomic data to replace a manual labeling pipeline."
+    focusDesc: "I trained a sequence classifier on previously labeled genomic data to replace a manual labeling pipeline."
   },
   {
     key: 4,
