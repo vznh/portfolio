@@ -10,7 +10,7 @@ export const experiences: WorkRowProps[] = [
     date: "JUN 2025 - PRESENT",
     images: ["/images/projects/morecompute/logo.png", "/images/projects/morecompute/sidebar.png"],
     focusDate: "JUN 2025 - PRESENT",
-    focusRole: "DENG",
+    focusLocation: "Brooklyn, New York",
     focusDesc: "I currently create brand identities and digital experiences for ambitious founders."
   },
   {
@@ -20,7 +20,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/apple.png",
     date: "JUN 2024 - AUG 2024",
     focusDate: "JUN 2024 - AUG 2024",
-    focusRole: "SWE",
+    focusLocation: "Cupertino, California",
     focusDesc: "I worked on the CoreOS team, focusing on various parts of the operating system and user interface when changes were made in the Settings app for the release of iOS26."
   },
   {
@@ -30,7 +30,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/etalyc.png",
     date: "2023",
     focusDate: "SEP 2023 - FEB 2024",
-    focusRole: "SWE",
+    focusLocation: "New York City, New York",
     focusDesc: "I worked on Hypersafe, a platform for traffic engineers to analyze incident data. I worked on everything from front, back and data. I cut hefty production processing from 2 minutes to averaging sub-10  seconds, and impl. memoization to handle 10K+ HTTP requests with a 99.6% cost drop."
   },
   {
@@ -41,7 +41,7 @@ export const experiences: WorkRowProps[] = [
     imgClassName: "scale-[0.65]",
     date: "2024",
     focusDate: "2024",
-    focusRole: "Founder",
+    focusLocation: "Stanford, California",
     focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.\n\nI co-founded Tokn, a social cryptocurrency analytics platform, owning all technical work. Exited in a multi-six acquisition.",
     images: ["/images/projects/polyglot/Polyglot.png"]
   },
@@ -52,7 +52,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/cmu.png",
     date: "2022",
     focusDate: "SEP 2022 - MAY 2023",
-    focusRole: "Scholar",
+    focusLocation: "Pittsburgh, Pennsylvania",
     focusDesc: "I built a baseline scalable neural network using Rust to interpret variably scabled neurological data for the Neuro Technology and Engineering lab."
   },
   {
@@ -62,7 +62,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/ucsc.png",
     date: "2022",
     focusDate: "DEC 2022 - JUN 2023",
-    focusRole: "Scholar",
+    focusLocation: "Santa Cruz, California",
     focusDesc: "I helped build a prompt-to-video pipeline, experimenting with the film industry to produce Version 0 prototypes under Dr. Allen."
   },
 ];
