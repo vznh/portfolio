@@ -17,7 +17,7 @@ export interface WorkRowProps {
   imgClassName?: string;
 
   focusDate?: string;
-  focusRole?: string;
+  focusLocation?: string;
   focusDesc?: string;
   images?: string[];
 }
@@ -30,7 +30,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
   className = "",
   imgClassName = "",
   focusDate = "",
-  focusRole = "",
+  focusLocation = "",
   focusDesc = "",
   images = []
 }) => {
@@ -210,7 +210,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         <Focus
           visible={phase === 'dimming'}
           date={focusDate}
-          role={focusRole || role}
+          role={focusLocation || role}
           desc={focusDesc}
           images={images}
         />
@@ -227,7 +227,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 const WorkSection = () => {
   return <div className="work-section-container flex flex-col gap-y-3">
     {experiences.map((i) => (
-      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} images={i.images} />
+      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusLocation={i.focusLocation} images={i.images} />
     ))}
   </div>
 }
