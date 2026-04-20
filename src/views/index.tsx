@@ -376,6 +376,7 @@ const IndexView = () => {
 
           <div className="absolute top-20 right-0 hidden md:flex flex-col gap-y-2">
             <motion.div
+              className="group"
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 0.7 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -405,12 +406,13 @@ const IndexView = () => {
                   </>
                 )}
               </Link>{" "}
-              <span className="text-[var(--text-color)] text-[11px]">↗</span>
+              <span className="text-[var(--text-color)] text-[11px] inline-block transition-transform duration-300 ease-out group-hover:-rotate-45">→</span>
             </motion.div>
           </div>
 
           <div className="absolute top-16 md:hidden left-0 flex flex-col gap-y-2">
             <motion.div
+              className="group"
               initial={{ opacity: 0.5 }}
               whileHover={{ opacity: 0.7 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
@@ -440,7 +442,7 @@ const IndexView = () => {
                   </>
                 )}
               </Link>{" "}
-              <span className="text-[var(--text-color)] text-[11px]">↗</span>
+              <span className="text-[var(--text-color)] text-[11px] inline-block transition-transform duration-300 ease-out group-hover:-rotate-45">→</span>
             </motion.div>
           </div>
         </footer>
