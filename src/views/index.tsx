@@ -25,7 +25,17 @@ const IndexView = () => {
   const [eyeHovered, setEyeHovered] = React.useState(false);
   const [mailHovered, setMailHovered] = React.useState(false);
   const [themeIndex, setThemeIndex] = React.useState(0);
+  const [dimAnimating, setDimAnimating] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (hoveredAnchor) {
+      setDimAnimating(true);
+      return;
+    }
+    const timer = setTimeout(() => setDimAnimating(false), 500);
+    return () => clearTimeout(timer);
+  }, [hoveredAnchor]);
 
   React.useEffect(() => {
     const theme = THEMES[themeIndex % THEMES.length];
@@ -200,7 +210,7 @@ const IndexView = () => {
               initial={{ opacity: 0.05 }}
               animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("work") ?? 1) }}
               exit={{ opacity: 0 }}
-              transition={hoveredAnchor ? { duration: 0.5, ease: "easeInOut" } : getTransition({
+              transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1,
                 duration: 0.8,
                 ease: "easeInOut",
@@ -228,7 +238,7 @@ const IndexView = () => {
               initial={{ opacity: 0.05 }}
               animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("projects") ?? 1) }}
               exit={{ opacity: 0 }}
-              transition={hoveredAnchor ? { duration: 0.5, ease: "easeInOut" } : getTransition({
+              transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1.3,
                 duration: 1.0,
                 ease: "easeInOut",
