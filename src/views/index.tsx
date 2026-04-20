@@ -6,6 +6,7 @@ import Logo from "@/components/Logo";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useVersion } from "@/hooks/useVersion";
+import { FEATURES } from "@/presets/features";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -135,51 +136,59 @@ const IndexView = () => {
           </div>
         </div>
 
-        <div className="h-12" />
+        {FEATURES.work && (
+          <>
+            <div className="h-12" />
 
-        <motion.div
-          ref={registerSection("work")}
-          data-section="work"
-          className="work-section-container flex flex-col gap-y-3"
-          initial={{ opacity: 0.05 }}
-          animate={{ opacity: getOpacity("work") ?? 1 }}
-          exit={{ opacity: 0 }}
-          transition={getTransition({
-            delay: 1,
-            duration: 0.8,
-            ease: "easeInOut",
-          })}
-        >
-          <div className="flex flex-row justify-between">
-            <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">
-              PREVIOUSLY
-            </span>
-            <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">
-              TYPE
-            </span>
-          </div>
-          <WorkSection />
-        </motion.div>
+            <motion.div
+              ref={registerSection("work")}
+              data-section="work"
+              className="work-section-container flex flex-col gap-y-3"
+              initial={{ opacity: 0.05 }}
+              animate={{ opacity: getOpacity("work") ?? 1 }}
+              exit={{ opacity: 0 }}
+              transition={getTransition({
+                delay: 1,
+                duration: 0.8,
+                ease: "easeInOut",
+              })}
+            >
+              <div className="flex flex-row justify-between">
+                <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+                  Antecedents
+                </span>
+                <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+                  Discipline
+                </span>
+              </div>
+              <WorkSection />
+            </motion.div>
+          </>
+        )}
 
-        <div className="h-16" />
-        <motion.div
-          ref={registerSection("projects")}
-          data-section="projects"
-          initial={{ opacity: 0.05 }}
-          animate={{ opacity: getOpacity("projects") ?? 1 }}
-          exit={{ opacity: 0 }}
-          transition={getTransition({
-            delay: 1.3,
-            duration: 1.0,
-            ease: "easeInOut",
-          })}
-          className="flex flex-col gap-y-4"
-        >
-          <span className="font-jb tracking-tight opacity-50 text-[#1E1919]">
-            PROJECTS
-          </span>
-          <ExperimentSection />
-        </motion.div>
+        {FEATURES.projects && (
+          <>
+            <div className="h-16" />
+            <motion.div
+              ref={registerSection("projects")}
+              data-section="projects"
+              initial={{ opacity: 0.05 }}
+              animate={{ opacity: getOpacity("projects") ?? 1 }}
+              exit={{ opacity: 0 }}
+              transition={getTransition({
+                delay: 1.3,
+                duration: 1.0,
+                ease: "easeInOut",
+              })}
+              className="flex flex-col gap-y-4"
+            >
+              <span className="font-plex font-normal tracking-tight opacity-50 text-[#1E1919]">
+                Projects
+              </span>
+              <ExperimentSection />
+            </motion.div>
+          </>
+        )}
 
         {/* This section should lowkey typewrite out itself */}
         <div className="h-24" />
