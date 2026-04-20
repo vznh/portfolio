@@ -67,31 +67,32 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
     }
   };
 
+  const hasImages = !!images && images.length > 0;
+
   return (
     <div
       className={`absolute top-1/2 left-1/2 bg-white border-black border-opacity-20 border transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ease-in-out z-50 ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
         }`}
       style={{
-        width: '288px',
-        height: '216px',
+        minWidth: '240px',
+        maxWidth: '320px',
+        width: 'max-content',
         backdropFilter: 'blur(8px)',
       }}
     >
-      <div className="flex flex-col h-full text-black text-xs justify-between font-medium px-2">
-        <div className="flex flex-row justify-between">
-          <div className="text-xs font-jb items-start p-2 pt-4 opacity-50">
-            <span>{date || 'DATE'}</span>
-          </div>
-          <div className="text-xs font-jb items-start p-2 pt-4 text-right opacity-50">
-            <span>{role || 'ROLE'}</span>
-          </div>
+      <div className="flex flex-col text-black text-xs font-medium p-4 gap-y-3">
+        <div className="flex flex-row justify-between gap-x-4">
+          <span className="text-xs font-jb opacity-50">{date || 'DATE'}</span>
+          <span className="text-xs font-jb text-right opacity-50">{role || 'ROLE'}</span>
         </div>
 
-        <div className="flex ml-2">
-          {renderImages()}
-        </div>
+        {hasImages && (
+          <div className="flex">
+            {renderImages()}
+          </div>
+        )}
 
-        <div className="text-xs font-jb items-end p-2 pb-4">
+        <div className="text-xs font-jb">
           {desc || 'No description available.'}
         </div>
       </div>
