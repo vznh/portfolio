@@ -198,7 +198,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
       </div>
 
       { /* Company goes here! */ }
-      <span className={`font-plex text-lg md:text-xl min-w-0 mr-3 overflow-hidden text-ellipsis whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
+      <span className={`font-plex text-lg md:text-xl shrink-0 mr-3 whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
         opacity: 0.8,
       }}>{ company }</span>
 
