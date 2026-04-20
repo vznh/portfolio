@@ -23,7 +23,7 @@ const Logo: React.FC<{ width: number, height: number, className?: string }> = ({
     <Image
       src={images[index]}
       alt={`logo frame${index + 1}`}
-      className={className}
+      className={`grayscale ${className}`}
       width={width}
       height={height}
       priority
