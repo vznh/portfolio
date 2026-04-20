@@ -393,16 +393,14 @@ const IndexView = () => {
                       onComplete={
                         currentCryptedIndex === 2 ? decrypted : undefined
                       }
-                    />{" "}
-                    <span className="text-[11px]">/</span>{" "}
-                    <Crypted text="April 2026" delay={15} />
+                    />
+                    , <Crypted text="April 2026" delay={15} />
                   </>
                 ) : showCrypted ? (
                   ""
                 ) : (
                   <>
-                    Version {version} <span className="text-[11px]">/</span>{" "}
-                    April 2026
+                    Version {version}, April 2026
                   </>
                 )}
               </Link>{" "}
@@ -429,16 +427,14 @@ const IndexView = () => {
                       onComplete={
                         currentCryptedIndex === 2 ? decrypted : undefined
                       }
-                    />{" "}
-                    <span className="text-[11px]">/</span>{" "}
-                    <Crypted text="April 2026" delay={15} />
+                    />
+                    , <Crypted text="April 2026" delay={15} />
                   </>
                 ) : showCrypted ? (
                   ""
                 ) : (
                   <>
-                    Version {version} <span className="text-[11px]">/</span>{" "}
-                    April 2026
+                    Version {version}, April 2026
                   </>
                 )}
               </Link>{" "}
