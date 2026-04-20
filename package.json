@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-icons": "^1.3.2",
     "@vercel/analytics": "^1.5.0",
     "@vznh/substack": "^0.1.2",
     "framer-motion": "^12.16.0",
