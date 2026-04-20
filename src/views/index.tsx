@@ -136,7 +136,7 @@ const IndexView = () => {
                   desc="I invest in consumer-facing apps or artificial intelligence labs."
                 />
               </span>
-              <span className="opacity-50">. Based in New York City as a researcher and full-stack generalist. I was previously at </span>
+              <span className="opacity-50"> at 21. Based in New York City as a researcher and full-stack generalist. I was previously at </span>
               <span
                 className="link sc-anchor"
                 onMouseEnter={() => setHoveredAnchor('sc')}
