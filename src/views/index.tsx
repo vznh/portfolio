@@ -97,12 +97,11 @@ const IndexView = () => {
     });
 
     const apply = (el: HTMLElement) => {
+      el.style.setProperty('transition', `opacity ${duration}`, 'important');
       if (hoveredAnchor) {
-        el.style.setProperty('transition', `opacity ${duration}`, 'important');
         el.style.setProperty('opacity', '0.1', 'important');
       } else {
         el.style.removeProperty('opacity');
-        el.style.removeProperty('transition');
       }
     };
 
