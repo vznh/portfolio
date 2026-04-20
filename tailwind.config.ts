@@ -5,7 +5,8 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/views/**/*.{js,ts,jsx,tsx,mdx}"
+    "./src/views/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/presets/**/*.{js,ts,jsx,tsx,mdx}"
   ],
   theme: {
     extend: {
@@ -19,6 +20,7 @@ const config: Config = {
         "tiempos": ["Tiempos", "serif"],
         "geist": ["Geist", "sans-serif"],
         "jb": ["JB", "sans-serif"],
+        "plex": ["IBM Plex Sans", "Plex", "sans-serif"],
         "khmer": ["khmer", "sans-serif"],
         "newsreader": ["Newsreader", "serif"],
         "covik": ["Covik", "sans-serif"],
