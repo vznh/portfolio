@@ -10,6 +10,7 @@ import { useVersion } from "@/hooks/useVersion";
 import { FEATURES } from "@/presets/features";
 import { THEMES } from "@/presets/theme";
 import { EyeIcon, MailIcon } from "@/presets/svgs";
+import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
@@ -79,7 +80,7 @@ const IndexView = () => {
     const duration = '0.5s ease-in-out';
     const targetSelectors = [
       '.main-content h1',
-      '.main-content .font-jb.tracking-tighter',
+      '.main-content .social-row',
       'footer',
     ];
     const targets: HTMLElement[] = [];
@@ -167,48 +168,24 @@ const IndexView = () => {
               </span>
               <span className="opacity-50">.</span>
             </span>
-            <div>
-              <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[var(--text-color)]">
-                <Link
-                  className="hover:underline underline-offset-4 decoration-dashed"
-                  target="_blank"
-                  href="https://x.com/@vivivinh"
-                >
-                  X
-                </Link>
-                <span className="text-sm">\</span>
-                <Link
-                  className="hover:underline underline-offset-4 decoration-dashed"
-                  target="_blank"
-                  href="https://linkedin.com/in/vznh"
-                >
-                  LinkedIn
-                </Link>
-                <span className="text-sm">\</span>
-                <Link
-                  className="hover:underline underline-offset-4 decoration-dashed"
-                  target="_blank"
-                  href="https://venh.substack.com"
-                >
-                  Substack
-                </Link>
-                <span className="text-sm">\</span>
-                <Link
-                  className="hover:underline underline-offset-4 decoration-dashed"
-                  target="_blank"
-                  href="https://open.spotify.com/user/31axml7xyxvqdf55teottiazjpc4"
-                >
-                  Spotify
-                </Link>
-                <span className="text-sm">\</span>
-                <Link
-                  className="hover:underline underline-offset-4 decoration-dashed"
-                  target="_blank"
-                  href="https://github.com/vznh"
-                >
-                  GitHub
-                </Link>
-              </div>
+            <div className="h-2" />
+            <div className="social-row flex flex-row items-center gap-x-3 text-[var(--text-color)]">
+              <Link href="https://x.com/@vivivinh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </Link>
+              <Link href="https://linkedin.com/in/vznh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                <LinkedInLogoIcon width={23} height={23} />
+              </Link>
+              <Link href="https://github.com/vznh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                <GitHubLogoIcon width={23} height={23} />
+              </Link>
+              <Link href="https://venh.substack.com" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                <svg width="23" height="23" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3.5 2C3.22386 2 3 2.22386 3 2.5V13.5C3 13.6818 3.09864 13.8492 3.25762 13.9373C3.41659 14.0254 3.61087 14.0203 3.765 13.924L7.5 11.5896L11.235 13.924C11.3891 14.0203 11.5834 14.0254 11.7424 13.9373C11.9014 13.8492 12 13.6818 12 13.5V2.5C12 2.22386 11.7761 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
+                </svg>
+              </Link>
             </div>
           </div>
         </div>
