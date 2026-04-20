@@ -42,7 +42,7 @@ export const experiences: WorkRowProps[] = [
     date: "2024",
     focusDate: "2024",
     focusRole: "Founder",
-    focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.",
+    focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.\n\nI co-founded Tokn, a social cryptocurrency analytics platform, owning all technical work. Exited in a multi-six acquisition.",
     images: ["/images/projects/polyglot/Polyglot.png"]
   },
   {
