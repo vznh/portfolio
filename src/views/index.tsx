@@ -19,7 +19,6 @@ const IndexView = () => {
   const { registerSection, getOpacity, getTransition } = useActiveSection(3000);
   const version = useVersion();
   const [showCrypted, setShowCrypted] = React.useState(false);
-  const [currentCryptedIndex, setCurrentCryptedIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
   const [eyeHovered, setEyeHovered] = React.useState(false);
@@ -81,10 +80,6 @@ const IndexView = () => {
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
-
-  const decrypted = () => {
-    setCurrentCryptedIndex((prev) => prev + 1);
-  };
 
   React.useEffect(() => {
     const duration = '0.5s ease-in-out';
@@ -277,16 +272,8 @@ const IndexView = () => {
                 href="mailto:jasonvinhson@gmail.com"
                 className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               >
-                {showCrypted && currentCryptedIndex >= 0 ? (
-                  <Crypted
-                    text="REQUEST A RESUME"
-                    delay={15}
-                    onComplete={
-                      currentCryptedIndex === 0 ? decrypted : undefined
-                    }
-                  />
-                ) : showCrypted ? (
-                  ""
+                {showCrypted ? (
+                  <Crypted text="REQUEST A RESUME" delay={15} />
                 ) : (
                   "REQUEST A RESUME"
                 )}
@@ -321,16 +308,8 @@ const IndexView = () => {
                 href="https://cal.com/jason-son-suncdj/15min"
                 className="font-jb text-xs tracking-tight text-[var(--text-color)]"
               >
-                {showCrypted && currentCryptedIndex >= 1 ? (
-                  <Crypted
-                    text="BOOK A CALL"
-                    delay={15}
-                    onComplete={
-                      currentCryptedIndex === 1 ? decrypted : undefined
-                    }
-                  />
-                ) : showCrypted ? (
-                  ""
+                {showCrypted ? (
+                  <Crypted text="BOOK A CALL" delay={15} />
                 ) : (
                   "BOOK A CALL"
                 )}
@@ -365,19 +344,11 @@ const IndexView = () => {
                 href="https://github.com/vznh/mole/releases/"
                 className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
               >
-                {showCrypted && currentCryptedIndex >= 2 ? (
+                {showCrypted ? (
                   <>
-                    <Crypted
-                      text={`Version ${version}`}
-                      delay={15}
-                      onComplete={
-                        currentCryptedIndex === 2 ? decrypted : undefined
-                      }
-                    />
+                    <Crypted text={`Version ${version}`} delay={15} />
                     , <Crypted text="April 2026" delay={15} />
                   </>
-                ) : showCrypted ? (
-                  ""
                 ) : (
                   <>
                     Version {version}, April 2026
@@ -399,19 +370,11 @@ const IndexView = () => {
                 href="https://github.com/vznh/mole/releases/"
                 className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
               >
-                {showCrypted && currentCryptedIndex >= 2 ? (
+                {showCrypted ? (
                   <>
-                    <Crypted
-                      text={`Version ${version}`}
-                      delay={15}
-                      onComplete={
-                        currentCryptedIndex === 2 ? decrypted : undefined
-                      }
-                    />
+                    <Crypted text={`Version ${version}`} delay={15} />
                     , <Crypted text="April 2026" delay={15} />
                   </>
-                ) : showCrypted ? (
-                  ""
                 ) : (
                   <>
                     Version {version}, April 2026
