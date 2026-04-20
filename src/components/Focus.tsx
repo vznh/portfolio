@@ -81,10 +81,12 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
       }}
     >
       <div className="flex flex-col text-black text-xs font-medium p-4 gap-y-3">
-        <div className="flex flex-row justify-between gap-x-4">
-          <span className="text-xs font-jb opacity-50">{date || 'DATE'}</span>
-          <span className="text-xs font-jb text-right opacity-50">{role || 'ROLE'}</span>
-        </div>
+        {(date || role) && (
+          <div className="flex flex-row justify-between gap-x-4">
+            {date && <span className="text-xs font-jb opacity-50">{date}</span>}
+            {role && <span className="text-xs font-jb text-right opacity-50">{role}</span>}
+          </div>
+        )}
 
         {hasImages && (
           <div className="flex">
@@ -92,7 +94,7 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
           </div>
         )}
 
-        <div className="text-xs font-jb">
+        <div className="text-xs font-jb whitespace-pre-line">
           {desc || 'No description available.'}
         </div>
       </div>
