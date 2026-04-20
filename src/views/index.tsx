@@ -296,14 +296,14 @@ const IndexView = () => {
                       }
                     />{" "}
                     <span className="text-[11px]">/</span>{" "}
-                    <Crypted text="September 2025" delay={15} />
+                    <Crypted text="April 2026" delay={15} />
                   </>
                 ) : showCrypted ? (
                   ""
                 ) : (
                   <>
                     Version {version} <span className="text-[11px]">/</span>{" "}
-                    September 2025
+                    April 2026
                   </>
                 )}
               </Link>{" "}
@@ -331,14 +331,14 @@ const IndexView = () => {
                       }
                     />{" "}
                     <span className="text-[11px]">/</span>{" "}
-                    <Crypted text="September 2025" delay={15} />
+                    <Crypted text="April 2026" delay={15} />
                   </>
                 ) : showCrypted ? (
                   ""
                 ) : (
                   <>
                     Version {version} <span className="text-[11px]">/</span>{" "}
-                    September 2025
+                    April 2026
                   </>
                 )}
               </Link>{" "}
