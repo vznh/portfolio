@@ -14,6 +14,7 @@ export interface WorkRowProps {
   role: string;
   img: string;
   className?: string;
+  imgClassName?: string;
 
   focusDate?: string;
   focusRole?: string;
@@ -27,6 +28,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
   role,
   img,
   className = "",
+  imgClassName = "",
   focusDate = "",
   focusRole = "",
   focusDesc = "",
@@ -185,13 +187,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
         cursor: phase === 'growing' ? 'wait' : 'pointer',
       }}
     >
-      <Image
-        src={img}
-        alt={`Icon for company ${company}`}
-        width={24}
-        height={24}
-        className="rounded-sm w-6 h-6 md:w-8 md:h-8"
-      />
+      <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0">
+        <Image
+          src={img}
+          alt={`Icon for company ${company}`}
+          fill
+          sizes="32px"
+          className={`rounded-sm object-contain ${imgClassName}`}
+        />
+      </div>
 
       { /* Company goes here! */ }
       <span className={`font-plex text-lg md:text-xl min-w-0 mr-3 overflow-hidden text-ellipsis whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
@@ -223,7 +227,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 const WorkSection = () => {
   return <div className="work-section-container flex flex-col gap-y-3">
     {experiences.map((i) => (
-      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} images={i.images} />
+      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusRole={i.focusRole} images={i.images} />
     ))}
   </div>
 }
