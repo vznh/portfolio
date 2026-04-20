@@ -64,8 +64,14 @@ const IndexView = () => {
             <h1 className="font-lora text-4xl tracking-tight text-[#1E1919]">
               Jason Son
             </h1>
-            <span className="font-plex text-xl opacity-50 tracking-tight text-[#1E1919]">
-              Engineer and angel investor. Based in New York City as a researcher and full-stack generalist. I was previously at Santa Cruz and in San Francisco.
+            <span className="font-plex text-xl tracking-tight text-[#1E1919]">
+              <span className="opacity-50">Engineer and </span>
+              <Link className="link" href="#" target="_blank">angel investor</Link>
+              <span className="opacity-50">. Based in New York City as a researcher and full-stack generalist. I was previously at </span>
+              <Link className="link" href="#" target="_blank">Santa Cruz</Link>
+              <span className="opacity-50"> and in </span>
+              <Link className="link" href="#" target="_blank">San Francisco</Link>
+              <span className="opacity-50">.</span>
             </span>
             <div>
               <div className="font-jb tracking-tighter opacity-50 flex flex-wrap gap-x-2 items-center text-[#1E1919]">

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --highlight: #222;
   background-color: #F8FBF8;
   color: #1E1919;
 
@@ -51,6 +52,15 @@
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
   animation: pulse 6s infinite;
+}
+
+.link {
+  color: var(--highlight);
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  text-decoration-color: var(--highlight);
+  text-decoration-thickness: 0.8px;
+  opacity: 1;
 }
 
 
