@@ -1,6 +1,7 @@
 // views/
 import Crypted from "@/components/Crypted";
 import ExperimentSection from "@/components/ExperimentSection";
+import Focus from "@/components/Focus";
 import Logo from "@/components/Logo";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
@@ -16,6 +17,7 @@ const IndexView = () => {
   const [showCrypted, setShowCrypted] = React.useState(false);
   const [currentCryptedIndex, setCurrentCryptedIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
+  const [angelHovered, setAngelHovered] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -66,7 +68,19 @@ const IndexView = () => {
             </h1>
             <span className="font-plex text-xl tracking-tight text-[#1E1919]">
               <span className="opacity-50">Engineer and </span>
-              <Link className="link" href="#" target="_blank">angel investor</Link>
+              <span
+                className="relative inline-block"
+                onMouseEnter={() => setAngelHovered(true)}
+                onMouseLeave={() => setAngelHovered(false)}
+              >
+                <Link className="link" href="#" target="_blank">angel investor</Link>
+                <Focus
+                  visible={angelHovered}
+                  date="PLACEHOLDER"
+                  role="Angel Investor"
+                  desc="Placeholder description for angel investing activity."
+                />
+              </span>
               <span className="opacity-50">. Based in New York City as a researcher and full-stack generalist. I was previously at </span>
               <Link className="link" href="#" target="_blank">Santa Cruz</Link>
               <span className="opacity-50"> and in </span>
