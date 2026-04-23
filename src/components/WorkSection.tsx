@@ -56,12 +56,13 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
   React.useEffect(() => {
     if (phase === 'growing' && active) {
-      // After 1 second of growing, start dimming other elements
+      const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+      const delay = isMobile ? 0 : 1000;
       const dimmingTimer = setTimeout(() => {
-        if (active) { // Double-check we're still hovered before transitioning
+        if (active) {
           setPhase('dimming');
         }
-      }, 1000);
+      }, delay);
 
       return () => clearTimeout(dimmingTimer);
     }
