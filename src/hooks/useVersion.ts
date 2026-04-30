@@ -8,12 +8,12 @@ interface GitHubRelease {
 }
 
 const useVersion = () => {
-  const [version, setVersion] = useState<string>('4.2');
+  const [version, setVersion] = useState<string>('5.1');
 
   useEffect(() => {
     const fetchLatestRelease = async () => {
       try {
-        const response = await fetch('https://api.github.com/repos/vznh/mole/releases/latest');
+        const response = await fetch('https://api.github.com/repos/vznh/portfolio/releases/latest');
         if (response.ok) {
           const release: GitHubRelease = await response.json();
           setVersion(release.tag_name);
