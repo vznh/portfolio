@@ -168,7 +168,7 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
         }`}
       style={{
         minWidth: '240px',
-        maxWidth: 'min(720px, calc(100vw - 32px))',
+        maxWidth: hasImages ? 'min(720px, calc(100vw - 32px))' : '320px',
         width: 'max-content',
         backdropFilter: 'blur(8px)',
       }}
