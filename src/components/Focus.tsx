@@ -2,6 +2,88 @@
 import Image from 'next/image';
 import React from 'react';
 
+const isVideo = (src: string) => /\.(mp4|mov|webm)$/i.test(src);
+
+// Progressive blur — banded stack inspired by ProgressiveBlurHeader (variable
+// blur). Each layer applies a single blur radius confined to a soft trapezoidal
+// band; bands tile from strongest-at-edge to weakest-at-content. A subtle bg
+// tint at the outermost edge dissolves the strongest blur into the dialog bg.
+const ProgressiveBlur: React.FC<{ position: 'top' | 'bottom' }> = ({ position }) => {
+  // Strongest first (closest to outer edge), weakest last (closest to content).
+  const blurs = [40, 24, 14, 8, 4.5, 2.5, 1.25, 0.5];
+  const n = blurs.length;
+  const step = 100 / n;
+  const dir = position === 'top' ? 'to bottom' : 'to top';
+  const tintDir = position === 'top' ? 'to top' : 'to bottom';
+  const posClass = position === 'top' ? '-top-px' : '-bottom-px';
+  return (
+    <div className={`md:hidden pointer-events-none absolute inset-x-0 h-10 z-10 ${posClass}`}>
+      {blurs.map((blur, i) => {
+        const a = Math.max(0, (i - 1) * step);
+        const b = i * step;
+        const c = (i + 1) * step;
+        const d = Math.min(100, (i + 2) * step);
+        const mask = `linear-gradient(${dir}, black ${a}%, black ${b}%, black ${c}%, transparent ${d}%)`;
+        return (
+          <div
+            key={i}
+            className="absolute inset-0"
+            style={{
+              backdropFilter: `blur(${blur}px)`,
+              WebkitBackdropFilter: `blur(${blur}px)`,
+              WebkitMaskImage: mask,
+              maskImage: mask,
+            }}
+          />
+        );
+      })}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(${tintDir}, rgba(255,255,255,0) 55%, rgba(255,255,255,0.65) 85%, rgba(255,255,255,1) 100%)`,
+        }}
+      />
+    </div>
+  );
+};
+
+const LoopingVideo: React.FC<{ src: string; width?: number; height?: number; className?: string }> = ({ src, width, height, className }) => {
+  const ref = React.useRef<HTMLVideoElement>(null);
+  const [opacity, setOpacity] = React.useState(1);
+  const FADE_MS = 350;
+
+  const onTimeUpdate = () => {
+    const v = ref.current;
+    if (!v || !v.duration) return;
+    if (v.duration - v.currentTime <= FADE_MS / 1000) setOpacity(0);
+  };
+
+  const onEnded = () => {
+    const v = ref.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+    requestAnimationFrame(() => setOpacity(1));
+  };
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      width={width}
+      height={height}
+      autoPlay
+      muted
+      playsInline
+      preload="metadata"
+      onTimeUpdate={onTimeUpdate}
+      onEnded={onEnded}
+      className={`w-auto ${className ?? ''}`}
+      style={{ opacity, transition: `opacity ${FADE_MS}ms ease-in-out`, ...(height ? { height } : {}), ...(width ? { width } : {}) }}
+    />
+  );
+};
+
 interface FocusProps {
   visible: boolean;
   date?: string; // Jun 2024 - Aug 2024
@@ -11,60 +93,71 @@ interface FocusProps {
 }
 
 const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const [isHovered, setIsHovered] = React.useState(false);
+  const scrollRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollUp, setCanScrollUp] = React.useState(false);
+  const [canScrollDown, setCanScrollDown] = React.useState(false);
+
+  const updateScrollState = React.useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const threshold = 2;
+    setCanScrollUp(el.scrollTop > threshold);
+    setCanScrollDown(el.scrollTop + el.clientHeight < el.scrollHeight - threshold);
+  }, []);
 
   React.useEffect(() => {
-    if (!images || images.length <= 3 || !visible || isHovered) return;
-
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 2500); // 2.5 seconds
-
-    return () => clearInterval(interval);
-  }, [images, visible, isHovered]);
-
-  React.useEffect(() => {
-    if (!visible) {
-      setCurrentImageIndex(0);
-    }
-  }, [visible]);
+    if (!visible) return;
+    updateScrollState();
+    const el = scrollRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', updateScrollState, { passive: true });
+    const ro = new ResizeObserver(updateScrollState);
+    ro.observe(el);
+    return () => {
+      el.removeEventListener('scroll', updateScrollState);
+      ro.disconnect();
+    };
+  }, [visible, images, updateScrollState]);
 
   const renderImages = () => {
     if (!images || images.length === 0) return null;
-
-    if (images.length <= 3) {
-      return (
-        <div className="flex flex-row gap-x-2 justify-center">
-          {images.map((image, index) => (
+    const H = 112;
+    return (
+      <div className="relative w-full md:w-[640px]">
+        {canScrollUp && <ProgressiveBlur position="top" />}
+        {canScrollDown && <ProgressiveBlur position="bottom" />}
+      <div ref={scrollRef} className="flex flex-col md:flex-row md:flex-wrap gap-2 md:justify-between items-center w-full max-h-[60vh] md:max-h-none overflow-y-auto md:overflow-visible py-12 md:py-0">
+        {images.map((src, index) => {
+          const h = /Footer/i.test(src) ? Math.round(H * 0.85) : H;
+          const heightClass = /Footer/i.test(src) ? 'h-[190px] md:h-[95px]' : 'h-[224px] md:h-[112px]';
+          if (isVideo(src)) return <LoopingVideo key={index} src={src} className={heightClass} />;
+          const img = (
             <Image
               key={index}
-              src={image}
+              src={src}
               alt=""
-              width={images.length === 1 ? 160 : images.length === 2 ? 75 : 50}
-              height={90}
-              className="object-cover"
+              width={200}
+              height={h}
+              className={`w-auto object-contain ${heightClass}`}
             />
-          ))}
+          );
+          const linkMap: Record<string, string> = {
+            Kim: 'https://davidkimjs.space',
+            Coinvest: 'https://liquid.trade',
+          };
+          const matchedHref = Object.entries(linkMap).find(([k]) => new RegExp(k, 'i').test(src))?.[1];
+          if (matchedHref) {
+            return (
+              <a key={index} href={matchedHref} target="_blank" rel="noopener noreferrer">
+                {img}
+              </a>
+            );
+          }
+          return img;
+        })}
         </div>
-      );
-    } else {
-      return (
-        <div 
-          className="relative overflow-hidden"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <Image
-            src={images[currentImageIndex]}
-            alt=""
-            width={160}
-            height={90}
-            className="transition-opacity duration-300"
-          />
-        </div>
-      );
-    }
+      </div>
+    );
   };
 
   const hasImages = !!images && images.length > 0;
@@ -75,7 +168,7 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
         }`}
       style={{
         minWidth: '240px',
-        maxWidth: '320px',
+        maxWidth: 'min(720px, calc(100vw - 32px))',
         width: 'max-content',
         backdropFilter: 'blur(8px)',
       }}

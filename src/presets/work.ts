@@ -8,7 +8,7 @@ export const experiences: WorkRowProps[] = [
     role: "Creative",
     img: "/images/logo/hi.png",
     date: "JUN 2025 - PRESENT",
-    images: ["/images/projects/morecompute/logo.png", "/images/projects/morecompute/sidebar.png"],
+    images: ["/videos/Paradigm1.mov", "/videos/Paradigm2.mov", "/images/Kim.png", "/images/Picky1.png", "/images/AGMNTContent.png", "/images/Coinvest.png"],
     focusDate: "2025 - Present",
     focusLocation: "Brooklyn, New York",
     focusDesc: "I currently create brand identities and digital experiences for ambitious founders."
