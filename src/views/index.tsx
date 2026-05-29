@@ -19,7 +19,7 @@ const IndexView = () => {
   const { registerSection, getOpacity, getTransition } = useActiveSection(3000);
   const version = useVersion();
   const [showCrypted, setShowCrypted] = React.useState(false);
-  const [hasStarted, setHasStarted] = React.useState(false);
+  const hasStartedRef = React.useRef(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
   const [eyeHovered, setEyeHovered] = React.useState(false);
   const [mailHovered, setMailHovered] = React.useState(false);
@@ -61,12 +61,8 @@ const IndexView = () => {
 
       const shouldShow = distanceFromCenter <= threshold;
 
-      if (shouldShow && !hasStarted) {
-        setHasStarted(true);
-        setShowCrypted(true);
-      }
-
-      if (hasStarted) {
+      if (shouldShow && !hasStartedRef.current) {
+        hasStartedRef.current = true;
         setShowCrypted(true);
       }
     };
@@ -81,49 +77,33 @@ const IndexView = () => {
     };
   }, []);
 
-  React.useEffect(() => {
-    const duration = '0.5s ease-in-out';
-    const targetSelectors = [
-      '.main-content h1',
-      '.main-content .social-row',
-      'footer',
-    ];
-    const targets: HTMLElement[] = [];
-    targetSelectors.forEach((sel) => {
-      document.querySelectorAll(sel).forEach((el) => targets.push(el as HTMLElement));
-    });
+  // Dimming is derived from the active anchor and applied declaratively below.
+  // A non-mouse pointer (touch/pen) toggles the anchor on tap, since synthetic
+  // mouseenter/mouseleave events don't fire reliably on touch devices.
+  const DIM_OPACITY = 0.1;
+  const dimTransition = "transition-opacity duration-500 ease-in-out";
 
-    const activeClass = hoveredAnchor ? `${hoveredAnchor}-anchor` : null;
-    const siblings: HTMLElement[] = [];
-    document.querySelectorAll('.vc-tagline > *').forEach((el) => {
-      if (!activeClass || !el.classList.contains(activeClass)) {
-        siblings.push(el as HTMLElement);
+  // Opacity for an element that is fully lit when idle and dimmed while any anchor is active.
+  const blockOpacity = hoveredAnchor ? DIM_OPACITY : 1;
+  // Opacity for the muted ("opacity-50") tagline text.
+  const mutedOpacity = hoveredAnchor ? DIM_OPACITY : 0.5;
+  // Opacity for an anchor: itself stays lit, the others dim when any anchor is active.
+  const anchorOpacity = (self: 'vc' | 'sc' | 'sf') =>
+    hoveredAnchor && hoveredAnchor !== self ? DIM_OPACITY : 1;
+
+  const anchorHandlers = (anchor: 'vc' | 'sc' | 'sf') => ({
+    onPointerEnter: (e: React.PointerEvent) => {
+      if (e.pointerType === 'mouse') setHoveredAnchor(anchor);
+    },
+    onPointerLeave: (e: React.PointerEvent) => {
+      if (e.pointerType === 'mouse') setHoveredAnchor(null);
+    },
+    onPointerUp: (e: React.PointerEvent) => {
+      if (e.pointerType !== 'mouse') {
+        setHoveredAnchor((prev) => (prev === anchor ? null : anchor));
       }
-    });
-
-    const apply = (el: HTMLElement) => {
-      el.style.setProperty('transition', `opacity ${duration}`, 'important');
-      if (hoveredAnchor) {
-        el.style.setProperty('opacity', '0.1', 'important');
-      } else {
-        el.style.removeProperty('opacity');
-      }
-    };
-
-    targets.forEach(apply);
-    siblings.forEach(apply);
-
-    return () => {
-      targets.forEach((el) => {
-        el.style.removeProperty('opacity');
-        el.style.removeProperty('transition');
-      });
-      siblings.forEach((el) => {
-        el.style.removeProperty('opacity');
-        el.style.removeProperty('transition');
-      });
-    };
-  }, [hoveredAnchor]);
+    },
+  });
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -136,15 +116,18 @@ const IndexView = () => {
       <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[var(--bg-color)]">
         <div className="w-full flex flex-row justify-between items-start">
           <div className="flex flex-col gap-y-2">
-            <h1 className="font-lora text-4xl tracking-tight text-[var(--text-color)]">
+            <h1
+              className={`font-lora text-4xl tracking-tight text-[var(--text-color)] ${dimTransition}`}
+              style={{ opacity: blockOpacity }}
+            >
               Jason Son
             </h1>
             <span className="font-plex text-xl tracking-tight text-[var(--text-color)] vc-tagline">
-              <span className="opacity-50">Engineer and </span>
+              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}>Engineer and </span>
               <span
-                className="relative inline-block vc-anchor"
-                onMouseEnter={() => setHoveredAnchor('vc')}
-                onMouseLeave={() => setHoveredAnchor(null)}
+                className={`relative inline-block vc-anchor ${dimTransition}`}
+                style={{ opacity: anchorOpacity('vc') }}
+                {...anchorHandlers('vc')}
               >
                 <span className="link">venture capitalist</span>
                 <Focus
@@ -154,26 +137,29 @@ const IndexView = () => {
                   desc="I invest in consumer-facing apps or artificial intelligence labs."
                 />
               </span>
-              <span className="opacity-50"> at 21. Based in New York City as a researcher and full-stack generalist. I graduated </span>
+              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 21. Based in New York City as a researcher and full-stack generalist. I graduated </span>
               <span
-                className="link sc-anchor"
-                onMouseEnter={() => setHoveredAnchor('sc')}
-                onMouseLeave={() => setHoveredAnchor(null)}
+                className={`link sc-anchor ${dimTransition}`}
+                style={{ opacity: anchorOpacity('sc') }}
+                {...anchorHandlers('sc')}
               >
                 Santa Cruz
               </span>
-              <span className="opacity-50"> at 20, and worked previously in </span>
+              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 20, and worked previously in </span>
               <span
-                className="link sf-anchor"
-                onMouseEnter={() => setHoveredAnchor('sf')}
-                onMouseLeave={() => setHoveredAnchor(null)}
+                className={`link sf-anchor ${dimTransition}`}
+                style={{ opacity: anchorOpacity('sf') }}
+                {...anchorHandlers('sf')}
               >
                 San Francisco
               </span>
-              <span className="opacity-50">.</span>
+              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}>.</span>
             </span>
             <div className="h-2" />
-            <div className="social-row flex flex-row items-center gap-x-3 text-[var(--text-color)]">
+            <div
+              className={`social-row flex flex-row items-center gap-x-3 text-[var(--text-color)] ${dimTransition}`}
+              style={{ opacity: blockOpacity }}
+            >
               <Link href="https://x.com/@vivivinh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
                 <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -253,7 +239,8 @@ const IndexView = () => {
 
         <footer
           ref={footerRef}
-          className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px]"
+          className={`relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px] ${dimTransition}`}
+          style={{ opacity: blockOpacity }}
         >
           <div className="hidden md:block">
             <Logo width={500} height={400} className="-rotate-[30deg]" onClick={cycleTheme} />
