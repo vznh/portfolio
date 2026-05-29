@@ -51,11 +51,13 @@ const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onC
     if (isCompleteRef.current) return;
 
     const revealInterval = setInterval(() => {
-      if (currentIndex < text.length) {
-        setCurrentIndex(prev => prev + 1);
-      } else {
+      setCurrentIndex(prev => {
+        if (prev < text.length) {
+          return prev + 1;
+        }
         clearInterval(revealInterval);
-      }
+        return prev;
+      });
     }, delay * 8); // Reveal next character every 8 cycles
 
     return () => clearInterval(revealInterval);
