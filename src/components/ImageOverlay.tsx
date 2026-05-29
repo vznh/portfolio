@@ -30,7 +30,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
           return (
             <div
               key={i}
-              className="relative overflow-hidden border border-[#222]"
+              className="relative overflow-hidden border-[0.5px] border-[#22222240]"
               style={{ width: `min(${widthPx}px, 80vw)`, aspectRatio }}
             >
               <Image
@@ -50,7 +50,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
             alt=""
             width={widthPx}
             height={Math.round(widthPx * 0.75)}
-            className="object-contain border border-[#222]"
+            className="object-contain border-[0.5px] border-[#22222240]"
             style={{ maxWidth: `min(${widthPx}px, 80vw)`, maxHeight: `${maxHeightVh}vh` }}
           />
         );
