@@ -5,7 +5,12 @@ import React from 'react';
 
 interface HoverContextType {
   hoveredItem: string | null;
-  setHoveredItem: (itemId: string | null) => void;
+  setHoveredItem: React.Dispatch<React.SetStateAction<string | null>>;
+  // The row currently in its "dimming" phase — i.e. the one whose Focus popup is
+  // showing. Drives the page-wide dim so it stays in sync with the popup instead
+  // of the (racy) per-row imperative DOM mutation it replaced.
+  focusedItem: string | null;
+  setFocusedItem: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const HoverContext = React.createContext<HoverContextType | undefined>(undefined);
@@ -16,9 +21,10 @@ interface HoverProviderProps {
 
 export const HoverProvider: React.FC<HoverProviderProps> = ({ children }) => {
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
+  const [focusedItem, setFocusedItem] = React.useState<string | null>(null);
 
   return (
-    <HoverContext.Provider value={{ hoveredItem, setHoveredItem }}>
+    <HoverContext.Provider value={{ hoveredItem, setHoveredItem, focusedItem, setFocusedItem }}>
       {children}
     </HoverContext.Provider>
   );
