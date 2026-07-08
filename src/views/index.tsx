@@ -3,9 +3,9 @@ import Crypted from "@/components/Crypted";
 import ExperimentSection from "@/components/ExperimentSection";
 import Focus from "@/components/Focus";
 import ImageOverlay from "@/components/ImageOverlay";
-import Logo from "@/components/Logo";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
+import { useHoverContext } from "@/hooks/useHoverContext";
 import { useVersion } from "@/hooks/useVersion";
 import { FEATURES } from "@/presets/features";
 import { THEMES } from "@/presets/theme";
@@ -17,6 +17,7 @@ import React from "react";
 
 const IndexView = () => {
   const { registerSection, getOpacity, getTransition } = useActiveSection(3000);
+  const { focusedItem } = useHoverContext();
   const version = useVersion();
   const [showCrypted, setShowCrypted] = React.useState(false);
   const hasStartedRef = React.useRef(false);
@@ -25,16 +26,23 @@ const IndexView = () => {
   const [mailHovered, setMailHovered] = React.useState(false);
   const [themeIndex, setThemeIndex] = React.useState(0);
   const [dimAnimating, setDimAnimating] = React.useState(false);
+  const [footerRevealed, setFooterRevealed] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
 
+  // One-shot fade-in for the footer once the hero/section reveals have played.
   React.useEffect(() => {
-    if (hoveredAnchor) {
+    const timer = setTimeout(() => setFooterRevealed(true), 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    if (hoveredAnchor || focusedItem) {
       setDimAnimating(true);
       return;
     }
     const timer = setTimeout(() => setDimAnimating(false), 500);
     return () => clearTimeout(timer);
-  }, [hoveredAnchor]);
+  }, [hoveredAnchor, focusedItem]);
 
   React.useEffect(() => {
     const theme = THEMES[themeIndex % THEMES.length];
@@ -45,7 +53,22 @@ const IndexView = () => {
     root.style.setProperty('--highlight', theme.highlight);
   }, [themeIndex]);
 
-  const cycleTheme = () => setThemeIndex((i) => (i + 1) % THEMES.length);
+
+  // Dismiss an open header Focus on any tap/click that lands outside the three
+  // anchors (empty space, an antecedent row, etc.). Touch devices never fire a
+  // pointerleave, so without this an opened Focus would stay stuck until the
+  // same word is tapped again.
+  React.useEffect(() => {
+    if (!hoveredAnchor) return;
+    const handlePointerDown = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target?.closest('.vc-anchor, .sc-anchor, .sf-anchor')) {
+        setHoveredAnchor(null);
+      }
+    };
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [hoveredAnchor]);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -83,13 +106,15 @@ const IndexView = () => {
   const DIM_OPACITY = 0.1;
   const dimTransition = "transition-opacity duration-500 ease-in-out";
 
-  // Opacity for an element that is fully lit when idle and dimmed while any anchor is active.
-  const blockOpacity = hoveredAnchor ? DIM_OPACITY : 1;
+  // Anything focused — a header anchor or an antecedent row — dims the page.
+  const anyFocus = hoveredAnchor !== null || focusedItem !== null;
+  // Opacity for an element that is fully lit when idle and dimmed while anything is focused.
+  const blockOpacity = anyFocus ? DIM_OPACITY : 1;
   // Opacity for the muted ("opacity-50") tagline text.
-  const mutedOpacity = hoveredAnchor ? DIM_OPACITY : 0.5;
-  // Opacity for an anchor: itself stays lit, the others dim when any anchor is active.
+  const mutedOpacity = anyFocus ? DIM_OPACITY : 0.5;
+  // Opacity for an anchor: itself stays lit, the others dim when anything is focused.
   const anchorOpacity = (self: 'vc' | 'sc' | 'sf') =>
-    hoveredAnchor && hoveredAnchor !== self ? DIM_OPACITY : 1;
+    anyFocus && hoveredAnchor !== self ? DIM_OPACITY : 1;
 
   const anchorHandlers = (anchor: 'vc' | 'sc' | 'sf') => ({
     onPointerEnter: (e: React.PointerEvent) => {
@@ -137,7 +162,7 @@ const IndexView = () => {
                   desc="I invest in consumer-facing apps or artificial intelligence labs."
                 />
               </span>
-              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 21. Based in New York City as a researcher and full-stack generalist. I graduated </span>
+              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 22. Based in New York City as a researcher and full-stack generalist. I graduated </span>
               <span
                 className={`link sc-anchor ${dimTransition}`}
                 style={{ opacity: anchorOpacity('sc') }}
@@ -160,7 +185,7 @@ const IndexView = () => {
               className={`social-row flex flex-row items-center gap-x-3 text-[var(--text-color)] ${dimTransition}`}
               style={{ opacity: blockOpacity }}
             >
-              <Link href="https://x.com/@vivivinh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="https://x.com/jasonvinhson" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
                 <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
@@ -189,7 +214,7 @@ const IndexView = () => {
               data-section="work"
               className="work-section-container flex flex-col gap-y-3"
               initial={{ opacity: 0.05 }}
-              animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("work") ?? 1) }}
+              animate={{ opacity: hoveredAnchor ? 0.1 : focusedItem ? 1 : (getOpacity("work") ?? 1) }}
               exit={{ opacity: 0 }}
               transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1,
@@ -197,7 +222,10 @@ const IndexView = () => {
                 ease: "easeInOut",
               })}
             >
-              <div className="flex flex-row justify-between">
+              <div
+                className={`flex flex-row justify-between ${dimTransition}`}
+                style={{ opacity: focusedItem ? DIM_OPACITY : 1 }}
+              >
                 <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
                   Antecedents
                 </span>
@@ -217,7 +245,7 @@ const IndexView = () => {
               ref={registerSection("projects")}
               data-section="projects"
               initial={{ opacity: 0.05 }}
-              animate={{ opacity: hoveredAnchor ? 0.1 : (getOpacity("projects") ?? 1) }}
+              animate={{ opacity: (hoveredAnchor || focusedItem) ? 0.1 : (getOpacity("projects") ?? 1) }}
               exit={{ opacity: 0 }}
               transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1.3,
@@ -237,15 +265,13 @@ const IndexView = () => {
         {/* This section should lowkey typewrite out itself */}
         <div className="h-24" />
 
-        <footer
+        <motion.footer
           ref={footerRef}
-          className={`relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px] ${dimTransition}`}
-          style={{ opacity: blockOpacity }}
+          className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px]"
+          initial={{ opacity: 0.05 }}
+          animate={{ opacity: (hoveredAnchor || focusedItem) ? DIM_OPACITY : (footerRevealed ? 1 : 0.05) }}
+          transition={{ duration: dimAnimating ? 0.5 : 1.0, ease: "easeInOut" }}
         >
-          <div className="hidden md:block">
-            <Logo width={500} height={400} className="-rotate-[30deg]" onClick={cycleTheme} />
-          </div>
-
           <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
             <motion.div
               className="flex flex-row items-center space-x-2 group"
@@ -371,7 +397,7 @@ const IndexView = () => {
               <span className="text-[var(--text-color)] text-[11px] inline-block transition-transform duration-300 ease-out -rotate-45">→</span>
             </motion.div>
           </div>
-        </footer>
+        </motion.footer>
       </div>
     </div>
   );
