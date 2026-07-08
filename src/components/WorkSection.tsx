@@ -34,13 +34,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
   focusDesc = "",
   images = []
 }) => {
-  const { hoveredItem, setHoveredItem } = useHoverContext();
+  const { hoveredItem, setHoveredItem, focusedItem, setFocusedItem } = useHoverContext();
   const itemId = useId();
   const [phase, setPhase] = React.useState<'initial' | 'growing' | 'dimming' | 'exiting'>('initial');
   const [exiting, setExiting] = React.useState(false);
 
   const hovered = hoveredItem === itemId;
   const active = hovered && !exiting;
+  // A sibling row is the focused one — dim ourselves out of its way.
+  const dimmedBySibling = focusedItem !== null && focusedItem !== itemId;
 
   const handleMouseEnter = () => {
     setExiting(false);
@@ -68,100 +70,17 @@ const WorkRow: React.FC<WorkRowProps> = ({
     }
   }, [phase, active]);
 
+  // Publish this row as the page-wide focused item exactly while its Focus popup
+  // is showing. Using a functional update keyed on itemId means a row handing off
+  // to another can never clobber the newcomer's value, so the dim can't get stuck
+  // or skipped the way the old cross-component DOM mutation did.
   React.useEffect(() => {
-    const duration = '0.5s ease-in-out';
-
     if (phase === 'dimming' && active) {
-      const headerSection = document.querySelector('.main-content > div:first-child');
-      if (headerSection) {
-        (headerSection as HTMLElement).style.transition = `opacity ${duration}`;
-        (headerSection as HTMLElement).style.opacity = '0.1';
-      }
-
-      const projectSections = document.querySelectorAll('[data-section="projects"], [data-section="upcoming"], [data-section="open-source"], [data-section="other"]');
-      projectSections.forEach((section) => {
-        (section as HTMLElement).style.transition = `opacity ${duration}`;
-        (section as HTMLElement).style.opacity = '0.1';
-      });
-
-      const footerSections = document.querySelectorAll('[data-section="other"], .relative.flex.flex-col.md\\:flex-row.justify-between');
-      footerSections.forEach((section) => {
-        if (!section.hasAttribute('data-section') || section.getAttribute('data-section') !== 'work') {
-          (section as HTMLElement).style.transition = `opacity ${duration}`;
-          (section as HTMLElement).style.opacity = '0.1';
-        }
-      });
-
-      const workSection = document.querySelector('.work-section-container');
-      if (workSection) {
-        // Dim the headers (PREVIOUSLY and TYPE)
-        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
-        if (headerDiv) {
-          (headerDiv as HTMLElement).style.transition = `opacity ${duration}`;
-          (headerDiv as HTMLElement).style.opacity = '0.1';
-        }
-
-        // Dim other work rows
-        const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
-        allWorkRows.forEach((row) => {
-          const rowElement = row as HTMLElement;
-          if (rowElement.getAttribute('data-work-id') !== itemId) {
-            rowElement.style.transition = `opacity ${duration}`;
-            rowElement.style.opacity = '0.1';
-          }
-        });
-      }
-    } else if (phase === 'initial' || phase === 'exiting' || !active) {
-      const elementsToReset = document.querySelectorAll('.main-content > div:first-child, [data-section="projects"], [data-section="upcoming"], [data-section="open-source"], [data-section="other"], .relative.flex.flex-col.md\\:flex-row.justify-between');
-      elementsToReset.forEach((element) => {
-        (element as HTMLElement).style.transition = `opacity ${duration}`;
-        (element as HTMLElement).style.opacity = '';
-      });
-
-      const workSection = document.querySelector('.work-section-container');
-      if (workSection) {
-        // Reset the headers (PREVIOUSLY and TYPE)
-        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
-        if (headerDiv) {
-          (headerDiv as HTMLElement).style.transition = `opacity ${duration}`;
-          (headerDiv as HTMLElement).style.opacity = '';
-        }
-
-        // Reset other work rows
-        const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
-        allWorkRows.forEach((row) => {
-          const rowElement = row as HTMLElement;
-          rowElement.style.transition = `opacity ${duration}`;
-          rowElement.style.opacity = '';
-        });
-      }
+      setFocusedItem(itemId);
+      return () => setFocusedItem((prev) => (prev === itemId ? null : prev));
     }
-
-    return () => {
-      const elementsToReset = document.querySelectorAll('.main-content > div:first-child, [data-section="projects"], [data-section="upcoming"], [data-section="open-source"], [data-section="other"], .relative.flex.flex-col.md\\:flex-row.justify-between');
-      elementsToReset.forEach((element) => {
-        (element as HTMLElement).style.opacity = '';
-        (element as HTMLElement).style.transition = '';
-      });
-
-      const workSection = document.querySelector('.work-section-container');
-      if (workSection) {
-        // Reset the headers (PREVIOUSLY and TYPE)
-        const headerDiv = workSection.querySelector('.flex.flex-row.justify-between');
-        if (headerDiv) {
-          (headerDiv as HTMLElement).style.opacity = '';
-          (headerDiv as HTMLElement).style.transition = '';
-        }
-
-        // Reset other work rows
-        const allWorkRows = workSection.querySelectorAll('.work-section-container > .flex.items-center');
-        allWorkRows.forEach((row) => {
-          (row as HTMLElement).style.opacity = '';
-          (row as HTMLElement).style.transition = '';
-        });
-      }
-    };
-  }, [phase, active, itemId]);
+    setFocusedItem((prev) => (prev === itemId ? null : prev));
+  }, [phase, active, itemId, setFocusedItem]);
 
   // Handle exiting animation - smoothly transition back to initial after animations complete
   React.useEffect(() => {
@@ -182,8 +101,9 @@ const WorkRow: React.FC<WorkRowProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        opacity: 1, // Always full opacity for work items (they handle their own internal opacity)
-        transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.3s ease-in-out',
+        // Full opacity normally; dim out of the way when a sibling row is focused.
+        opacity: dimmedBySibling ? 0.1 : 1,
+        transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.5s ease-in-out',
         position: 'relative',
         cursor: phase === 'growing' ? 'wait' : 'pointer',
       }}
