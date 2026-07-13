@@ -36,6 +36,8 @@ const WorkRow: React.FC<WorkRowProps> = ({
 }) => {
   const { hoveredItem, setHoveredItem, focusedItem, setFocusedItem } = useHoverContext();
   const itemId = useId();
+  // Rows without any focus content (e.g. Paradigm) never open a popup.
+  const hasFocus = Boolean(focusDate || focusLocation || focusDesc || images.length);
   const [phase, setPhase] = React.useState<'initial' | 'growing' | 'dimming' | 'exiting'>('initial');
   const [exiting, setExiting] = React.useState(false);
 
@@ -75,12 +77,12 @@ const WorkRow: React.FC<WorkRowProps> = ({
   // to another can never clobber the newcomer's value, so the dim can't get stuck
   // or skipped the way the old cross-component DOM mutation did.
   React.useEffect(() => {
-    if (phase === 'dimming' && active) {
+    if (phase === 'dimming' && active && hasFocus) {
       setFocusedItem(itemId);
       return () => setFocusedItem((prev) => (prev === itemId ? null : prev));
     }
     setFocusedItem((prev) => (prev === itemId ? null : prev));
-  }, [phase, active, itemId, setFocusedItem]);
+  }, [phase, active, itemId, setFocusedItem, hasFocus]);
 
   // Handle exiting animation - smoothly transition back to initial after animations complete
   React.useEffect(() => {
@@ -128,13 +130,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
       <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
 
       { /* Overlay box. */}
-        <Focus
-          visible={phase === 'dimming'}
-          date={focusDate}
-          role={focusLocation || role}
-          desc={focusDesc}
-          images={images}
-        />
+        {hasFocus && (
+          <Focus
+            visible={phase === 'dimming'}
+            date={focusDate}
+            role={focusLocation || role}
+            desc={focusDesc}
+            images={images}
+          />
+        )}
 
       { /* Role goes here! */ }
       <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
