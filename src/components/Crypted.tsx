@@ -50,14 +50,11 @@ const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onC
   React.useEffect(() => {
     if (isCompleteRef.current) return;
 
+    // Keep the updater pure (React may invoke it more than once) — advance the
+    // index only. Once it reaches the end the updater no-ops (React bails on the
+    // unchanged value); the timer is torn down by the cleanup on unmount.
     const revealInterval = setInterval(() => {
-      setCurrentIndex(prev => {
-        if (prev < text.length) {
-          return prev + 1;
-        }
-        clearInterval(revealInterval);
-        return prev;
-      });
+      setCurrentIndex(prev => (prev < text.length ? prev + 1 : prev));
     }, delay * 8); // Reveal next character every 8 cycles
 
     return () => clearInterval(revealInterval);

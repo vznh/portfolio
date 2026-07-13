@@ -1,24 +1,21 @@
 // views/
-import Crypted from "@/components/Crypted";
 import ExperimentSection from "@/components/ExperimentSection";
 import Focus from "@/components/Focus";
+import Footer from "@/components/Footer";
 import ImageOverlay from "@/components/ImageOverlay";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useHoverContext } from "@/hooks/useHoverContext";
-import { useVersion } from "@/hooks/useVersion";
 import { FEATURES } from "@/presets/features";
 import { THEMES } from "@/presets/theme";
-import { EyeIcon, MailIcon } from "@/presets/svgs";
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { motion } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
-const IndexView = () => {
+const IndexView = ({ version }: { version: string }) => {
   const { registerSection, getOpacity, getTransition } = useActiveSection(3000);
   const { focusedItem } = useHoverContext();
-  const version = useVersion();
   const [showCrypted, setShowCrypted] = React.useState(false);
   const hasStartedRef = React.useRef(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
@@ -131,6 +128,7 @@ const IndexView = () => {
   });
 
   return (
+    <LazyMotion features={domAnimation}>
     <div className="relative min-h-screen overflow-hidden">
       <ImageOverlay visible={hoveredAnchor === 'sc'} images={["/images/overlays/santa-cruz.jpg"]} scale={1.25} aspectRatio="16/9" zoom={1.25} objectPosition="center bottom" origin="bottom" />
       <ImageOverlay
@@ -198,7 +196,7 @@ const IndexView = () => {
               </Link>
               <Link href="https://venh.substack.com" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
                 <svg width="23" height="23" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.5 2C3.22386 2 3 2.22386 3 2.5V13.5C3 13.6818 3.09864 13.8492 3.25762 13.9373C3.41659 14.0254 3.61087 14.0203 3.765 13.924L7.5 11.5896L11.235 13.924C11.3891 14.0203 11.5834 14.0254 11.7424 13.9373C11.9014 13.8492 12 13.6818 12 13.5V2.5C12 2.22386 11.7761 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
+                  <path d="M3.5 2C3.22 2 3 2.22 3 2.5V13.5C3 13.68 3.1 13.85 3.26 13.94C3.42 14.03 3.61 14.02 3.77 13.92L7.5 11.59L11.24 13.92C11.39 14.02 11.58 14.03 11.74 13.94C11.9 13.85 12 13.68 12 13.5V2.5C12 2.22 11.78 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
                 </svg>
               </Link>
             </div>
@@ -209,7 +207,7 @@ const IndexView = () => {
           <>
             <div className="h-12" />
 
-            <motion.div
+            <m.div
               ref={registerSection("work")}
               data-section="work"
               className="work-section-container flex flex-col gap-y-3"
@@ -234,14 +232,14 @@ const IndexView = () => {
                 </span>
               </div>
               <WorkSection />
-            </motion.div>
+            </m.div>
           </>
         )}
 
         {FEATURES.projects && (
           <>
             <div className="h-16" />
-            <motion.div
+            <m.div
               ref={registerSection("projects")}
               data-section="projects"
               initial={{ opacity: 0.05 }}
@@ -258,148 +256,27 @@ const IndexView = () => {
                 Projects
               </span>
               <ExperimentSection />
-            </motion.div>
+            </m.div>
           </>
         )}
 
         {/* This section should lowkey typewrite out itself */}
         <div className="h-24" />
 
-        <motion.footer
-          ref={footerRef}
-          className="relative flex w-full justify-center h-[200px] md:h-[500px] md:mb-[-350px]"
-          initial={{ opacity: 0.05 }}
-          animate={{ opacity: (hoveredAnchor || focusedItem) ? DIM_OPACITY : (footerRevealed ? 1 : 0.05) }}
-          transition={{ duration: dimAnimating ? 0.5 : 1.0, ease: "easeInOut" }}
-        >
-          <div className="absolute top-4 md:top-20 left-0 flex flex-col gap-y-2">
-            <motion.div
-              className="flex flex-row items-center space-x-2 group"
-              initial={{ opacity: 0.5 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              onMouseEnter={() => setMailHovered(true)}
-              onMouseLeave={() => setMailHovered(false)}
-            >
-              <Link
-                href="mailto:jasonvinhson@gmail.com"
-                className="font-jb text-xs tracking-tight text-[var(--text-color)]"
-              >
-                {showCrypted ? (
-                  <Crypted text="REQUEST A RESUME" delay={15} />
-                ) : (
-                  "REQUEST A RESUME"
-                )}
-              </Link>{" "}
-              <span className="relative flex items-center">
-                <motion.span
-                  className="absolute inset-0 rounded-full pointer-events-none z-20"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 0 }}
-                  whileHover={{ opacity: 0.7, scale: 1.2 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{
-                    boxShadow: "0 0 16px 8px rgba(255, 255, 255, 0.5)",
-                    filter: "blur(4px)",
-                  }}
-                />
-                <div className="relative z-10">
-                  <MailIcon open={mailHovered} />
-                </div>
-              </span>
-            </motion.div>
-
-            <motion.div
-              className="flex flex-row items-center space-x-2 group"
-              initial={{ opacity: 0.5 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              onMouseEnter={() => setEyeHovered(true)}
-              onMouseLeave={() => setEyeHovered(false)}
-            >
-              <Link
-                href="https://cal.com/jason-son-suncdj/15min"
-                className="font-jb text-xs tracking-tight text-[var(--text-color)]"
-              >
-                {showCrypted ? (
-                  <Crypted text="BOOK A CALL" delay={15} />
-                ) : (
-                  "BOOK A CALL"
-                )}
-              </Link>{" "}
-              <span className="relative flex items-center">
-                <motion.span
-                  className="absolute inset-0 rounded-full pointer-events-none z-20"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 0 }}
-                  whileHover={{ opacity: 0.7, scale: 1.2 }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                  style={{
-                    boxShadow: "0 0 16px 8px rgba(255, 255, 255, 0.5)",
-                    filter: "blur(4px)",
-                  }}
-                />
-                <div className="relative z-10">
-                  <EyeIcon closed={eyeHovered} />
-                </div>
-              </span>
-            </motion.div>
-          </div>
-
-          <div className="absolute top-20 right-0 hidden md:flex flex-col gap-y-2">
-            <motion.div
-              className="group"
-              initial={{ opacity: 0.5 }}
-              whileHover={{ opacity: 0.7 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-            >
-              <Link
-                href="https://github.com/vznh/mole/releases/"
-                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
-              >
-                {showCrypted ? (
-                  <>
-                    <Crypted text={`Version ${version}`} delay={15} />
-                    , <Crypted text="April 2026" delay={15} />
-                  </>
-                ) : (
-                  <>
-                    Version {version}, April 2026
-                  </>
-                )}
-              </Link>{" "}
-              <span className="text-[var(--text-color)] text-[11px] inline-block transition-transform duration-300 ease-out group-hover:-rotate-45">→</span>
-            </motion.div>
-          </div>
-
-          <div className="absolute top-24 md:hidden left-0 flex flex-col gap-y-2">
-            <motion.div
-              className="group"
-              initial={{ opacity: 0.5 }}
-              whileHover={{ opacity: 0.7 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-            >
-              <Link
-                href="https://github.com/vznh/mole/releases/"
-                className="font-jb text-xs tracking-tight hover:underline decoration-dashed underline-offset-4 text-[var(--text-color)]"
-              >
-                {showCrypted ? (
-                  <>
-                    <Crypted text={`Version ${version}`} delay={15} />
-                    , <Crypted text="April 2026" delay={15} />
-                  </>
-                ) : (
-                  <>
-                    Version {version}, April 2026
-                  </>
-                )}
-              </Link>{" "}
-              <span className="text-[var(--text-color)] text-[11px] inline-block transition-transform duration-300 ease-out -rotate-45">→</span>
-            </motion.div>
-          </div>
-        </motion.footer>
+        <Footer
+          footerRef={footerRef}
+          opacity={(hoveredAnchor || focusedItem) ? DIM_OPACITY : (footerRevealed ? 1 : 0.05)}
+          dimAnimating={dimAnimating}
+          showCrypted={showCrypted}
+          version={version}
+          mailHovered={mailHovered}
+          setMailHovered={setMailHovered}
+          eyeHovered={eyeHovered}
+          setEyeHovered={setEyeHovered}
+        />
       </div>
     </div>
+    </LazyMotion>
   );
 };
 

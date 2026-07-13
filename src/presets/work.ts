@@ -3,6 +3,13 @@
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
   {
+    key: 2,
+    company: "Paradigm",
+    role: "Software",
+    img: "/images/logo/paradigm.png",
+    imgClassName: "grayscale",
+  },
+  {
     key: 0,
     company: "Independent Design",
     role: "Creative",
@@ -12,13 +19,6 @@ export const experiences: WorkRowProps[] = [
     focusDate: "2025 - Present",
     focusLocation: "Brooklyn, New York",
     focusDesc: "I currently create brand identities and digital experiences for ambitious founders."
-  },
-  {
-    key: 2,
-    company: "Paradigm",
-    role: "Software",
-    img: "/images/logo/paradigm.png",
-    imgClassName: "grayscale",
   },
   {
     key: 1,

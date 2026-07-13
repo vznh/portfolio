@@ -7,6 +7,10 @@ import { useHoverContext } from "@/hooks/useHoverContext";
 import { useId } from "react";
 import Focus from "./Focus";
 
+// Stable empty default so a row without `images` doesn't get a fresh array each
+// render (which would defeat memoization on any child comparing the prop).
+const EMPTY_IMAGES: string[] = [];
+
 export interface WorkRowProps {
   key: number;
   company: string;
@@ -32,7 +36,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
   focusDate = "",
   focusLocation = "",
   focusDesc = "",
-  images = []
+  images = EMPTY_IMAGES
 }) => {
   const { hoveredItem, setHoveredItem, focusedItem, setFocusedItem } = useHoverContext();
   const itemId = useId();
@@ -47,12 +51,16 @@ const WorkRow: React.FC<WorkRowProps> = ({
   const dimmedBySibling = focusedItem !== null && focusedItem !== itemId;
 
   const handleMouseEnter = () => {
+    // Rows without a Focus popup (e.g. Paradigm) have nothing to reveal, so skip
+    // the growing/dimming "loading" phase and its wait cursor entirely.
+    if (!hasFocus) return;
     setExiting(false);
     setHoveredItem(itemId);
     setPhase('growing');
   };
 
   const handleMouseLeave = () => {
+    if (!hasFocus) return;
     setExiting(true);
     setHoveredItem(null);
     setPhase('exiting');
@@ -107,7 +115,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         opacity: dimmedBySibling ? 0.1 : 1,
         transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.5s ease-in-out',
         position: 'relative',
-        cursor: phase === 'growing' ? 'wait' : 'pointer',
+        cursor: !hasFocus ? 'default' : phase === 'growing' ? 'wait' : 'pointer',
       }}
     >
       <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0">
