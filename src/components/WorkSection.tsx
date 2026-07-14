@@ -142,7 +142,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
           <Focus
             visible={phase === 'dimming'}
             date={focusDate}
-            role={focusLocation || role}
+            role={focusLocation}
             desc={focusDesc}
             images={images}
           />
