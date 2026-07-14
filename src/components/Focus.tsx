@@ -8,17 +8,18 @@ const isVideo = (src: string) => /\.(mp4|mov|webm)$/i.test(src);
 // blur). Each layer applies a single blur radius confined to a soft trapezoidal
 // band; bands tile from strongest-at-edge to weakest-at-content. A subtle bg
 // tint at the outermost edge dissolves the strongest blur into the dialog bg.
+// Strongest first (closest to outer edge), weakest last (closest to content).
+const BLURS = [40, 24, 14, 8, 4.5, 2.5, 1.25, 0.5];
+
 const ProgressiveBlur: React.FC<{ position: 'top' | 'bottom' }> = ({ position }) => {
-  // Strongest first (closest to outer edge), weakest last (closest to content).
-  const blurs = [40, 24, 14, 8, 4.5, 2.5, 1.25, 0.5];
-  const n = blurs.length;
+  const n = BLURS.length;
   const step = 100 / n;
   const dir = position === 'top' ? 'to bottom' : 'to top';
   const tintDir = position === 'top' ? 'to top' : 'to bottom';
   const posClass = position === 'top' ? '-top-px' : '-bottom-px';
   return (
     <div className={`md:hidden pointer-events-none absolute inset-x-0 h-10 z-10 ${posClass}`}>
-      {blurs.map((blur, i) => {
+      {BLURS.map((blur, i) => {
         const a = Math.max(0, (i - 1) * step);
         const b = i * step;
         const c = (i + 1) * step;
@@ -127,13 +128,13 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
         {canScrollUp && <ProgressiveBlur position="top" />}
         {canScrollDown && <ProgressiveBlur position="bottom" />}
       <div ref={scrollRef} className="flex flex-col md:flex-row md:flex-wrap gap-2 md:justify-between items-center w-full max-h-[60vh] md:max-h-none overflow-y-auto md:overflow-visible py-12 md:py-0">
-        {images.map((src, index) => {
+        {images.map((src) => {
           const h = /Footer/i.test(src) ? Math.round(H * 0.85) : H;
           const heightClass = /Footer/i.test(src) ? 'h-[190px] md:h-[95px]' : 'h-[224px] md:h-[112px]';
-          if (isVideo(src)) return <LoopingVideo key={index} src={src} className={heightClass} />;
+          if (isVideo(src)) return <LoopingVideo key={src} src={src} className={heightClass} />;
           const img = (
             <Image
-              key={index}
+              key={src}
               src={src}
               alt=""
               width={200}
@@ -148,7 +149,7 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
           const matchedHref = Object.entries(linkMap).find(([k]) => new RegExp(k, 'i').test(src))?.[1];
           if (matchedHref) {
             return (
-              <a key={index} href={matchedHref} target="_blank" rel="noopener noreferrer">
+              <a key={src} href={matchedHref} target="_blank" rel="noopener noreferrer">
                 {img}
               </a>
             );

@@ -25,11 +25,11 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
         visible ? 'opacity-90' : 'opacity-0'
       }`}
     >
-      {images.map((src, i) => {
+      {images.map((src) => {
         if (aspectRatio) {
           return (
             <div
-              key={i}
+              key={src}
               className="relative overflow-hidden border-[0.5px] border-[#22222240]"
               style={{ width: `min(${widthPx}px, 80vw)`, aspectRatio }}
             >
@@ -37,6 +37,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
                 src={src}
                 alt=""
                 fill
+                sizes={`min(${widthPx}px, 80vw)`}
                 className="object-cover"
                 style={{ objectPosition, transformOrigin: origin, transform: `scale(${zoom})` }}
               />
@@ -45,7 +46,7 @@ const ImageOverlay: React.FC<ImageOverlayProps> = ({ visible, images, aspectRati
         }
         return (
           <Image
-            key={i}
+            key={src}
             src={src}
             alt=""
             width={widthPx}

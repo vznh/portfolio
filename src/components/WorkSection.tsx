@@ -7,6 +7,10 @@ import { useHoverContext } from "@/hooks/useHoverContext";
 import { useId } from "react";
 import Focus from "./Focus";
 
+// Stable empty default so a row without `images` doesn't get a fresh array each
+// render (which would defeat memoization on any child comparing the prop).
+const EMPTY_IMAGES: string[] = [];
+
 export interface WorkRowProps {
   key: number;
   company: string;
@@ -32,10 +36,12 @@ const WorkRow: React.FC<WorkRowProps> = ({
   focusDate = "",
   focusLocation = "",
   focusDesc = "",
-  images = []
+  images = EMPTY_IMAGES
 }) => {
   const { hoveredItem, setHoveredItem, focusedItem, setFocusedItem } = useHoverContext();
   const itemId = useId();
+  // Rows without any focus content (e.g. Paradigm) never open a popup.
+  const hasFocus = Boolean(focusDate || focusLocation || focusDesc || images.length);
   const [phase, setPhase] = React.useState<'initial' | 'growing' | 'dimming' | 'exiting'>('initial');
   const [exiting, setExiting] = React.useState(false);
 
@@ -45,12 +51,16 @@ const WorkRow: React.FC<WorkRowProps> = ({
   const dimmedBySibling = focusedItem !== null && focusedItem !== itemId;
 
   const handleMouseEnter = () => {
+    // Rows without a Focus popup (e.g. Paradigm) have nothing to reveal, so skip
+    // the growing/dimming "loading" phase and its wait cursor entirely.
+    if (!hasFocus) return;
     setExiting(false);
     setHoveredItem(itemId);
     setPhase('growing');
   };
 
   const handleMouseLeave = () => {
+    if (!hasFocus) return;
     setExiting(true);
     setHoveredItem(null);
     setPhase('exiting');
@@ -75,12 +85,12 @@ const WorkRow: React.FC<WorkRowProps> = ({
   // to another can never clobber the newcomer's value, so the dim can't get stuck
   // or skipped the way the old cross-component DOM mutation did.
   React.useEffect(() => {
-    if (phase === 'dimming' && active) {
+    if (phase === 'dimming' && active && hasFocus) {
       setFocusedItem(itemId);
       return () => setFocusedItem((prev) => (prev === itemId ? null : prev));
     }
     setFocusedItem((prev) => (prev === itemId ? null : prev));
-  }, [phase, active, itemId, setFocusedItem]);
+  }, [phase, active, itemId, setFocusedItem, hasFocus]);
 
   // Handle exiting animation - smoothly transition back to initial after animations complete
   React.useEffect(() => {
@@ -105,7 +115,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         opacity: dimmedBySibling ? 0.1 : 1,
         transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.5s ease-in-out',
         position: 'relative',
-        cursor: phase === 'growing' ? 'wait' : 'pointer',
+        cursor: !hasFocus ? 'default' : phase === 'growing' ? 'wait' : 'pointer',
       }}
     >
       <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0">
@@ -128,13 +138,15 @@ const WorkRow: React.FC<WorkRowProps> = ({
       <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
 
       { /* Overlay box. */}
-        <Focus
-          visible={phase === 'dimming'}
-          date={focusDate}
-          role={focusLocation || role}
-          desc={focusDesc}
-          images={images}
-        />
+        {hasFocus && (
+          <Focus
+            visible={phase === 'dimming'}
+            date={focusDate}
+            role={focusLocation || role}
+            desc={focusDesc}
+            images={images}
+          />
+        )}
 
       { /* Role goes here! */ }
       <span className={`font-plex text-lg md:text-xl min-w-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{

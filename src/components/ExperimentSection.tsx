@@ -1,5 +1,5 @@
 import { ProjectProps, projects } from "@/presets/work";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -12,7 +12,9 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   priority = false,
 }) => {
   const [hovered, setHovered] = useState<boolean>(false);
-  const [touched, setTouched] = useState<boolean>(false);
+  // Touch state is only read inside event handlers, never rendered — a ref keeps
+  // it without triggering a re-render on every touchstart/touchend.
+  const touchedRef = useRef<boolean>(false);
   const [desktop, setDesktop] = useState<boolean>(false);
   const [inViewport, setInViewport] = useState<boolean>(false);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
@@ -106,14 +108,14 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
       className={`relative ${url ? "cursor-pointer" : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => setTouched(true)}
-      onTouchEnd={() => setTouched(false)}
+      onTouchStart={() => { touchedRef.current = true; }}
+      onTouchEnd={() => { touchedRef.current = false; }}
     >
       {/* Media Container - 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xs">
         <AnimatePresence>
           {!videoLoaded ? (
-            <motion.div
+            <m.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -123,10 +125,11 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
                 src="/images/projects/PLACEHOLDER.png"
                 alt="Project placeholder"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
                 priority={priority}
               />
-            </motion.div>
+            </m.div>
           ) : null}
         </AnimatePresence>
 
@@ -143,7 +146,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
 
         <AnimatePresence>
           {((desktop && hovered) || (!desktop && inViewport)) && (
-            <motion.div
+            <m.div
               initial={false}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -158,7 +161,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
                   {rightText || ""}
                 </span>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
@@ -178,22 +181,24 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
 
 const ExperimentSection = () => {
   return (
-    <section className="">
-      <div className="c">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-          {projects.map((project, index) => (
-            <ExperimentEntity
-              key={project.key}
-              videoPath={project.videoPath}
-              leftText={project.leftText}
-              rightText={project.rightText}
-              url={project.url}
-              priority={index < 2}
-            />
-          ))}
+    <LazyMotion features={domAnimation}>
+      <section className="">
+        <div className="c">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+            {projects.map((project, index) => (
+              <ExperimentEntity
+                key={project.key}
+                videoPath={project.videoPath}
+                leftText={project.leftText}
+                rightText={project.rightText}
+                url={project.url}
+                priority={index < 2}
+              />
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </LazyMotion>
   );
 };
 
