@@ -3,6 +3,13 @@
 import { WorkRowProps } from "@/components/WorkSection";
 export const experiences: WorkRowProps[] = [
   {
+    key: 2,
+    company: "Paradigm",
+    role: "Software",
+    img: "/images/logo/paradigm.png",
+    imgClassName: "grayscale",
+  },
+  {
     key: 0,
     company: "Independent Design",
     role: "Creative",
@@ -54,7 +61,7 @@ export const experiences: WorkRowProps[] = [
     date: "2023 - 2024",
     focusDate: "2023 - 2024",
     focusLocation: "Seoul, South Korea",
-    focusDesc: "I trained a sequence classifier on previously labeled genomic data to replace a manual labeling pipeline."
+    focusDesc: "I trained a sequence classifier on historically annotated genomic data to replace a manual labeling pipeline."
   },
   {
     key: 4,

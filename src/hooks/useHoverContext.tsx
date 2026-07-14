@@ -23,8 +23,15 @@ export const HoverProvider: React.FC<HoverProviderProps> = ({ children }) => {
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null);
   const [focusedItem, setFocusedItem] = React.useState<string | null>(null);
 
+  // Memoize so consumers only re-render when a value actually changes, not on
+  // every provider render (the setters are stable identities).
+  const value = React.useMemo(
+    () => ({ hoveredItem, setHoveredItem, focusedItem, setFocusedItem }),
+    [hoveredItem, focusedItem]
+  );
+
   return (
-    <HoverContext.Provider value={{ hoveredItem, setHoveredItem, focusedItem, setFocusedItem }}>
+    <HoverContext.Provider value={value}>
       {children}
     </HoverContext.Provider>
   );
