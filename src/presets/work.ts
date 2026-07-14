@@ -8,6 +8,7 @@ export const experiences: WorkRowProps[] = [
     role: "Software",
     img: "/images/logo/paradigm.png",
     imgClassName: "grayscale",
+    focusDesc: "In progress.",
   },
   {
     key: 0,
