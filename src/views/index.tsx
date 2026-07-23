@@ -136,7 +136,7 @@ const IndexView = ({ version }: { version: string }) => {
         images={["/images/overlays/san-francisco.jpg", "/images/overlays/san-francisco-2.jpg"]}
         aspectRatio="16/9"
       />
-      <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[20%] gap-y-2 pb-[200px] bg-[var(--bg-color)]">
+      <div className="main-content flex flex-col px-[5%] py-[10%] md:py-[5%] md:px-[22.5%] gap-y-2 pb-[200px] bg-[var(--bg-color)]">
         <div className="w-full flex flex-row justify-between items-start">
           <div className="flex flex-col gap-y-2">
             <h1
