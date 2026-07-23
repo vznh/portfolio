@@ -106,7 +106,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
   return (
     <div
-      className={`flex items-center w-full tracking-tighter gap-x-1 sm:gap-x-2 transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out ${className}`}
+      className={`col-span-2 grid grid-cols-subgrid items-center w-full tracking-tighter transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out ${className}`}
       data-work-id={itemId}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -118,24 +118,26 @@ const WorkRow: React.FC<WorkRowProps> = ({
         cursor: !hasFocus ? 'default' : phase === 'growing' ? 'wait' : 'pointer',
       }}
     >
-      <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0">
-        <Image
-          src={img}
-          alt={`Icon for company ${company}`}
-          fill
-          sizes="32px"
-          className={`rounded-sm object-contain ${imgClassName}`}
-        />
+      <div className="col-start-1 flex min-w-0 items-center gap-x-1 sm:gap-x-2">
+        <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0">
+          <Image
+            src={img}
+            alt={`Icon for company ${company}`}
+            fill
+            sizes="32px"
+            className={`rounded-sm object-contain ${imgClassName}`}
+          />
+        </div>
+
+        { /* Company goes here! */ }
+        <span className={`font-plex text-lg md:text-xl shrink-0 mr-3 whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
+          opacity: 0.8,
+        }}>{ company }</span>
+
+
+        { /* Line component is here - don't change. */}
+        <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
       </div>
-
-      { /* Company goes here! */ }
-      <span className={`font-plex text-lg md:text-xl shrink-0 mr-3 whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
-        opacity: 0.8,
-      }}>{ company }</span>
-
-
-      { /* Line component is here - don't change. */}
-      <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
 
       { /* Overlay box. */}
         {hasFocus && (
@@ -149,7 +151,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         )}
 
       { /* Role goes here! */ }
-      <span className={`font-plex text-lg md:text-xl w-[7.5ch] shrink-0 overflow-hidden ml-3 text-ellipsis whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
+      <span className={`col-start-2 font-plex text-lg md:text-xl whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
         opacity: 0.8,
       }}>{ role }</span>
     </div>
@@ -158,7 +160,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
 // note: i import experiences from presets/work.ts
 const WorkSection = () => {
-  return <div className="work-section-container flex flex-col gap-y-3">
+  return <div className="work-section-container grid grid-cols-[minmax(0,1fr)_max-content] gap-y-3 md:gap-x-[6px]">
     {experiences.map((i) => (
       <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusLocation={i.focusLocation} images={i.images} />
     ))}
