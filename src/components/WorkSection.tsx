@@ -160,7 +160,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
 // note: i import experiences from presets/work.ts
 const WorkSection = () => {
-  return <div className="work-section-container grid grid-cols-[minmax(0,1fr)_max-content] gap-y-3 md:gap-x-[6px]">
+  return <div className="work-section-container grid grid-cols-[minmax(0,1fr)_max-content] gap-y-3 md:gap-x-[13px]">
     {experiences.map((i) => (
       <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusLocation={i.focusLocation} images={i.images} />
     ))}
