@@ -1,5 +1,5 @@
 // views/
-import CoolStuffSection from "@/components/CoolStuffSection";
+import ProvenanceSection from "@/components/ProvenanceSection";
 import ExperimentSection from "@/components/ExperimentSection";
 import Focus from "@/components/Focus";
 import Footer from "@/components/Footer";
@@ -234,11 +234,11 @@ const IndexView = ({ version }: { version: string }) => {
             <div className="h-16" />
 
             <m.div
-              ref={registerSection("cool-stuff")}
-              data-section="cool-stuff"
-              className="cool-stuff-section-container flex flex-col gap-y-3"
+              ref={registerSection("provenance")}
+              data-section="provenance"
+              className="provenance-section-container flex flex-col gap-y-3"
               initial={{ opacity: 0.05 }}
-              animate={{ opacity: hoveredAnchor ? 0.1 : focusedItem ? 1 : (getOpacity("cool-stuff") ?? 1) }}
+              animate={{ opacity: hoveredAnchor ? 0.1 : focusedItem ? 1 : (getOpacity("provenance") ?? 1) }}
               exit={{ opacity: 0 }}
               transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
                 delay: 1,
@@ -251,7 +251,7 @@ const IndexView = ({ version }: { version: string }) => {
                   Provenance
                 </span>
               </div>
-              <CoolStuffSection />
+              <ProvenanceSection />
             </m.div>
           </>
         )}
