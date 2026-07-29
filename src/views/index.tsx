@@ -8,7 +8,6 @@ import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useHoverContext } from "@/hooks/useHoverContext";
 import { FEATURES } from "@/presets/features";
-import { THEMES } from "@/presets/theme";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
@@ -19,7 +18,6 @@ const IndexView = ({ version }: { version: string }) => {
   const [showCrypted, setShowCrypted] = React.useState(false);
   const hasStartedRef = React.useRef(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
-  const [themeIndex, setThemeIndex] = React.useState(0);
   const [dimAnimating, setDimAnimating] = React.useState(false);
   const [footerRevealed, setFooterRevealed] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
@@ -38,16 +36,6 @@ const IndexView = ({ version }: { version: string }) => {
     const timer = setTimeout(() => setDimAnimating(false), 500);
     return () => clearTimeout(timer);
   }, [hoveredAnchor, focusedItem]);
-
-  React.useEffect(() => {
-    const theme = THEMES[themeIndex % THEMES.length];
-    if (!theme) return;
-    const root = document.documentElement;
-    root.style.setProperty('--bg-color', theme.bg);
-    root.style.setProperty('--text-color', theme.text);
-    root.style.setProperty('--highlight', theme.highlight);
-  }, [themeIndex]);
-
 
   // Dismiss an open header Focus on any tap/click that lands outside the three
   // anchors (empty space, an antecedent row, etc.). Touch devices never fire a
