@@ -12,6 +12,7 @@ export interface ProvenanceAccent {
   // Shown in the reading-bar reveal frame; linked accents without media get a
   // placeholder. An array renders side by side as a filmstrip.
   media?: ProvenanceMedia | ProvenanceMedia[];
+  disableReveal?: boolean;
 }
 
 export type ProvenanceStoryPart = string | ProvenanceAccent;
@@ -142,6 +143,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "I made a tool proven to reduce tool calls and token usage by 75% and 90% respectively, based on exact queries tested with and without the package.",
     url: "https://github.com/vznh/axiomarc",
+    disableReveal: true,
   },
   " At xAI, I made a ",
   { text: "tool to replicate designs layer-by-layer instead of inferring layer structure from a flattened image" },

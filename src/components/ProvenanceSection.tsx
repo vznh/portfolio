@@ -451,7 +451,12 @@ const ProvenanceSection = () => {
     if (best && isSettledRef.current && !framesRef.current.some((f) => f.key === best.key)) {
       const accent = oldestFirstStory[best.paragraphIndex]?.[best.partIndex];
       // Nothing to reveal (no link, no media) → highlight only, no layout shift.
-      if (accent && isAccent(accent) && (accent.url || accent.media)) {
+      if (
+        accent &&
+        isAccent(accent) &&
+        !accent.disableReveal &&
+        (accent.url || accent.media)
+      ) {
         const splitOffset = computeSplitOffset(best.paragraphIndex, best.partIndex);
         if (splitOffset !== null) {
           newFrame = {
