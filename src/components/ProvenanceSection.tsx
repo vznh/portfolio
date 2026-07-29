@@ -15,7 +15,7 @@ const isAccent = (part: string | ProvenanceAccent): part is ProvenanceAccent =>
 const previewStory = oldestFirstStory.slice(0, 1);
 const COLLAPSED_FADE_DISTANCE_REM = 3.5;
 const EXPANSION_SCROLL_DURATION = 3000;
-const MASK_CLEAR_DURATION = 2000;
+const MASK_CLEAR_DURATION = 4000;
 const MASK_CLEAR_START_MS = 1750;
 const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
 const RETURN_SCROLL_DURATION = 750;
