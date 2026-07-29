@@ -18,6 +18,10 @@ export interface ProvenanceAccent {
 
 export type ProvenanceStoryPart = string | ProvenanceAccent;
 
+// A single opening line that stands on its own before the story begins.
+export const provenanceIntro =
+  "Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them.";
+
 export const oldestFirstStory: ProvenanceStoryPart[][] = [
   [
   "I started off ",
@@ -199,7 +203,6 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   { text: "karaoke machine that links between phone and computer" },
   ". ",
   { text: "NFC tags with a Spotify playlist that I programmed with a new algo to change everyday on genres we both want to explore." },
-  " Should I tell you more?",
   ],
 ];
 

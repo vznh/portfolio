@@ -3,6 +3,7 @@
 import {
   MUTED_PALETTE,
   oldestFirstStory,
+  provenanceIntro,
   type ProvenanceAccent,
   type ProvenanceStoryPart,
 } from "@/presets/provenance";
@@ -309,7 +310,9 @@ const ProvenanceSection = () => {
     const section = provenanceRef.current;
     if (!pretext || !section) return null;
 
-    const paragraphEl = section.querySelectorAll<HTMLElement>(":scope > p")[paragraphIndex];
+    const paragraphEl = section.querySelector<HTMLElement>(
+      `[data-provenance-paragraph="${paragraphIndex}"]`,
+    );
     const parts = oldestFirstStory[paragraphIndex];
     if (!paragraphEl || !parts) return null;
 
@@ -612,6 +615,9 @@ const ProvenanceSection = () => {
         ref={provenanceRef}
         className={`${isSettled ? "" : "provenance-preview "}provenance-story space-y-4`}
       >
+        <p className={`${paragraphClassName} opacity-50`}>
+          {provenanceIntro}
+        </p>
         {story.map((paragraph, paragraphIndex) => {
           const paragraphFrames = frames
             .filter((frame) => frame.paragraphIndex === paragraphIndex)
@@ -619,7 +625,11 @@ const ProvenanceSection = () => {
 
           if (paragraphFrames.length === 0) {
             return (
-              <p key={paragraphIndex} className={paragraphClassName}>
+              <p
+                key={paragraphIndex}
+                data-provenance-paragraph={paragraphIndex}
+                className={paragraphClassName}
+              >
                 {renderRange(paragraph, paragraphIndex, 0, Number.POSITIVE_INFINITY)}
               </p>
             );
@@ -670,7 +680,11 @@ const ProvenanceSection = () => {
           }
 
           return (
-            <p key={paragraphIndex} className={paragraphClassName}>
+            <p
+              key={paragraphIndex}
+              data-provenance-paragraph={paragraphIndex}
+              className={paragraphClassName}
+            >
               {chunks}
             </p>
           );
