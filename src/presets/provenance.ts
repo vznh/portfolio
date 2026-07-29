@@ -12,6 +12,7 @@ export interface ProvenanceAccent {
   // Shown in the reading-bar reveal frame; linked accents without media get a
   // placeholder. An array renders side by side as a filmstrip.
   media?: ProvenanceMedia | ProvenanceMedia[];
+  frameRows?: number;
   disableReveal?: boolean;
 }
 
@@ -179,6 +180,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     text: "made a Discord bot for my friends and I",
     url: "https://github.com/vznh/conviction",
     media: { type: "video", src: "/images/projects/experiments/75.mp4" },
+    frameRows: 12,
   },
   " to keep us accountable. It was a 75-day commitment with a $20 entry. If you failed, you lost. If you committed through the end, the winners split the pot. The bot kept track of everything and pinged users toward the end of the day. I love unreleased music. I ",
   { text: "made a bulk converter" },

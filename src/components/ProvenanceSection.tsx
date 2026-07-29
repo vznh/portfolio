@@ -32,7 +32,6 @@ const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
 const CANVAS_FONT_FAMILY = '"IBM Plex Sans"';
 const FRAME_ROWS = 6;
-const FRAME_HEIGHT_REM = LINE_HEIGHT_REM * FRAME_ROWS;
 const BAR_OVERLAP_THRESHOLD = 0.5;
 
 type PretextModule = typeof import("@chenglou/pretext");
@@ -119,6 +118,7 @@ const FrameBlock = ({
   onClosed: (key: string) => void;
 }) => {
   const open = frame.state === "open";
+  const frameHeightRem = LINE_HEIGHT_REM * (accent?.frameRows ?? FRAME_ROWS);
   const mediaList = accent?.media
     ? Array.isArray(accent.media)
       ? accent.media
@@ -129,13 +129,16 @@ const FrameBlock = ({
     <m.span
       className="provenance-frame"
       initial={{ height: 0, opacity: 0 }}
-      animate={{ height: open ? `${FRAME_HEIGHT_REM}rem` : 0, opacity: open ? 1 : 0 }}
+      animate={{ height: open ? `${frameHeightRem}rem` : 0, opacity: open ? 1 : 0 }}
       transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 0.61, 0.36, 1] }}
       onAnimationComplete={() => {
         if (!open) onClosed(frame.key);
       }}
     >
-      <span className="provenance-frame__inner">
+      <span
+        className="provenance-frame__inner"
+        style={{ height: `${frameHeightRem}rem` }}
+      >
         {mediaList.length > 0 ? (
           mediaList.map((media) =>
             media.type === "video" ? (
