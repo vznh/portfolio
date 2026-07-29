@@ -57,6 +57,7 @@ type BarCandidate = {
   partIndex: number;
   overlap: number;
   top: number;
+  width: number;
   singleLine: boolean;
 };
 
@@ -427,6 +428,7 @@ const ProvenanceSection = () => {
             partIndex,
             overlap,
             top: rect.top,
+            width: rect.width,
             singleLine: rects.length === 1,
           });
         });
@@ -441,7 +443,9 @@ const ProvenanceSection = () => {
         const pool = sameLine.some((c) => c.singleLine)
           ? sameLine.filter((c) => c.singleLine)
           : sameLine;
-        best = pool.sort((a, b) => b.overlap - a.overlap)[0] ?? null;
+        // When every candidate wraps, the phrase occupying most of this row
+        // is the clearest representation of what the reader is crossing.
+        best = pool.sort((a, b) => b.width - a.width || b.overlap - a.overlap)[0] ?? null;
       }
     }
 
