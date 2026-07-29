@@ -48,7 +48,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ". I'm inspired by my sisters, so I wanted to pursue medicine too. I ended up doing research domestically, building machine learning models to automate grunt work at Carnegie Mellon for neurology, and internationally at Seoul National for genealogy. I started a new start-up about ",
   { text: "language learning with heavy assimilation" },
   ". I failed, but learned a lot by picking myself up. My favorite hackathon project was a ",
-  { text: "CLI that resolved bugs through errors and PR checks", url: "https://github.com/ehcaw/splat" },
+  {
+    text: "CLI that resolved bugs through errors and PR checks",
+    url: "https://github.com/ehcaw/splat",
+    media: { type: "image", src: "/images/provenance/splat.png" },
+  },
   ". I was interested in theoretical mathematics, and took an entire 2 quarters to do Chaos Theory, Number Theory, Topology, and Real Analysis. I liked it. Then looked more into quant. Participated in a trading challenge with 30,000 participants and finished top 500 in the first round. My friend thought computer science meant everyone could design too. He paid me 500 buckaroos to ",
   { text: "design a website" },
   " for his health club. It was my first design, and it was crude. I ended up spending 10X the time I told him I would allocate to it. I fell in love with designing.",
