@@ -67,7 +67,15 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     media: { type: "image", src: "/images/provenance/splat.png" },
   },
   ". I was interested in theoretical mathematics, and took an entire 2 quarters to do Chaos Theory, Number Theory, Topology, and Real Analysis. I liked it. Then looked more into quant. Participated in a trading challenge with 30,000 participants and finished top 500 in the first round. My friend thought computer science meant everyone could design too. He paid me 500 buckaroos to ",
-  { text: "design a website" },
+  {
+    text: "design a website",
+    media: [
+      { type: "image", src: "/images/provenance/healthclub-hero.jpg" },
+      { type: "image", src: "/images/provenance/healthclub-mission.jpg" },
+      { type: "image", src: "/images/provenance/healthclub-letter.jpg" },
+      { type: "image", src: "/images/provenance/healthclub-footer.jpg" },
+    ],
+  },
   " for his health club. It was my first design, and it was crude. I ended up spending 10X the time I told him I would allocate to it. I fell in love with designing.",
   ],
   [
