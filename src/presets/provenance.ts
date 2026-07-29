@@ -1,9 +1,16 @@
 // Content for the "Provenance" section. The story reads oldest-to-newest.
 // Accent parts are colored; those with a URL are also links.
 
+export interface ProvenanceMedia {
+  type: "image" | "video";
+  src: string;
+}
+
 export interface ProvenanceAccent {
   text: string;
   url?: string;
+  // Shown in the reading-bar reveal frame; linked accents without media get a placeholder.
+  media?: ProvenanceMedia;
 }
 
 export type ProvenanceStoryPart = string | ProvenanceAccent;
@@ -102,7 +109,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ". And ",
   { text: "made an API when it didn't exist", url: "https://github.com/vznh/substack" },
   " for Substack, exposing articles as text and content alongside profile data, for my own website. Then I wanted to looksmax. I ",
-  { text: "made a Discord bot for my friends and I", url: "https://github.com/vznh/conviction" },
+  {
+    text: "made a Discord bot for my friends and I",
+    url: "https://github.com/vznh/conviction",
+    media: { type: "video", src: "/images/projects/experiments/75.mp4" },
+  },
   " to keep us accountable. It was a 75-day commitment with a $20 entry. If you failed, you lost. If you committed through the end, the winners split the pot. The bot kept track of everything and pinged users toward the end of the day. I love unreleased music. I ",
   { text: "made a bulk converter" },
   " that takes YouTube and SoundCloud links, then researches the web to assign proper metadata.",
