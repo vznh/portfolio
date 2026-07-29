@@ -544,7 +544,10 @@ const ProvenanceSection = () => {
       const color = isActive
         ? colors[part.text] ?? "var(--text-color)"
         : "var(--text-color)";
-      const accentStyle = { color, textDecorationColor: color };
+      const accentStyle = {
+        color,
+        textDecorationColor: isActive ? color : "transparent",
+      };
       const accentClassName = `link provenance-accent${
         isActive ? " provenance-accent--active" : ""
       }`;
