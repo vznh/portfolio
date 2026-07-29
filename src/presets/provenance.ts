@@ -133,7 +133,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   " (similarly to old models!). On the side, I started a ",
   { text: "small design agency for my coterie" },
   ", a term I use for my close companions. My cool clients include frontier labs to fashion collectives. I ended up making ",
-  { text: "components of my favorite pieces", url: "https://github.com/vznh/devour" },
+  {
+    text: "components of my favorite pieces",
+    url: "https://github.com/vznh/devour",
+    media: { type: "image", src: "/images/provenance/devour-components.gif" },
+  },
   " in all of my designs. ",
   {
     text: "I made a tool proven to reduce tool calls and token usage by 75% and 90% respectively, based on exact queries tested with and without the package.",
