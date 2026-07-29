@@ -83,6 +83,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "create bulk calendar entries with just a normal sentence",
     url: "https://x.com/jasonvinhson/status/1915190716151849076",
+    media: { type: "video", src: "/images/provenance/calendar.mp4" },
   },
   ". They found themselves allocating time to make events, which is ironic because in order to create time, you must block it out. But they found themselves blocking out time just to plan. It was my first work of app design. My friends used it in 2024. I released it to the public in 2025. I made an ",
   { text: "app for my campus to replace the map system and introduce a new social layer" },
