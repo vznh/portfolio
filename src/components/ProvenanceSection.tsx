@@ -110,6 +110,11 @@ const FrameBlock = ({
   onClosed: (key: string) => void;
 }) => {
   const open = frame.state === "open";
+  const mediaList = accent?.media
+    ? Array.isArray(accent.media)
+      ? accent.media
+      : [accent.media]
+    : [];
 
   return (
     <m.span
@@ -122,18 +127,28 @@ const FrameBlock = ({
       }}
     >
       <span className="provenance-frame__inner">
-        {accent?.media?.type === "video" ? (
-          <video
-            className="provenance-frame__media"
-            src={accent.media.src}
-            autoPlay
-            muted
-            loop
-            playsInline
-          />
-        ) : accent?.media ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img className="provenance-frame__media" src={accent.media.src} alt={accent.text} />
+        {mediaList.length > 0 ? (
+          mediaList.map((media) =>
+            media.type === "video" ? (
+              <video
+                key={media.src}
+                className="provenance-frame__media"
+                src={media.src}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={media.src}
+                className="provenance-frame__media"
+                src={media.src}
+                alt={accent?.text ?? ""}
+              />
+            ),
+          )
         ) : (
           <span className="provenance-frame__placeholder">
             {accent?.url ? hostnameOf(accent.url) : ""}

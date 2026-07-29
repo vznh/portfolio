@@ -9,8 +9,9 @@ export interface ProvenanceMedia {
 export interface ProvenanceAccent {
   text: string;
   url?: string;
-  // Shown in the reading-bar reveal frame; linked accents without media get a placeholder.
-  media?: ProvenanceMedia;
+  // Shown in the reading-bar reveal frame; linked accents without media get a
+  // placeholder. An array renders side by side as a filmstrip.
+  media?: ProvenanceMedia | ProvenanceMedia[];
 }
 
 export type ProvenanceStoryPart = string | ProvenanceAccent;
@@ -49,7 +50,16 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ". And then I got into davinci-002 and gpt-3.5-turbo. I spent my last $30 on inference just fiddling with them. I pitched to a professor and ended up helping build the entire pipeline for ",
   { text: "research on a text-to-video generative model" },
   ". I'm inspired by my sisters, so I wanted to pursue medicine too. I ended up doing research domestically, building machine learning models to automate grunt work at Carnegie Mellon for neurology, and internationally at Seoul National for genealogy. I started a new start-up about ",
-  { text: "language learning with heavy assimilation" },
+  {
+    text: "language learning with heavy assimilation",
+    media: [
+      { type: "image", src: "/images/provenance/polyglot-wireframe-1.png" },
+      { type: "image", src: "/images/provenance/polyglot-wireframe-2.png" },
+      { type: "image", src: "/images/provenance/polyglot-logos.png" },
+      { type: "image", src: "/images/provenance/polyglot-stanford.jpg" },
+      { type: "image", src: "/images/provenance/polyglot-team.jpg" },
+    ],
+  },
   ". I failed, but learned a lot by picking myself up. My favorite hackathon project was a ",
   {
     text: "CLI that resolved bugs through errors and PR checks",

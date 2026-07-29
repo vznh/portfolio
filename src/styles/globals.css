@@ -124,6 +124,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   height: 10.5rem; /* six rows of leading-7 text */
   padding: 0.4rem 0;
   box-sizing: border-box;
@@ -132,6 +133,8 @@
 .provenance-frame__media {
   height: 100%;
   width: auto; /* keep the asset's intrinsic aspect ratio */
+  min-width: 0; /* a filmstrip wider than the column shrinks... */
+  object-fit: cover; /* ...cropping each item from the center */
 }
 
 .provenance-frame__placeholder {
