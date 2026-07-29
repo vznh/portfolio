@@ -23,10 +23,10 @@ const MASK_CLEAR_DURATION = 4000;
 const MASK_CLEAR_START_MS = 1750;
 const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
 
-// Reading bar + reveal frame. The bar floats a quarter down the viewport; the
+// Reading bar + reveal frame. The bar is centered in the viewport; the
 // values below must mirror the paragraph classes (text-xl leading-7
 // tracking-tight font-plex) so pretext reproduces the browser's line breaks.
-const BAR_VIEWPORT_RATIO = 0.25;
+const BAR_VIEWPORT_RATIO = 0.5;
 const LINE_HEIGHT_REM = 1.75;
 const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
@@ -356,7 +356,8 @@ const ProvenanceSection = () => {
 
     const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
     const lineHeightPx = LINE_HEIGHT_REM * rootFontSize;
-    const barTop = window.innerHeight * BAR_VIEWPORT_RATIO;
+    // Band centered in the viewport; must mirror .provenance-bar's CSS top.
+    const barTop = window.innerHeight * BAR_VIEWPORT_RATIO - lineHeightPx / 2;
     const barBottom = barTop + lineHeightPx;
     const sectionRect = section.getBoundingClientRect();
     const visible = sectionRect.top < barBottom && sectionRect.bottom > barTop;
