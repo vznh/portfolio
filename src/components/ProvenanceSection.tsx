@@ -3,6 +3,7 @@
 import {
   MUTED_PALETTE,
   oldestFirstStory,
+  provenanceIntro,
   type ProvenanceAccent,
 } from "@/presets/provenance";
 import Link from "next/link";
@@ -139,6 +140,9 @@ const ProvenanceSection = () => {
       ref={provenanceRef}
       className="provenance-preview space-y-4"
     >
+      <p className="font-plex text-xl leading-7 tracking-tight text-justify text-[var(--text-color)] opacity-50">
+        {provenanceIntro}
+      </p>
       {story.map((paragraph, paragraphIndex) => (
         <p
           key={paragraphIndex}
