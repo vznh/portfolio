@@ -1,14 +1,14 @@
 // Content for the "Provenance" section. The story reads oldest-to-newest.
 // Accent parts are colored; those with a URL are also links.
 
-export interface CoolStuffAccent {
+export interface ProvenanceAccent {
   text: string;
   url?: string;
 }
 
-export type CoolStuffStoryPart = string | CoolStuffAccent;
+export type ProvenanceStoryPart = string | ProvenanceAccent;
 
-export const oldestFirstStory: CoolStuffStoryPart[][] = [
+export const oldestFirstStory: ProvenanceStoryPart[][] = [
   [
   "I started off ",
   { text: "making bots in middle school" },
