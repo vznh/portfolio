@@ -105,7 +105,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     ],
   },
   ". I ended up experimenting with design. I made an ",
-  { text: "old portfolio website with a shader I created", url: "https://old.hobin.dev" },
+  {
+    text: "old portfolio website with a shader I created",
+    url: "https://old.hobin.dev",
+    media: { type: "image", src: "/images/provenance/old-portfolio.jpg" },
+  },
   ". Then used ",
   { text: "vision as a new interface" },
   ", using my hands through vision to navigate websites. Didn't work out. I made ",
