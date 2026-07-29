@@ -94,7 +94,16 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     ],
   },
   " (which was promptly shut down because it exposed paths that were dangerous and not publicly accessible). Turns out I yearned for a sense of community at Santa Cruz. Each housing community was a ways from the others, and events weren't easily accessible. I wanted a community of like-minded people. I started ",
-  { text: "co-working events", url: "https://luma.com/user/vinh" },
+  {
+    text: "co-working events",
+    url: "https://luma.com/user/vinh",
+    media: [
+      { type: "image", src: "/images/provenance/cowork-mchenry-1.png" },
+      { type: "image", src: "/images/provenance/cowork-mchenry-2.png" },
+      { type: "image", src: "/images/provenance/cowork-baskin.png" },
+      { type: "image", src: "/images/provenance/cowork-hacknight.png" },
+    ],
+  },
   ". I ended up experimenting with design. I made an ",
   { text: "old portfolio website with a shader I created", url: "https://old.hobin.dev" },
   ". Then used ",
