@@ -131,9 +131,7 @@
 
 .provenance-frame__media {
   height: 100%;
-  width: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  width: auto; /* keep the asset's intrinsic aspect ratio */
 }
 
 .provenance-frame__placeholder {

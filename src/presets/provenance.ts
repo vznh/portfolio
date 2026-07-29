@@ -20,7 +20,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   "I started off ",
   { text: "making bots in middle school" },
   " to buy streetwear and resell (asshole...). They automated the entire process from item to cart to checkout, beating humans and existing bots. Then tried ",
-  { text: "reverse-engineering a ROBLOX hack", url: "https://www.youtube.com/watch?v=xdWOZRxQvxo" },
+  {
+    text: "reverse-engineering a ROBLOX hack",
+    url: "https://www.youtube.com/watch?v=xdWOZRxQvxo",
+    media: { type: "image", src: "/images/provenance/roblox-hack.png" },
+  },
   " because I was greedy. The GUI allowed me to spawn only one item at a time, and I wanted a large quantity. I also used to cheat on TF2 with a skin changer I made. ",
   { text: "I got caught though.", url: "https://steamcommunity.com/id/vinh2/" },
   " I started experimenting with Discord bots for my friend group at this time for anime references (like Mudae!). I tinkered with robotics in high school, first with a ",
