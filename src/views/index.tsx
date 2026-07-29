@@ -9,7 +9,6 @@ import { useActiveSection } from "@/hooks/useActiveSection";
 import { useHoverContext } from "@/hooks/useHoverContext";
 import { FEATURES } from "@/presets/features";
 import { THEMES } from "@/presets/theme";
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
@@ -20,8 +19,6 @@ const IndexView = ({ version }: { version: string }) => {
   const [showCrypted, setShowCrypted] = React.useState(false);
   const hasStartedRef = React.useRef(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
-  const [eyeHovered, setEyeHovered] = React.useState(false);
-  const [mailHovered, setMailHovered] = React.useState(false);
   const [themeIndex, setThemeIndex] = React.useState(0);
   const [dimAnimating, setDimAnimating] = React.useState(false);
   const [footerRevealed, setFooterRevealed] = React.useState(false);
@@ -181,24 +178,23 @@ const IndexView = ({ version }: { version: string }) => {
             </span>
             <div className="h-2" />
             <div
-              className={`social-row flex flex-row items-center gap-x-3 text-[var(--text-color)] ${dimTransition}`}
+              className={`social-row flex flex-row flex-wrap items-center gap-x-3 gap-y-1 text-[var(--text-color)] ${dimTransition}`}
               style={{ opacity: blockOpacity }}
             >
-              <Link href="https://x.com/jasonvinhson" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
-                <svg width="23" height="23" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
+              <Link href="mailto:jasonvinhson@gmail.com" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                jasonvinhson@gmail.com
               </Link>
-              <Link href="https://linkedin.com/in/vznh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
-                <LinkedInLogoIcon width={23} height={23} />
+              <Link href="https://x.com/jasonvinhson" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                @jasonvinhson
               </Link>
-              <Link href="https://github.com/vznh" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
-                <GitHubLogoIcon width={23} height={23} />
+              <Link href="https://linkedin.com/in/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                in/vznh
               </Link>
-              <Link href="https://venh.substack.com" target="_blank" className="opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
-                <svg width="23" height="23" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M3.5 2C3.22 2 3 2.22 3 2.5V13.5C3 13.68 3.1 13.85 3.26 13.94C3.42 14.03 3.61 14.02 3.77 13.92L7.5 11.59L11.24 13.92C11.39 14.02 11.58 14.03 11.74 13.94C11.9 13.85 12 13.68 12 13.5V2.5C12 2.22 11.78 2 11.5 2H3.5Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd" />
-                </svg>
+              <Link href="https://github.com/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                github/vznh
+              </Link>
+              <Link href="https://venh.substack.com" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+                venh.substack.com
               </Link>
             </div>
           </div>
@@ -293,10 +289,6 @@ const IndexView = ({ version }: { version: string }) => {
           dimAnimating={dimAnimating}
           showCrypted={showCrypted}
           version={version}
-          mailHovered={mailHovered}
-          setMailHovered={setMailHovered}
-          eyeHovered={eyeHovered}
-          setEyeHovered={setEyeHovered}
         />
       </div>
     </div>
