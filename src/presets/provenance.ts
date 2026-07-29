@@ -86,7 +86,13 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     media: { type: "video", src: "/images/provenance/calendar.mp4" },
   },
   ". They found themselves allocating time to make events, which is ironic because in order to create time, you must block it out. But they found themselves blocking out time just to plan. It was my first work of app design. My friends used it in 2024. I released it to the public in 2025. I made an ",
-  { text: "app for my campus to replace the map system and introduce a new social layer" },
+  {
+    text: "app for my campus to replace the map system and introduce a new social layer",
+    media: [
+      { type: "image", src: "/images/provenance/campus-map-phone.jpg" },
+      { type: "image", src: "/images/provenance/campus-map-laptop.jpg" },
+    ],
+  },
   " (which was promptly shut down because it exposed paths that were dangerous and not publicly accessible). Turns out I yearned for a sense of community at Santa Cruz. Each housing community was a ways from the others, and events weren't easily accessible. I wanted a community of like-minded people. I started ",
   { text: "co-working events", url: "https://luma.com/user/vinh" },
   ". I ended up experimenting with design. I made an ",
