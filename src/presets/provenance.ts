@@ -117,9 +117,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     text: "websites for free for small businesses around Santa Cruz",
     media: { type: "image", src: "/images/provenance/madyolks.jpg" },
   },
-  " (inquire about this!). Tried ",
-  { text: "starting a club to continue my tradition" },
-  ". Didn't work out either. I graduated in 2.5 years.",
+  " (inquire about this!). Tried starting a club to continue my tradition. Didn't work out either. I graduated in 2.5 years.",
   ],
   [
   "Made a ",
