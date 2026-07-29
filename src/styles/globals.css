@@ -87,11 +87,14 @@
   outline-offset: 0.25rem;
 }
 
-/* Reading bar that floats a quarter down the viewport over the Provenance
-   text. Border-only; brightens while it rests on an accent. */
+/* Reading bar that floats a quarter down the viewport, spanning the full
+   page. Border-only; brightens while it rests on an accent, and fades out
+   once the Provenance section scrolls past it. */
 .provenance-bar {
   position: fixed;
   top: 25vh;
+  left: 0;
+  right: 0;
   height: 1.75rem; /* one row of leading-7 text */
   box-sizing: border-box;
   border-top: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);

@@ -153,7 +153,6 @@ const ProvenanceSection = () => {
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const [frames, setFrames] = useState<FrameSpec[]>([]);
   const [barVisible, setBarVisible] = useState(false);
-  const [barBox, setBarBox] = useState<{ left: number; width: number } | null>(null);
   const provenanceRef = React.useRef<HTMLDivElement>(null);
   const pendingExpansionRef = React.useRef<{ height: number } | null>(null);
   const pretextRef = React.useRef<PretextModule | null>(null);
@@ -363,11 +362,6 @@ const ProvenanceSection = () => {
     const visible = sectionRect.top < barBottom && sectionRect.bottom > barTop;
 
     setBarVisible(visible);
-    setBarBox((prev) =>
-      prev && Math.abs(prev.left - sectionRect.left) < 0.5 && Math.abs(prev.width - sectionRect.width) < 0.5
-        ? prev
-        : { left: sectionRect.left, width: sectionRect.width },
-    );
 
     let best: BarCandidate | null = null;
     if (visible) {
@@ -641,7 +635,6 @@ const ProvenanceSection = () => {
             className={`provenance-bar${barVisible ? " provenance-bar--visible" : ""}${
               activeKey ? " provenance-bar--active" : ""
             }`}
-            style={barBox ? { left: barBox.left, width: barBox.width } : undefined}
           />,
           document.body,
         )}
