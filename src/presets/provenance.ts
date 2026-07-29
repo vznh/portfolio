@@ -176,7 +176,11 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     media: { type: "image", src: "/images/provenance/spotify-ui-mockup.jpg" },
   },
   " too. I started ",
-  { text: "writing blogs", url: "https://venh.substack.com/" },
+  {
+    text: "writing blogs",
+    url: "https://venh.substack.com/",
+    disableReveal: true,
+  },
   ". And ",
   { text: "made an API when it didn't exist" },
   " for Substack, exposing articles as text and content alongside profile data, for my own website. Then I wanted to looksmax. I ",
