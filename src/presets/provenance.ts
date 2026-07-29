@@ -162,6 +162,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "overlap between music tastes instead of Spotify's blackbox",
     url: "https://x.com/jasonvinhson/status/1974311707138011515",
+    media: { type: "image", src: "/images/provenance/spotify-overlap.jpg" },
   },
   ". Made ",
   {
