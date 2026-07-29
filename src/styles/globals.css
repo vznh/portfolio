@@ -97,7 +97,7 @@
 
 /* Lets the final text row reach the reading bar before the page bottoms out. */
 .provenance-scroll-tail {
-  height: calc(55vh - 0.875rem);
+  height: 12vh;
 }
 
 /* Reading bar at 45% of the viewport, spanning the full page.
