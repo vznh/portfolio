@@ -126,6 +126,17 @@ const FrameBlock = ({
       ? accent.media
       : [accent.media]
     : [];
+  const filmstripColumns = mediaList.length <= 2
+    ? mediaList.length
+    : Math.ceil(mediaList.length / 2);
+  const filmstripRows = filmstripColumns > 0
+    ? Math.ceil(mediaList.length / filmstripColumns)
+    : 1;
+  const frameInnerStyle = {
+    height: `${frameHeightRem}rem`,
+    "--provenance-filmstrip-columns": filmstripColumns,
+    "--provenance-filmstrip-rows": filmstripRows,
+  } as React.CSSProperties;
 
   return (
     <m.span
@@ -138,8 +149,10 @@ const FrameBlock = ({
       }}
     >
       <span
-        className="provenance-frame__inner"
-        style={{ height: `${frameHeightRem}rem` }}
+        className={`provenance-frame__inner${
+          mediaList.length > 1 ? " provenance-frame__inner--filmstrip" : ""
+        }`}
+        style={frameInnerStyle}
       >
         {mediaList.length > 0 ? (
           mediaList.map((media) =>

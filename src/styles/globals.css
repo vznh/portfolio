@@ -179,6 +179,28 @@
   opacity: 0.5;
 }
 
+@media (max-width: 767px) {
+  .provenance-frame__inner--filmstrip {
+    display: grid;
+    grid-template-columns: repeat(
+      var(--provenance-filmstrip-columns),
+      minmax(0, 1fr)
+    );
+    grid-template-rows: repeat(
+      var(--provenance-filmstrip-rows),
+      minmax(0, 1fr)
+    );
+    gap: 0.25rem;
+  }
+
+  .provenance-frame__inner--filmstrip .provenance-frame__media {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
+
 
 
 /* Gradient overlay - desktop only */
