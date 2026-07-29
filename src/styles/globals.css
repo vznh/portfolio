@@ -92,7 +92,7 @@
    once the Provenance section scrolls past it. */
 .provenance-bar {
   position: fixed;
-  top: calc(50vh - 0.875rem); /* centered: half of the bar's 1.75rem height */
+  top: calc(40vh - 0.875rem); /* band midpoint at 40% of the viewport */
   left: 0;
   right: 0;
   height: 1.75rem; /* one row of leading-7 text */
