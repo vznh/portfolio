@@ -173,7 +173,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   " too. I started ",
   { text: "writing blogs", url: "https://venh.substack.com/" },
   ". And ",
-  { text: "made an API when it didn't exist", url: "https://github.com/vznh/substack" },
+  { text: "made an API when it didn't exist" },
   " for Substack, exposing articles as text and content alongside profile data, for my own website. Then I wanted to looksmax. I ",
   {
     text: "made a Discord bot for my friends and I",
