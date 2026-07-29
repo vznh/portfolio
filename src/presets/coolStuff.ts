@@ -74,7 +74,7 @@ export const oldestFirstStory: CoolStuffStoryPart[][] = [
     url: "https://github.com/vznh/axiomarc",
   },
   " Then at xAI, I made a ",
-  { text: "tool to replicate designs layer-by-layer instead of just looking at a photo and assuming the layers" },
+  { text: "tool to replicate designs layer-by-layer instead of relying on vision-to-text models to infer layer structure from a flattened image" },
   ".",
   ],
   [
