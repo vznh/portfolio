@@ -113,7 +113,10 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ". Then used ",
   { text: "vision as a new interface" },
   ", using my hands through vision to navigate websites. Didn't work out. I made ",
-  { text: "websites for free for small businesses around Santa Cruz" },
+  {
+    text: "websites for free for small businesses around Santa Cruz",
+    media: { type: "image", src: "/images/provenance/madyolks.jpg" },
+  },
   " (inquire about this!). Tried ",
   { text: "starting a club to continue my tradition" },
   ". Didn't work out either. I graduated in 2.5 years.",
