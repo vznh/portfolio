@@ -90,5 +90,5 @@ export function useActiveSection(initialDelay = 3000) {
     return () => observer.disconnect()
   }, [isEnabled])
 
-  return { registerSection, getOpacity, getTransition, activeSection, isEnabled }
+  return { registerSection, getOpacity, getTransition }
 }

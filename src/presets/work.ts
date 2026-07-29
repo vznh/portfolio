@@ -15,7 +15,6 @@ export const experiences: WorkRowProps[] = [
     company: "Independent Design",
     role: "Creative",
     img: "/images/logo/hi.png",
-    date: "JUN 2025 - PRESENT",
     images: ["/videos/Paradigm1.mov", "/videos/Paradigm2.mov", "/images/Kim.png", "/images/Picky1.png", "/images/AGMNTContent.png", "/images/Coinvest.png"],
     focusDate: "2025 - Present",
     focusLocation: "Brooklyn, New York",
@@ -26,7 +25,6 @@ export const experiences: WorkRowProps[] = [
     company: "Apple",
     role: "Software",
     img: "/images/apple.png",
-    date: "JUN 2024 - AUG 2024",
     focusDate: "2024",
     focusLocation: "Cupertino, California",
     focusDesc: "I worked on the CoreOS team, focusing on various parts of the operating system and user interface when changes were made in the Settings app for the release of iOS26."
@@ -36,7 +34,6 @@ export const experiences: WorkRowProps[] = [
     company: "ETALYC",
     role: "Software",
     img: "/images/etalyc.png",
-    date: "2023",
     focusDate: "2023 - 2024",
     focusLocation: "New York City, New York",
     focusDesc: "I worked on Hypersafe, a platform for traffic engineers to analyze incident data. I worked on everything from front, back and data. I cut hefty production processing from 2 minutes to averaging sub-10  seconds, and impl. memoization to handle 10K+ HTTP requests with a 99.6% cost drop."
@@ -47,7 +44,6 @@ export const experiences: WorkRowProps[] = [
     role: "Product",
     img: "/images/stanford.png",
     imgClassName: "scale-[0.65]",
-    date: "2024",
     focusDate: "2023 - 2024",
     focusLocation: "Stanford, California",
     focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.\n\nI co-founded Tokn, a social cryptocurrency analytics platform, owning all technical work. Exited in a multi-six acquisition.",
@@ -59,7 +55,6 @@ export const experiences: WorkRowProps[] = [
     role: "Research",
     img: "/images/snu.png",
     imgClassName: "grayscale scale-[0.80]",
-    date: "2023 - 2024",
     focusDate: "2023 - 2024",
     focusLocation: "Seoul, South Korea",
     focusDesc: "I trained a sequence classifier on historically annotated genomic data to replace a manual labeling pipeline."
@@ -69,7 +64,6 @@ export const experiences: WorkRowProps[] = [
     company: "Carnegie Mellon",
     role: "Research",
     img: "/images/cmu.png",
-    date: "2022",
     focusDate: "2022 - 2023",
     focusLocation: "Pittsburgh, Pennsylvania",
     focusDesc: "I built a baseline scalable neural network using Rust to interpret variably scabled neurological data for the Neuro Technology and Engineering lab."
@@ -79,7 +73,6 @@ export const experiences: WorkRowProps[] = [
     company: "Santa Cruz",
     role: "Research",
     img: "/images/ucsc.png",
-    date: "2022",
     focusDate: "2022 - 2023",
     focusLocation: "Santa Cruz, California",
     focusDesc: "I helped build a prompt-to-video pipeline, experimenting with the film industry to produce Version 0 prototypes under Dr. Allen."

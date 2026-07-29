@@ -14,10 +14,8 @@ const EMPTY_IMAGES: string[] = [];
 export interface WorkRowProps {
   key: number;
   company: string;
-  date?: string;
   role: string;
   img: string;
-  className?: string;
   imgClassName?: string;
 
   focusDate?: string;
@@ -28,10 +26,8 @@ export interface WorkRowProps {
 
 const WorkRow: React.FC<WorkRowProps> = ({
   company,
-  date = "",
   role,
   img,
-  className = "",
   imgClassName = "",
   focusDate = "",
   focusLocation = "",
@@ -106,7 +102,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
   return (
     <div
-      className={`col-span-2 grid grid-cols-subgrid items-center w-full tracking-tighter transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out ${className}`}
+      className={`col-span-2 grid grid-cols-subgrid items-center w-full tracking-tighter transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`}
       data-work-id={itemId}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -162,7 +158,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 const WorkSection = () => {
   return <div className="work-section-container grid grid-cols-[minmax(0,1fr)_max-content] gap-y-3 md:gap-x-[13px]">
     {experiences.map((i) => (
-      <WorkRow key={i.key} company={i.company} date={i.date} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusLocation={i.focusLocation} images={i.images} />
+      <WorkRow key={i.key} company={i.company} role={i.role} img={i.img} imgClassName={i.imgClassName} focusDate={i.focusDate} focusDesc={i.focusDesc} focusLocation={i.focusLocation} images={i.images} />
     ))}
   </div>
 }
