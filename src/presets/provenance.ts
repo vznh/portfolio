@@ -168,6 +168,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "mock-ups for potential UI",
     url: "https://x.com/jasonvinhson/status/2001431839064592836",
+    media: { type: "image", src: "/images/provenance/spotify-ui-mockup.jpg" },
   },
   " too. I started ",
   { text: "writing blogs", url: "https://venh.substack.com/" },
