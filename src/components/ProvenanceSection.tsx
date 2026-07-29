@@ -56,7 +56,6 @@ type BarCandidate = {
   key: string;
   paragraphIndex: number;
   partIndex: number;
-  fragmentIndex: number;
   overlap: number;
   top: number;
   singleLine: boolean;
@@ -272,13 +271,12 @@ const ProvenanceSection = () => {
     };
   }, [isExpanded]);
 
-  // Where does the line under the bar end? Pretext re-derives the browser's
+  // Where does the accent's last line end? Pretext re-derives the browser's
   // line breaks arithmetically so the paragraph can split at a real break —
   // the text above the frame keeps its exact wrapping.
   const computeSplitOffset = (
     paragraphIndex: number,
     partIndex: number,
-    fragmentIndex: number,
   ): number | null => {
     const pretext = pretextRef.current;
     const section = provenanceRef.current;
@@ -343,10 +341,12 @@ const ProvenanceSection = () => {
     }
     if (!lineEnds) return null;
 
+    // A wrapping hyperlink opens the frame after the LAST line it occupies.
+    const part = parts[partIndex];
     const accentStart = entry.partStarts[partIndex] ?? 0;
-    let lineIndex = lineEnds.findIndex((end) => accentStart < end);
+    const accentLastChar = accentStart + (isAccent(part) ? part.text.length : 0) - 1;
+    const lineIndex = lineEnds.findIndex((end) => accentLastChar < end);
     if (lineIndex === -1) return null;
-    lineIndex = Math.min(lineIndex + fragmentIndex, lineEnds.length - 1);
     return lineEnds[lineIndex];
   };
 
@@ -387,7 +387,7 @@ const ProvenanceSection = () => {
 
       const candidates: BarCandidate[] = [];
       rectsByKey.forEach((rects, key) => {
-        rects.forEach((rect, fragmentIndex) => {
+        rects.forEach((rect) => {
           const overlap = Math.min(rect.bottom, barBottom) - Math.max(rect.top, barTop);
           const denominator = Math.min(lineHeightPx, rect.height);
           if (denominator <= 0 || overlap / denominator < BAR_OVERLAP_THRESHOLD) return;
@@ -396,7 +396,6 @@ const ProvenanceSection = () => {
             key,
             paragraphIndex,
             partIndex,
-            fragmentIndex,
             overlap,
             top: rect.top,
             singleLine: rects.length === 1,
@@ -427,7 +426,7 @@ const ProvenanceSection = () => {
       const accent = oldestFirstStory[best.paragraphIndex]?.[best.partIndex];
       // No hyperlink → highlight only, no layout shift.
       if (accent && isAccent(accent) && accent.url) {
-        const splitOffset = computeSplitOffset(best.paragraphIndex, best.partIndex, best.fragmentIndex);
+        const splitOffset = computeSplitOffset(best.paragraphIndex, best.partIndex);
         if (splitOffset !== null) {
           newFrame = {
             key: best.key,
