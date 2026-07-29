@@ -23,10 +23,10 @@ const MASK_CLEAR_DURATION = 4000;
 const MASK_CLEAR_START_MS = 1750;
 const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
 
-// Reading bar + reveal frame. The bar sits 40% down the viewport; the
+// Reading bar + reveal frame. The bar sits 45% down the viewport; the
 // values below must mirror the paragraph classes (text-xl leading-7
 // tracking-tight font-plex) so pretext reproduces the browser's line breaks.
-const BAR_VIEWPORT_RATIO = 0.4;
+const BAR_VIEWPORT_RATIO = 0.45;
 const LINE_HEIGHT_REM = 1.75;
 const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
@@ -63,6 +63,15 @@ type BarCandidate = {
 
 const accentKeyOf = (paragraphIndex: number, partIndex: number) =>
   `${paragraphIndex}:${partIndex}`;
+
+const barColorOf = (accent: ProvenanceAccent) => {
+  const hasLink = Boolean(accent.url);
+  const hasPreview = Boolean(accent.media);
+
+  if (hasLink && hasPreview) return "#002fa7";
+  if (hasLink || hasPreview) return "orange";
+  return "red";
+};
 
 const hostnameOf = (url: string) => {
   try {
@@ -369,9 +378,16 @@ const ProvenanceSection = () => {
     const section = provenanceRef.current;
     if (!section) return;
 
+    if (!isExpanded) {
+      setBarVisible(false);
+      activeKeyRef.current = null;
+      setActiveKey(null);
+      return;
+    }
+
     const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
     const lineHeightPx = LINE_HEIGHT_REM * rootFontSize;
-    // Band midpoint at 40% of the viewport; must mirror .provenance-bar's CSS top.
+    // Band midpoint at 45% of the viewport; must mirror .provenance-bar's CSS top.
     const barTop = window.innerHeight * BAR_VIEWPORT_RATIO - lineHeightPx / 2;
     const barBottom = barTop + lineHeightPx;
     const sectionRect = section.getBoundingClientRect();
@@ -524,19 +540,21 @@ const ProvenanceSection = () => {
       }
 
       const accentKey = accentKeyOf(paragraphIndex, partIndex);
-      const baseColor = colors[part.text] ?? "var(--text-color)";
-      // Active accents get a nudge toward white — enough to pop, not glow.
-      const color = activeKey === accentKey
-        ? `color-mix(in srgb, ${baseColor} 78%, white)`
-        : baseColor;
+      const isActive = activeKey === accentKey;
+      const color = isActive
+        ? colors[part.text] ?? "var(--text-color)"
+        : "var(--text-color)";
       const accentStyle = { color, textDecorationColor: color };
+      const accentClassName = `link provenance-accent${
+        isActive ? " provenance-accent--active" : ""
+      }`;
 
       if (!part.url) {
         elements.push(
           <span
             key={key}
             data-accent-key={accentKey}
-            className="link transition-colors duration-200"
+            className={accentClassName}
             style={{ ...accentStyle, cursor: "not-allowed" }}
           >
             {slice}
@@ -552,7 +570,7 @@ const ProvenanceSection = () => {
           href={part.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="link transition-colors duration-200"
+          className={accentClassName}
           style={accentStyle}
         >
           {slice}
@@ -566,91 +584,106 @@ const ProvenanceSection = () => {
   const story = isExpanded ? oldestFirstStory : previewStory;
   const paragraphClassName =
     "font-plex text-xl leading-7 tracking-tight text-justify text-[var(--text-color)]";
+  const activeBarColor = (() => {
+    if (!activeKey) return undefined;
+    const [paragraphIndex, partIndex] = activeKey.split(":").map(Number);
+    const accent = oldestFirstStory[paragraphIndex]?.[partIndex];
+    return accent && isAccent(accent) ? barColorOf(accent) : undefined;
+  })();
 
   return (
-    <div
-      ref={provenanceRef}
-      className={`${isSettled ? "" : "provenance-preview "}space-y-4`}
-    >
-      {story.map((paragraph, paragraphIndex) => {
-        const paragraphFrames = frames
-          .filter((frame) => frame.paragraphIndex === paragraphIndex)
-          .sort((a, b) => a.splitOffset - b.splitOffset);
+    <div>
+      <div
+        ref={provenanceRef}
+        className={`${isSettled ? "" : "provenance-preview "}space-y-4`}
+      >
+        {story.map((paragraph, paragraphIndex) => {
+          const paragraphFrames = frames
+            .filter((frame) => frame.paragraphIndex === paragraphIndex)
+            .sort((a, b) => a.splitOffset - b.splitOffset);
 
-        if (paragraphFrames.length === 0) {
-          return (
-            <p key={paragraphIndex} className={paragraphClassName}>
-              {renderRange(paragraph, paragraphIndex, 0, Number.POSITIVE_INFINITY)}
-            </p>
+          if (paragraphFrames.length === 0) {
+            return (
+              <p key={paragraphIndex} className={paragraphClassName}>
+                {renderRange(paragraph, paragraphIndex, 0, Number.POSITIVE_INFINITY)}
+              </p>
+            );
+          }
+
+          const totalLength = paragraph.reduce(
+            (sum, part) => sum + (isAccent(part) ? part.text : part).length,
+            0,
           );
-        }
+          const chunks: React.ReactNode[] = [];
+          let from = 0;
 
-        const totalLength = paragraph.reduce(
-          (sum, part) => sum + (isAccent(part) ? part.text : part).length,
-          0,
-        );
-        const chunks: React.ReactNode[] = [];
-        let from = 0;
-
-        paragraphFrames.forEach((frame) => {
-          if (frame.splitOffset > from) {
+          paragraphFrames.forEach((frame) => {
+            if (frame.splitOffset > from) {
+              chunks.push(
+                <span
+                  key={`segment-${from}`}
+                  style={{
+                    display: "block",
+                    // Keep the split line justified; it is no longer the block's
+                    // real last line, only an artifact of the split.
+                    textAlignLast: frame.splitOffset < totalLength ? "justify" : undefined,
+                  }}
+                >
+                  {renderRange(paragraph, paragraphIndex, from, frame.splitOffset)}
+                </span>,
+              );
+            }
+            const accent = paragraph[frame.partIndex];
             chunks.push(
-              <span
-                key={`segment-${from}`}
-                style={{
-                  display: "block",
-                  // Keep the split line justified; it is no longer the block's
-                  // real last line, only an artifact of the split.
-                  textAlignLast: frame.splitOffset < totalLength ? "justify" : undefined,
-                }}
-              >
-                {renderRange(paragraph, paragraphIndex, from, frame.splitOffset)}
+              <FrameBlock
+                key={frame.key}
+                frame={frame}
+                accent={isAccent(accent) ? accent : null}
+                reducedMotion={reducedMotion}
+                onClosed={removeFrame}
+              />,
+            );
+            from = Math.max(from, frame.splitOffset);
+          });
+
+          if (from < totalLength) {
+            chunks.push(
+              <span key={`segment-${from}`} style={{ display: "block" }}>
+                {renderRange(paragraph, paragraphIndex, from, Number.POSITIVE_INFINITY)}
               </span>,
             );
           }
-          const accent = paragraph[frame.partIndex];
-          chunks.push(
-            <FrameBlock
-              key={frame.key}
-              frame={frame}
-              accent={isAccent(accent) ? accent : null}
-              reducedMotion={reducedMotion}
-              onClosed={removeFrame}
-            />,
-          );
-          from = Math.max(from, frame.splitOffset);
-        });
 
-        if (from < totalLength) {
-          chunks.push(
-            <span key={`segment-${from}`} style={{ display: "block" }}>
-              {renderRange(paragraph, paragraphIndex, from, Number.POSITIVE_INFINITY)}
-            </span>,
+          return (
+            <p key={paragraphIndex} className={paragraphClassName}>
+              {chunks}
+            </p>
           );
-        }
-
-        return (
-          <p key={paragraphIndex} className={paragraphClassName}>
-            {chunks}
-          </p>
-        );
-      })}
-      {!isExpanded && (
-        <button
-          type="button"
-          aria-label="Expand Provenance"
-          aria-expanded={false}
-          onClick={expandProvenance}
-          className="provenance-preview__trigger"
-        />
-      )}
+        })}
+        {!isExpanded && (
+          <button
+            type="button"
+            aria-label="Expand Provenance"
+            aria-expanded={false}
+            onClick={expandProvenance}
+            className="provenance-preview__trigger"
+          />
+        )}
+      </div>
+      {isExpanded && <div aria-hidden className="provenance-scroll-tail" />}
       {isMounted &&
+        isExpanded &&
         createPortal(
           <span
             aria-hidden
             className={`provenance-bar${barVisible ? " provenance-bar--visible" : ""}${
               activeKey ? " provenance-bar--active" : ""
             }`}
+            style={
+              activeBarColor
+                ? ({ "--provenance-bar-active-color": activeBarColor } as React.CSSProperties)
+                : undefined
+            }
           />,
           document.body,
         )}

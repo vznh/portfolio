@@ -35,6 +35,14 @@
   cursor: pointer;
 }
 
+.provenance-accent {
+  transition: color 0.2s ease, text-decoration-color 0.2s ease, filter 0.2s ease;
+}
+
+.provenance-accent--active {
+  filter: brightness(1.2) saturate(1.25);
+}
+
 .provenance-preview {
   position: relative;
   height: 7rem;
@@ -87,12 +95,17 @@
   outline-offset: 0.25rem;
 }
 
-/* Reading bar centered in the viewport, spanning the full page.
+/* Lets the final text row reach the reading bar before the page bottoms out. */
+.provenance-scroll-tail {
+  height: calc(55vh - 0.875rem);
+}
+
+/* Reading bar at 45% of the viewport, spanning the full page.
    Border-only; brightens while it rests on an accent, and fades out
    once the Provenance section scrolls past it. */
 .provenance-bar {
   position: fixed;
-  top: calc(40vh - 0.875rem); /* band midpoint at 40% of the viewport */
+  top: calc(45vh - 0.875rem); /* band midpoint at 45% of the viewport */
   left: 0;
   right: 0;
   height: 1.75rem; /* one row of leading-7 text */
@@ -110,8 +123,16 @@
 }
 
 .provenance-bar--active {
-  border-top-color: color-mix(in srgb, var(--text-color) 40%, transparent);
-  border-bottom-color: color-mix(in srgb, var(--text-color) 40%, transparent);
+  border-top-color: color-mix(
+    in srgb,
+    var(--provenance-bar-active-color, var(--text-color)) 40%,
+    transparent
+  );
+  border-bottom-color: color-mix(
+    in srgb,
+    var(--provenance-bar-active-color, var(--text-color)) 40%,
+    transparent
+  );
 }
 
 /* Frame revealed between text lines while the bar rests on a hyperlink. */

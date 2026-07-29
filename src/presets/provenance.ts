@@ -33,7 +33,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     text: "computer jukebox",
     media: { type: "image", src: "/images/provenance/jukebox.jpg" },
   },
-  " for my first love. It was an end-to-end system: RFID cards mapped to songs, an external speaker, and its own separate Spotify account. In the same year, I ",
+  " for my first love. It was an end-to-end system: 50 RFID cards mapped to songs, an external speaker, and its own separate Spotify account. Each card was painted to her favorite song! In the same year, I ",
   { text: "made a quick NFC tag that translated everyday news locally and relative cross-country into Vietnamese for my mom" },
   " (she still uses it!). I was old enough for hackathons then. I won categories at HackDavis and CalHacks, and became a finalist at TreeHacks. I was caught off of the high of building. I started a company named Tokn with my mentor for a ",
   {
