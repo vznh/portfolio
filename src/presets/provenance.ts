@@ -156,6 +156,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "made a performativeness test for myself and friends",
     url: "https://grandiose-five.vercel.app/",
+    media: { type: "image", src: "/images/provenance/performativeness-test.png" },
   },
   ". Someone made a better version though. I love music. I got curious and wanted to see the ",
   {
