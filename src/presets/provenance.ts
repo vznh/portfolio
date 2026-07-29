@@ -151,7 +151,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ],
   [
   "I'm selfish. I made a lot of stuff for myself. I save food videos, so ",
-  { text: "why not make it into recipes", url: "https://github.com/vznh/hungry" },
+  { text: "why not make it into recipes" },
   "? Then ",
   {
     text: "made a performativeness test for myself and friends",
