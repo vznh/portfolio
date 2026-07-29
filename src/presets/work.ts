@@ -8,7 +8,7 @@ export const experiences: WorkRowProps[] = [
     role: "Software",
     img: "/images/logo/paradigm.png",
     imgClassName: "grayscale",
-    focusDesc: "In progress.",
+    focusDesc: "Working with a portfolio company.",
   },
   {
     key: 0,
@@ -27,7 +27,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/apple.png",
     focusDate: "2024",
     focusLocation: "Cupertino, California",
-    focusDesc: "I worked on the CoreOS team, focusing on various parts of the operating system and user interface when changes were made in the Settings app for the release of iOS26."
+    focusDesc: "Core Services & UI"
   },
   {
     key: 3,
@@ -36,7 +36,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/etalyc.png",
     focusDate: "2023 - 2024",
     focusLocation: "New York City, New York",
-    focusDesc: "I worked on Hypersafe, a platform for traffic engineers to analyze incident data. I worked on everything from front, back and data. I cut hefty production processing from 2 minutes to averaging sub-10  seconds, and impl. memoization to handle 10K+ HTTP requests with a 99.6% cost drop."
+    focusDesc: "Full-stack"
   },
   {
     key: 6,
@@ -57,7 +57,7 @@ export const experiences: WorkRowProps[] = [
     imgClassName: "grayscale scale-[0.80]",
     focusDate: "2023 - 2024",
     focusLocation: "Seoul, South Korea",
-    focusDesc: "I trained a sequence classifier on historically annotated genomic data to replace a manual labeling pipeline."
+    focusDesc: "Sequence classification for historical data"
   },
   {
     key: 4,
@@ -66,7 +66,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/cmu.png",
     focusDate: "2022 - 2023",
     focusLocation: "Pittsburgh, Pennsylvania",
-    focusDesc: "I built a baseline scalable neural network using Rust to interpret variably scabled neurological data for the Neuro Technology and Engineering lab."
+    focusDesc: "Neural network for neuron classification and association"
   },
   {
     key: 5,
@@ -75,7 +75,7 @@ export const experiences: WorkRowProps[] = [
     img: "/images/ucsc.png",
     focusDate: "2022 - 2023",
     focusLocation: "Santa Cruz, California",
-    focusDesc: "I helped build a prompt-to-video pipeline, experimenting with the film industry to produce Version 0 prototypes under Dr. Allen."
+    focusDesc: "Built a text-to-video generation pipeline"
   },
 ];
 
