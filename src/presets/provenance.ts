@@ -35,7 +35,10 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   " for my first love. It was an end-to-end system: RFID cards mapped to songs, an external speaker, and its own separate Spotify account. In the same year, I ",
   { text: "made a quick NFC tag that translated everyday news locally and relative cross-country into Vietnamese for my mom" },
   " (she still uses it!). I was old enough for hackathons then. I won categories at HackDavis and CalHacks, and became a finalist at TreeHacks. I was caught off of the high of building. I started a company named Tokn with my mentor for a ",
-  { text: "social layer over token analytics" },
+  {
+    text: "social layer over token analytics",
+    media: { type: "image", src: "/images/provenance/tokn.png" },
+  },
   ", similar to Twitch chat for people watching their favorite coin. We got 2K+ users within the first 24 hours. We sold the app.",
   ],
   [
