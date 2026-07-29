@@ -18,18 +18,6 @@ const EXPANSION_SCROLL_DURATION = 3000;
 const MASK_CLEAR_DURATION = 4000;
 const MASK_CLEAR_START_MS = 1750;
 const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
-const RETURN_SCROLL_DURATION = 400;
-const RETURN_SCROLL_DELAY = 0;
-const RETURN_SCROLL_OFFSET = 64;
-const SCROLL_KEYS = new Set([
-  "ArrowDown",
-  "ArrowUp",
-  "PageDown",
-  "PageUp",
-  "Home",
-  "End",
-  " ",
-]);
 
 const easeReveal = (progress: number) => {
   // Match the cubic-bezier used by the Framer height and mask animations.
@@ -57,52 +45,11 @@ const easeReveal = (progress: number) => {
 const interpolate = (from: number, to: number, progress: number) =>
   from + (to - from) * progress;
 
-const animateScrollTo = (
-  target: number,
-  duration: number,
-  onComplete?: () => void,
-) => {
-  const start = window.scrollY;
-  const startedAt = performance.now();
-  let frame = 0;
-
-  const tick = (now: number) => {
-    const progress = Math.min((now - startedAt) / duration, 1);
-    window.scrollTo(0, start + (target - start) * easeReveal(progress));
-
-    if (progress < 1) {
-      frame = window.requestAnimationFrame(tick);
-    } else {
-      onComplete?.();
-    }
-  };
-
-  frame = window.requestAnimationFrame(tick);
-  return () => window.cancelAnimationFrame(frame);
-};
-
-const lockPageScroll = () => {
-  const preventScroll = (event: Event) => event.preventDefault();
-  const preventKeyboardScroll = (event: KeyboardEvent) => {
-    if (SCROLL_KEYS.has(event.key)) event.preventDefault();
-  };
-
-  window.addEventListener("wheel", preventScroll, { passive: false });
-  window.addEventListener("touchmove", preventScroll, { passive: false });
-  window.addEventListener("keydown", preventKeyboardScroll);
-
-  return () => {
-    window.removeEventListener("wheel", preventScroll);
-    window.removeEventListener("touchmove", preventScroll);
-    window.removeEventListener("keydown", preventKeyboardScroll);
-  };
-};
-
 const ProvenanceSection = () => {
   const [colors, setColors] = useState<Record<string, string>>({});
   const [isExpanded, setIsExpanded] = useState(false);
   const provenanceRef = React.useRef<HTMLDivElement>(null);
-  const pendingExpansionRef = React.useRef<{ scrollY: number; height: number } | null>(null);
+  const pendingExpansionRef = React.useRef<{ height: number } | null>(null);
 
   useEffect(() => {
     const next: Record<string, string> = {};
@@ -118,7 +65,6 @@ const ProvenanceSection = () => {
     if (isExpanded || !provenanceRef.current) return;
 
     pendingExpansionRef.current = {
-      scrollY: window.scrollY,
       height: provenanceRef.current.offsetHeight,
     };
     setIsExpanded(true);
@@ -130,16 +76,12 @@ const ProvenanceSection = () => {
     const initial = pendingExpansionRef.current;
     pendingExpansionRef.current = null;
 
-    let cancelScroll: (() => void) | undefined;
-    let returnTimer: number | undefined;
-    let unlockScroll: (() => void) | undefined;
     let revealFrame = 0;
     const measureFrame = window.requestAnimationFrame(() => {
       const element = provenanceRef.current;
       if (!element) return;
 
       const naturalExpandedHeight = element.scrollHeight;
-      const heightDelta = Math.max(0, naturalExpandedHeight - initial.height);
       const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
       const fadeDistance = rootFontSize * COLLAPSED_FADE_DISTANCE_REM;
       const collapsedFadeStart = fadeDistance;
@@ -153,7 +95,6 @@ const ProvenanceSection = () => {
         return;
       }
 
-      unlockScroll = lockPageScroll();
       const startedAt = performance.now();
 
       const reveal = (now: number) => {
@@ -175,20 +116,11 @@ const ProvenanceSection = () => {
 
         element.style.height = `${interpolate(initial.height, naturalExpandedHeight, progress)}px`;
         element.style.setProperty("--provenance-fade-start", `${fadeStart}px`);
-        window.scrollTo(0, initial.scrollY + heightDelta * progress);
 
         if (elapsed < MASK_CLEAR_END_MS) {
           revealFrame = window.requestAnimationFrame(reveal);
           return;
         }
-
-        returnTimer = window.setTimeout(() => {
-          cancelScroll = animateScrollTo(
-            initial.scrollY + RETURN_SCROLL_OFFSET,
-            RETURN_SCROLL_DURATION,
-            () => unlockScroll?.(),
-          );
-        }, RETURN_SCROLL_DELAY);
       };
 
       revealFrame = window.requestAnimationFrame(reveal);
@@ -197,9 +129,6 @@ const ProvenanceSection = () => {
     return () => {
       window.cancelAnimationFrame(measureFrame);
       window.cancelAnimationFrame(revealFrame);
-      cancelScroll?.();
-      if (returnTimer !== undefined) window.clearTimeout(returnTimer);
-      unlockScroll?.();
     };
   }, [isExpanded]);
 
