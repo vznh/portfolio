@@ -48,7 +48,7 @@ const ProgressiveBlur: React.FC<{ position: 'top' | 'bottom' }> = ({ position })
   );
 };
 
-const LoopingVideo: React.FC<{ src: string; width?: number; height?: number; className?: string }> = ({ src, width, height, className }) => {
+const LoopingVideo: React.FC<{ src: string; className?: string }> = ({ src, className }) => {
   const ref = React.useRef<HTMLVideoElement>(null);
   const [opacity, setOpacity] = React.useState(1);
   const FADE_MS = 350;
@@ -71,8 +71,6 @@ const LoopingVideo: React.FC<{ src: string; width?: number; height?: number; cla
     <video
       ref={ref}
       src={src}
-      width={width}
-      height={height}
       autoPlay
       muted
       playsInline
@@ -80,7 +78,7 @@ const LoopingVideo: React.FC<{ src: string; width?: number; height?: number; cla
       onTimeUpdate={onTimeUpdate}
       onEnded={onEnded}
       className={`w-auto ${className ?? ''}`}
-      style={{ opacity, transition: `opacity ${FADE_MS}ms ease-in-out`, ...(height ? { height } : {}), ...(width ? { width } : {}) }}
+      style={{ opacity, transition: `opacity ${FADE_MS}ms ease-in-out` }}
     />
   );
 };

@@ -12,9 +12,6 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   priority = false,
 }) => {
   const [hovered, setHovered] = useState<boolean>(false);
-  // Touch state is only read inside event handlers, never rendered — a ref keeps
-  // it without triggering a re-render on every touchstart/touchend.
-  const touchedRef = useRef<boolean>(false);
   const [desktop, setDesktop] = useState<boolean>(false);
   const [inViewport, setInViewport] = useState<boolean>(false);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
@@ -108,8 +105,6 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
       className={`relative ${url ? "cursor-pointer" : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onTouchStart={() => { touchedRef.current = true; }}
-      onTouchEnd={() => { touchedRef.current = false; }}
     >
       {/* Media Container - 1:1 aspect ratio */}
       <div className="relative w-full aspect-square overflow-hidden rounded-xs">
