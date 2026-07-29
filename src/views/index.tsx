@@ -158,7 +158,7 @@ const IndexView = ({ version }: { version: string }) => {
                   visible={hoveredAnchor === 'vc'}
                   date="2026"
                   role="(1) COMPANY"
-                  desc="I invest in consumer-facing apps or artificial intelligence labs."
+                  desc="I wrote a $10K check and was one of the first wires towards a lab. I am drawn to people with relentless ambition and care about the itty gritty details. I especially love crude ideas."
                 />
               </span>
               <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 22. Based in New York City as a researcher and full-stack generalist. I graduated </span>
