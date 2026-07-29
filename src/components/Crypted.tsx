@@ -4,11 +4,9 @@ import React from 'react';
 interface CryptedProps {
   text: string;
   delay?: number;
-  className?: string;
-  onComplete?: () => void;
 }
 
-const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onComplete }) => {
+const Crypted: React.FC<CryptedProps> = ({ text, delay = 15 }) => {
   const [displayText, setDisplayText] = React.useState<string>('');
   const [currentIndex, setCurrentIndex] = React.useState<number>(0);
   const intervalRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -28,7 +26,6 @@ const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onC
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      onComplete?.();
       return;
     }
 
@@ -45,7 +42,7 @@ const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onC
         clearInterval(intervalRef.current);
       }
     };
-  }, [currentIndex, text, delay, onComplete]);
+  }, [currentIndex, text, delay]);
 
   React.useEffect(() => {
     if (isCompleteRef.current) return;
@@ -68,11 +65,7 @@ const Crypted: React.FC<CryptedProps> = ({ text, delay = 15, className = '', onC
     };
   }, []);
 
-  return (
-    <span className={className}>
-      {displayText}
-    </span>
-  );
+  return <span>{displayText}</span>;
 };
 
 export default Crypted;
