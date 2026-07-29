@@ -10,7 +10,7 @@ export type ProvenanceStoryPart = string | ProvenanceAccent;
 
 // A single opening line that stands on its own before the story begins.
 export const provenanceIntro =
-  "I have started 182 projects, finished 52, and launched 24 of them.";
+  "Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them.";
 
 export const oldestFirstStory: ProvenanceStoryPart[][] = [
   [
