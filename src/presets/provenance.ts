@@ -28,7 +28,10 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   " because I was greedy. The GUI allowed me to spawn only one item at a time, and I wanted a large quantity. I also used to cheat on TF2 with a skin changer I made. ",
   { text: "I got caught though.", url: "https://steamcommunity.com/id/vinh2/" },
   " I started experimenting with Discord bots for my friend group at this time for anime references (like Mudae!). I tinkered with robotics in high school, first with a ",
-  { text: "computer jukebox" },
+  {
+    text: "computer jukebox",
+    media: { type: "image", src: "/images/provenance/jukebox.jpg" },
+  },
   " for my first love. It was an end-to-end system: RFID cards mapped to songs, an external speaker, and its own separate Spotify account. In the same year, I ",
   { text: "made a quick NFC tag that translated everyday news locally and relative cross-country into Vietnamese for my mom" },
   " (she still uses it!). I was old enough for hackathons then. I won categories at HackDavis and CalHacks, and became a finalist at TreeHacks. I was caught off of the high of building. I started a company named Tokn with my mentor for a ",

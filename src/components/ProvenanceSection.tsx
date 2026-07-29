@@ -31,7 +31,7 @@ const LINE_HEIGHT_REM = 1.75;
 const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
 const CANVAS_FONT_FAMILY = '"IBM Plex Sans"';
-const FRAME_ROWS = 3;
+const FRAME_ROWS = 6;
 const FRAME_HEIGHT_REM = LINE_HEIGHT_REM * FRAME_ROWS;
 const BAR_OVERLAP_THRESHOLD = 0.5;
 
@@ -419,8 +419,8 @@ const ProvenanceSection = () => {
     let newFrame: FrameSpec | null = null;
     if (best && isSettledRef.current && !framesRef.current.some((f) => f.key === best.key)) {
       const accent = oldestFirstStory[best.paragraphIndex]?.[best.partIndex];
-      // No hyperlink → highlight only, no layout shift.
-      if (accent && isAccent(accent) && accent.url) {
+      // Nothing to reveal (no link, no media) → highlight only, no layout shift.
+      if (accent && isAccent(accent) && (accent.url || accent.media)) {
         const splitOffset = computeSplitOffset(best.paragraphIndex, best.partIndex);
         if (splitOffset !== null) {
           newFrame = {
