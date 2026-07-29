@@ -598,7 +598,7 @@ const ProvenanceSection = () => {
     <div>
       <div
         ref={provenanceRef}
-        className={`${isSettled ? "" : "provenance-preview "}space-y-4`}
+        className={`${isSettled ? "" : "provenance-preview "}provenance-story space-y-4`}
       >
         {story.map((paragraph, paragraphIndex) => {
           const paragraphFrames = frames
