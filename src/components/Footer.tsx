@@ -27,11 +27,11 @@ const VersionLink = ({ showCrypted, version, rotateOnHover }: { showCrypted: boo
       {showCrypted ? (
         <>
           <Crypted text={`Version ${version}`} delay={15} />
-          , <Crypted text="April 2026" delay={15} />
+          , <Crypted text="July 2026" delay={15} />
         </>
       ) : (
         <>
-          Version {version}, April 2026
+          Version {version}, July 2026
         </>
       )}
     </Link>{" "}
