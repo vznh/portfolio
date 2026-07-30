@@ -35,10 +35,6 @@
   cursor: pointer;
 }
 
-.provenance-accent {
-  transition: color 0.2s ease, text-decoration-color 0.2s ease, filter 0.2s ease;
-}
-
 .provenance-accent--active {
   filter: brightness(1.2) saturate(1.25);
 }
