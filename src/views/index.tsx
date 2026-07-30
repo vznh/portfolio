@@ -169,19 +169,19 @@ const IndexView = ({ version }: { version: string }) => {
               className={`social-row flex flex-row flex-wrap items-center gap-x-3 gap-y-1 text-[var(--text-color)] ${dimTransition}`}
               style={{ opacity: blockOpacity }}
             >
-              <Link href="mailto:jasonvinhson@gmail.com" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="mailto:jasonvinhson@gmail.com" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
                 jasonvinhson@gmail.com
               </Link>
-              <Link href="https://x.com/jasonvinhson" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="https://x.com/jasonvinhson" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
                 @jasonvinhson
               </Link>
-              <Link href="https://linkedin.com/in/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="https://linkedin.com/in/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
                 in/vznh
               </Link>
-              <Link href="https://github.com/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="https://github.com/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
                 github/vznh
               </Link>
-              <Link href="https://venh.substack.com" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-all duration-200 hover:opacity-100 hover:text-[#222]">
+              <Link href="https://venh.substack.com" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
                 venh.substack.com
               </Link>
             </div>
