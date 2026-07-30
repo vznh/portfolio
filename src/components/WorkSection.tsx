@@ -4,6 +4,8 @@ import React from "react";
 import { experiences } from "@/presets/work";
 import Image from "next/image";
 import { useHoverContext } from "@/hooks/useHoverContext";
+import { useLatest } from "@/hooks/useLatest";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useId } from "react";
 import Focus from "./Focus";
 
@@ -36,6 +38,9 @@ const WorkRow: React.FC<WorkRowProps> = ({
 }) => {
   const { hoveredItem, setHoveredItem, focusedItem, setFocusedItem } = useHoverContext();
   const itemId = useId();
+  // Read through a ref so crossing the breakpoint mid-hover can't clear and
+  // restart the in-flight dimming timer.
+  const isMobileRef = useLatest(useMediaQuery("(max-width: 767px)"));
   // Rows without any focus content (e.g. Paradigm) never open a popup.
   const hasFocus = Boolean(focusDate || focusLocation || focusDesc || images.length);
   const [phase, setPhase] = React.useState<'initial' | 'growing' | 'dimming' | 'exiting'>('initial');
@@ -45,6 +50,9 @@ const WorkRow: React.FC<WorkRowProps> = ({
   const active = hovered && !exiting;
   // A sibling row is the focused one — dim ourselves out of its way.
   const dimmedBySibling = focusedItem !== null && focusedItem !== itemId;
+  // Growing and exiting are the slow, deliberate phases; everything else snaps.
+  const slowPhase = phase === 'growing' || phase === 'exiting';
+  const phaseDuration = slowPhase ? 'duration-1000' : 'duration-300';
 
   const handleMouseEnter = () => {
     // Rows without a Focus popup (e.g. Paradigm) have nothing to reveal, so skip
@@ -64,8 +72,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
   React.useEffect(() => {
     if (phase === 'growing' && active) {
-      const isMobile = typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
-      const delay = isMobile ? 0 : 1000;
+      const delay = isMobileRef.current ? 0 : 1000;
       const dimmingTimer = setTimeout(() => {
         if (active) {
           setPhase('dimming');
@@ -74,7 +81,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
       return () => clearTimeout(dimmingTimer);
     }
-  }, [phase, active]);
+  }, [phase, active, isMobileRef]);
 
   // Publish this row as the page-wide focused item exactly while its Focus popup
   // is showing. Using a functional update keyed on itemId means a row handing off
@@ -102,14 +109,14 @@ const WorkRow: React.FC<WorkRowProps> = ({
 
   return (
     <div
-      className={`col-span-2 grid grid-cols-subgrid items-center w-full tracking-tighter transition-all ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`}
+      className={`col-span-2 grid grid-cols-subgrid items-center w-full tracking-tighter transition-all ${phaseDuration} ease-in-out`}
       data-work-id={itemId}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
         // Full opacity normally; dim out of the way when a sibling row is focused.
         opacity: dimmedBySibling ? 0.1 : 1,
-        transition: (phase === 'growing' || phase === 'exiting') ? 'opacity 1s ease-in-out' : 'opacity 0.5s ease-in-out',
+        transition: slowPhase ? 'opacity 1s ease-in-out' : 'opacity 0.5s ease-in-out',
         position: 'relative',
         cursor: !hasFocus ? 'default' : phase === 'growing' ? 'wait' : 'pointer',
       }}
@@ -126,13 +133,13 @@ const WorkRow: React.FC<WorkRowProps> = ({
         </div>
 
         { /* Company goes here! */ }
-        <span className={`font-plex text-lg md:text-xl shrink-0 mr-3 whitespace-nowrap transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} style={{
+        <span className={`font-plex text-lg md:text-xl shrink-0 mr-3 whitespace-nowrap transition-opacity ${phaseDuration} ease-in-out`} style={{
           opacity: 0.8,
         }}>{ company }</span>
 
 
         { /* Line component is here - don't change. */}
-        <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out`} />
+        <div className={`flex-grow h-px bg-[var(--text-color)] opacity-0 md:opacity-10 aria-hidden transition-opacity ${phaseDuration} ease-in-out`} />
       </div>
 
       { /* Overlay box. */}
@@ -147,7 +154,7 @@ const WorkRow: React.FC<WorkRowProps> = ({
         )}
 
       { /* Role goes here! */ }
-      <span className={`col-start-2 font-plex text-lg md:text-xl whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${(phase === 'growing' || phase === 'exiting') ? 'duration-1000' : 'duration-300'} ease-in-out text-[var(--text-color)]`} style={{
+      <span className={`col-start-2 font-plex text-lg md:text-xl whitespace-nowrap text-right transition-opacity underline md:no-underline decoration-[0.8px] underline-offset-[1px] ${phaseDuration} ease-in-out text-[var(--text-color)]`} style={{
         opacity: 0.8,
       }}>{ role }</span>
     </div>

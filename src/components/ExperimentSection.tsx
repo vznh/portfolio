@@ -1,3 +1,5 @@
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { useNearViewportCenter } from "@/hooks/useNearViewportCenter";
 import { ProjectProps, projects } from "@/presets/work";
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 import Image from "next/image";
@@ -12,54 +14,16 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
   priority = false,
 }) => {
   const [hovered, setHovered] = useState<boolean>(false);
-  const [desktop, setDesktop] = useState<boolean>(false);
-  const [inViewport, setInViewport] = useState<boolean>(false);
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const checkDesktop = () => {
-      setDesktop(
-        window.matchMedia("(hover: hover) and (pointer: fine)").matches,
-      );
-    };
-
-    checkDesktop();
-    window.addEventListener("resize", checkDesktop);
-
-    return () => {
-      window.removeEventListener("resize", checkDesktop);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (desktop) return;
-
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-
-      const rect = containerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const viewportCenter = viewportHeight / 2;
-
-      const elementCenter = rect.top + rect.height / 2;
-      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-      const threshold = viewportHeight * 0.5;
-
-      setInViewport(distanceFromCenter <= threshold);
-    };
-
-    handleScroll();
-
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, [desktop]);
+  const desktop = useMediaQuery("(hover: hover) and (pointer: fine)");
+  // Touch devices have no hover to play on, so playback follows the scroll.
+  const inViewport = useNearViewportCenter(containerRef, {
+    threshold: 0.5,
+    enabled: !desktop,
+  });
 
   useEffect(() => {
     const video = videoRef.current;

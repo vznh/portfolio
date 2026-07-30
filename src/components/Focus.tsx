@@ -127,8 +127,9 @@ const Focus: React.FC<FocusProps> = ({ visible, date, role, images, desc }) => {
         {canScrollDown && <ProgressiveBlur position="bottom" />}
       <div ref={scrollRef} className="flex flex-col md:flex-row md:flex-wrap gap-2 md:justify-between items-center w-full max-h-[60vh] md:max-h-none overflow-y-auto md:overflow-visible py-12 md:py-0">
         {images.map((src) => {
-          const h = /Footer/i.test(src) ? Math.round(H * 0.85) : H;
-          const heightClass = /Footer/i.test(src) ? 'h-[190px] md:h-[95px]' : 'h-[224px] md:h-[112px]';
+          const isFooterShot = /Footer/i.test(src);
+          const h = isFooterShot ? Math.round(H * 0.85) : H;
+          const heightClass = isFooterShot ? 'h-[190px] md:h-[95px]' : 'h-[224px] md:h-[112px]';
           if (isVideo(src)) return <LoopingVideo key={src} src={src} className={heightClass} />;
           const img = (
             <Image
