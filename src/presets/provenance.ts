@@ -191,7 +191,14 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
     frameRows: 12,
   },
   " to keep us accountable. It was a 75-day commitment with a $20 entry. If you failed, you lost. If you committed through the end, the winners split the pot. The bot kept track of everything and pinged users toward the end of the day. I love unreleased music. I ",
-  { text: "made a bulk converter" },
+  {
+    text: "made a bulk converter",
+    media: [
+      { type: "image", src: "/images/provenance/transmute-terminal.png" },
+      { type: "image", src: "/images/provenance/transmute-metadata.png" },
+    ],
+    frameRows: 7,
+  },
   " that takes YouTube and SoundCloud links, then researches the web to assign proper metadata.",
   ],
   [
