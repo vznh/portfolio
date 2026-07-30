@@ -207,8 +207,13 @@ const ProvenanceSection = () => {
   const isSettledRef = React.useRef(false);
   const lastScrollYRef = React.useRef<number | null>(null);
 
-  framesRef.current = frames;
-  isSettledRef.current = isSettled;
+  useEffect(() => {
+    framesRef.current = frames;
+  }, [frames]);
+
+  useEffect(() => {
+    isSettledRef.current = isSettled;
+  }, [isSettled]);
 
   useEffect(() => {
     const next: Record<string, string> = {};
@@ -413,7 +418,7 @@ const ProvenanceSection = () => {
   };
 
   const detectRef = React.useRef<() => void>(() => {});
-  detectRef.current = () => {
+  const detect = () => {
     const section = provenanceRef.current;
     if (!section) return;
 
@@ -547,6 +552,10 @@ const ProvenanceSection = () => {
       return next;
     });
   };
+
+  useEffect(() => {
+    detectRef.current = detect;
+  });
 
   useEffect(() => {
     let rafId = 0;
