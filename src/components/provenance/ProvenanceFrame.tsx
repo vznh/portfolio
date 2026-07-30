@@ -1,5 +1,6 @@
 import type { ProvenanceAccent } from "@/presets/provenance";
 import { m } from "framer-motion";
+import Image from "next/image";
 import React from "react";
 
 import { FRAME_ROWS, LINE_HEIGHT_REM } from "./constants";
@@ -10,6 +11,38 @@ export type FrameSpec = {
   partIndex: number;
   splitOffset: number;
   state: "open" | "closing";
+};
+
+const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
+  "/images/provenance/business-card-opennode.png": { width: 1612, height: 998 },
+  "/images/provenance/campus-map-laptop.jpg": { width: 376, height: 360 },
+  "/images/provenance/campus-map-phone.jpg": { width: 376, height: 360 },
+  "/images/provenance/cowork-baskin.png": { width: 360, height: 360 },
+  "/images/provenance/cowork-hacknight.png": { width: 360, height: 360 },
+  "/images/provenance/cowork-mchenry-1.png": { width: 360, height: 360 },
+  "/images/provenance/cowork-mchenry-2.png": { width: 360, height: 360 },
+  "/images/provenance/devour-components.gif": { width: 800, height: 318 },
+  "/images/provenance/healthclub-footer.jpg": { width: 433, height: 360 },
+  "/images/provenance/healthclub-hero.jpg": { width: 433, height: 360 },
+  "/images/provenance/healthclub-letter.jpg": { width: 433, height: 360 },
+  "/images/provenance/healthclub-mission.jpg": { width: 433, height: 360 },
+  "/images/provenance/jukebox.jpg": { width: 700, height: 525 },
+  "/images/provenance/madyolks.jpg": { width: 750, height: 360 },
+  "/images/provenance/old-portfolio.jpg": { width: 758, height: 360 },
+  "/images/provenance/performativeness-test.png": { width: 900, height: 438 },
+  "/images/provenance/polyglot-logos.png": { width: 554, height: 360 },
+  "/images/provenance/polyglot-stanford.jpg": { width: 482, height: 360 },
+  "/images/provenance/polyglot-team.jpg": { width: 546, height: 360 },
+  "/images/provenance/polyglot-wireframe-1.png": { width: 278, height: 360 },
+  "/images/provenance/polyglot-wireframe-2.png": { width: 277, height: 360 },
+  "/images/provenance/roblox-hack.png": { width: 480, height: 479 },
+  "/images/provenance/splat.png": { width: 900, height: 358 },
+  "/images/provenance/spotify-overlap.jpg": { width: 900, height: 612 },
+  "/images/provenance/spotify-ui-mockup.jpg": { width: 900, height: 555 },
+  "/images/provenance/steam-vac-ban.png": { width: 472, height: 196 },
+  "/images/provenance/tokn.png": { width: 500, height: 500 },
+  "/images/provenance/transmute-metadata.png": { width: 1152, height: 976 },
+  "/images/provenance/transmute-terminal.png": { width: 904, height: 334 },
 };
 
 const hostnameOf = (url: string) => {
@@ -45,6 +78,7 @@ const ProvenanceFrame = ({
   const filmstripRows = filmstripColumns > 0
     ? Math.ceil(mediaList.length / filmstripColumns)
     : 1;
+
   React.useEffect(() => {
     if (!open) {
       setExpanded(false);
@@ -102,12 +136,14 @@ const ProvenanceFrame = ({
                 playsInline
               />
             ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 key={media.src}
                 className="provenance-frame__media"
                 src={media.src}
                 alt={accent?.text ?? ""}
+                width={IMAGE_DIMENSIONS[media.src]?.width ?? 1200}
+                height={IMAGE_DIMENSIONS[media.src]?.height ?? 675}
+                sizes="(max-width: 767px) 90vw, 55vw"
               />
             ),
           )
