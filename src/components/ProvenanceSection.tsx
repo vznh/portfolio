@@ -1,11 +1,14 @@
 "use client";
 
 import {
+  isAccent,
   MUTED_PALETTE,
   oldestFirstStory,
   provenanceIntro,
   type ProvenanceAccent,
 } from "@/presets/provenance";
+import { useLatest } from "@/hooks/useLatest";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useProvenanceReadingBar } from "@/hooks/useProvenanceReadingBar";
 import React from "react";
 import { createPortal } from "react-dom";
@@ -18,11 +21,8 @@ import {
   MASK_CLEAR_END_MS,
   MASK_CLEAR_START_MS,
   MASK_CLEAR_DURATION,
+  PARAGRAPH_CLASS,
 } from "./provenance/constants";
-
-const isAccent = (
-  part: string | ProvenanceAccent,
-): part is ProvenanceAccent => typeof part !== "string";
 
 const previewStory = oldestFirstStory.slice(0, 1);
 
@@ -63,8 +63,12 @@ const ProvenanceSection = () => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isSettled, setIsSettled] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
-  const [isMobile, setIsMobile] = React.useState(false);
-  const [reducedMotion, setReducedMotion] = React.useState(false);
+  const isMobile = useMediaQuery("(max-width: 767px)");
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  // Read through a ref inside the reveal loop below: the expansion effect is a
+  // one-shot (it consumes pendingExpansionRef), so re-running it mid-reveal
+  // would cancel the animation and leave the section stuck half-expanded.
+  const reducedMotionRef = useLatest(reducedMotion);
   const provenanceRef = React.useRef<HTMLDivElement>(null);
   const pendingExpansionRef = React.useRef<{ height: number } | null>(
     null,
@@ -93,18 +97,6 @@ const ProvenanceSection = () => {
 
   React.useEffect(() => {
     setIsMounted(true);
-    setReducedMotion(
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    );
-  }, []);
-
-  React.useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(query.matches);
-
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
   }, []);
 
   const expandProvenance = () => {
@@ -136,9 +128,7 @@ const ProvenanceSection = () => {
         rootFontSize *
         (COLLAPSED_PREVIEW_HEIGHT_REM - COLLAPSED_FADE_DISTANCE_REM);
 
-      if (
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
+      if (reducedMotionRef.current) {
         setIsSettled(true);
         return;
       }
@@ -197,7 +187,7 @@ const ProvenanceSection = () => {
       window.cancelAnimationFrame(measureFrame);
       window.cancelAnimationFrame(revealFrame);
     };
-  }, [isExpanded]);
+  }, [isExpanded, reducedMotionRef]);
 
   const story = isExpanded ? oldestFirstStory : previewStory;
   const activeBarColor = (() => {
@@ -215,7 +205,7 @@ const ProvenanceSection = () => {
           isSettled ? "" : "provenance-preview "
         }provenance-story space-y-4`}
       >
-        <p className="font-plex text-xl leading-7 tracking-tight text-justify text-[var(--text-color)] opacity-50">
+        <p className={`${PARAGRAPH_CLASS} opacity-50`}>
           {provenanceIntro}
         </p>
         <ProvenanceStory

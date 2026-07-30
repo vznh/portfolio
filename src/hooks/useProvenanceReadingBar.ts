@@ -7,16 +7,9 @@ import {
   LINE_HEIGHT_REM,
   TRACKING_EM,
 } from "@/components/provenance/constants";
-import {
-  oldestFirstStory,
-  type ProvenanceAccent,
-} from "@/presets/provenance";
+import { isAccent, oldestFirstStory } from "@/presets/provenance";
 import type { PreparedTextWithSegments } from "@chenglou/pretext";
 import React from "react";
-
-const isAccent = (
-  part: string | ProvenanceAccent,
-): part is ProvenanceAccent => typeof part !== "string";
 
 type PretextModule = typeof import("@chenglou/pretext");
 
