@@ -18,10 +18,6 @@ export interface ProvenanceAccent {
 
 export type ProvenanceStoryPart = string | ProvenanceAccent;
 
-export const isAccent = (
-  part: ProvenanceStoryPart,
-): part is ProvenanceAccent => typeof part !== "string";
-
 // A single opening line that stands on its own before the story begins.
 export const provenanceIntro =
   "Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them.";

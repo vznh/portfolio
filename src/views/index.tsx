@@ -10,7 +10,7 @@ import { useHoverContext } from "@/hooks/useHoverContext";
 import { useNearViewportCenter } from "@/hooks/useNearViewportCenter";
 import { FEATURES } from "@/presets/features";
 import { socials } from "@/presets/socials";
-import { LazyMotion, domMax, m } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
@@ -128,7 +128,7 @@ const IndexView = ({ version }: { version: string }) => {
   });
 
   return (
-    <LazyMotion features={domMax}>
+    <LazyMotion features={domAnimation}>
     <div className="relative min-h-screen overflow-hidden">
       <ImageOverlay visible={hoveredAnchor === 'sc'} images={["/images/overlays/santa-cruz.jpg"]} scale={1.25} aspectRatio="16/9" zoom={1.25} objectPosition="center bottom" origin="bottom" />
       <ImageOverlay
