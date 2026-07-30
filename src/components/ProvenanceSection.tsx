@@ -16,8 +16,9 @@ import { createPortal } from "react-dom";
 const isAccent = (part: string | ProvenanceAccent): part is ProvenanceAccent =>
   typeof part !== "string";
 
-// Keep the initial teaser small until the section gets an explicit reveal.
+// Keep the initial teaser concise until the section gets an explicit reveal.
 const previewStory = oldestFirstStory.slice(0, 1);
+const COLLAPSED_PREVIEW_HEIGHT_REM = 10.5;
 const COLLAPSED_FADE_DISTANCE_REM = 3.5;
 const EXPANSION_SCROLL_DURATION = 3000;
 const MASK_CLEAR_DURATION = 4000;
@@ -141,6 +142,7 @@ const FrameBlock = ({
   return (
     <m.span
       className="provenance-frame"
+      data-provenance-frame={frame.key}
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: open ? `${frameHeightRem}rem` : 0, opacity: open ? 1 : 0 }}
       transition={{ duration: reducedMotion ? 0 : 0.55, ease: [0.22, 0.61, 0.36, 1] }}
@@ -191,6 +193,7 @@ const ProvenanceSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSettled, setIsSettled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const [frames, setFrames] = useState<FrameSpec[]>([]);
@@ -202,6 +205,7 @@ const ProvenanceSection = () => {
   const activeKeyRef = React.useRef<string | null>(null);
   const framesRef = React.useRef<FrameSpec[]>([]);
   const isSettledRef = React.useRef(false);
+  const lastScrollYRef = React.useRef<number | null>(null);
 
   framesRef.current = frames;
   isSettledRef.current = isSettled;
@@ -239,6 +243,15 @@ const ProvenanceSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(query.matches);
+
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
   const expandProvenance = () => {
     if (isExpanded || !provenanceRef.current) return;
 
@@ -262,7 +275,9 @@ const ProvenanceSection = () => {
       const naturalExpandedHeight = element.scrollHeight;
       const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
       const fadeDistance = rootFontSize * COLLAPSED_FADE_DISTANCE_REM;
-      const collapsedFadeStart = fadeDistance;
+      const collapsedFadeStart = rootFontSize * (
+        COLLAPSED_PREVIEW_HEIGHT_REM - COLLAPSED_FADE_DISTANCE_REM
+      );
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         setIsSettled(true);
@@ -412,8 +427,16 @@ const ProvenanceSection = () => {
     const barBottom = barTop + lineHeightPx;
     const sectionRect = section.getBoundingClientRect();
     const visible = sectionRect.top < barBottom && sectionRect.bottom > barTop;
+    const scrollY = window.scrollY;
+    const previousScrollY = lastScrollYRef.current;
+    const scrollDirection = previousScrollY === null
+      ? 0
+      : Math.sign(scrollY - previousScrollY);
+    lastScrollYRef.current = scrollY;
 
-    setBarVisible(visible);
+    // On touch screens the reading bar remains a positional trigger only. The
+    // layout shift is visible, but the bar itself would obstruct reading.
+    setBarVisible(!isMobile && visible);
 
     let best: BarCandidate | null = null;
     if (visible) {
@@ -465,10 +488,26 @@ const ProvenanceSection = () => {
       }
     }
 
+    const framesToClear = new Set<string>();
+    section.querySelectorAll<HTMLElement>("[data-provenance-frame]").forEach((frame) => {
+      const key = frame.dataset.provenanceFrame;
+      const rect = frame.getBoundingClientRect();
+      const shouldClear =
+        (scrollDirection > 0 && rect.bottom <= 0) ||
+        (scrollDirection < 0 && rect.top >= window.innerHeight);
+      if (key && shouldClear) {
+        framesToClear.add(key);
+      }
+    });
+
     const nextKey = best?.key ?? null;
-    if (nextKey === activeKeyRef.current) return;
-    activeKeyRef.current = nextKey;
-    setActiveKey(nextKey);
+    const activeKeyChanged = nextKey !== activeKeyRef.current;
+    if (!activeKeyChanged && framesToClear.size === 0) return;
+
+    if (activeKeyChanged) {
+      activeKeyRef.current = nextKey;
+      setActiveKey(nextKey);
+    }
 
     let newFrame: FrameSpec | null = null;
     if (best && isSettledRef.current && !framesRef.current.some((f) => f.key === best.key)) {
@@ -495,8 +534,8 @@ const ProvenanceSection = () => {
 
     setFrames((prev) => {
       let next = prev.map((frame) => {
-        const target: FrameSpec["state"] = frame.key === nextKey ? "open" : "closing";
-        return frame.state === target ? frame : { ...frame, state: target };
+        if (!framesToClear.has(frame.key) || frame.state === "closing") return frame;
+        return { ...frame, state: "closing" as const };
       });
       if (newFrame && !prev.some((frame) => frame.key === newFrame?.key)) {
         next = [...next, newFrame];
@@ -528,7 +567,7 @@ const ProvenanceSection = () => {
 
   useEffect(() => {
     detectRef.current();
-  }, [isExpanded, isSettled]);
+  }, [isExpanded, isMobile, isSettled]);
 
   const removeFrame = React.useCallback((key: string) => {
     setFrames((prev) => {
