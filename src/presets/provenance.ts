@@ -194,6 +194,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "made a bulk converter",
     media: [
+      { type: "image", src: "/images/provenance/transmute-app.png" },
       { type: "image", src: "/images/provenance/transmute-terminal.png" },
       { type: "image", src: "/images/provenance/transmute-metadata.png" },
     ],
