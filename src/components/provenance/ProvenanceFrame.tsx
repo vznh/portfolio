@@ -41,6 +41,7 @@ const IMAGE_DIMENSIONS: Record<string, { width: number; height: number }> = {
   "/images/provenance/spotify-ui-mockup.jpg": { width: 900, height: 555 },
   "/images/provenance/steam-vac-ban.png": { width: 472, height: 196 },
   "/images/provenance/tokn.png": { width: 500, height: 500 },
+  "/images/provenance/transmute-app.png": { width: 1588, height: 1028 },
   "/images/provenance/transmute-metadata.png": { width: 1152, height: 976 },
   "/images/provenance/transmute-terminal.png": { width: 904, height: 334 },
 };
