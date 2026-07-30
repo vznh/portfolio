@@ -608,15 +608,19 @@ const ProvenanceSection = () => {
 
       const accentKey = accentKeyOf(paragraphIndex, partIndex);
       const isActive = activeKey === accentKey;
-      const color = isActive
+      const hasOpenPreview = frames.some(
+        (frame) => frame.key === accentKey && frame.state === "open",
+      );
+      const isHighlighted = isActive || hasOpenPreview;
+      const color = isHighlighted
         ? colors[part.text] ?? "var(--text-color)"
         : "var(--text-color)";
       const accentStyle = {
         color,
-        textDecorationColor: isActive ? color : "transparent",
+        textDecorationColor: isHighlighted ? color : "transparent",
       };
       const accentClassName = `link provenance-accent${
-        isActive ? " provenance-accent--active" : ""
+        isHighlighted ? " provenance-accent--active" : ""
       }`;
 
       if (!part.url) {
