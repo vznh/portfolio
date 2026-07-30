@@ -32,6 +32,7 @@ const ProvenanceFrame = ({
   onClosed: (key: string) => void;
 }) => {
   const open = frame.state === "open";
+  const [expanded, setExpanded] = React.useState(false);
   const frameHeightRem = LINE_HEIGHT_REM * (accent?.frameRows ?? FRAME_ROWS);
   const mediaList = accent?.media
     ? Array.isArray(accent.media)
@@ -44,34 +45,49 @@ const ProvenanceFrame = ({
   const filmstripRows = filmstripColumns > 0
     ? Math.ceil(mediaList.length / filmstripColumns)
     : 1;
-  const frameInnerStyle = {
-    height: `${frameHeightRem}rem`,
+  React.useEffect(() => {
+    if (!open) {
+      setExpanded(false);
+      return;
+    }
+
+    // Commit the collapsed frame first so Motion can measure both layouts.
+    const animationFrame = window.requestAnimationFrame(() => setExpanded(true));
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [open]);
+
+  const frameStyle = {
+    height: expanded ? `${frameHeightRem}rem` : 0,
     "--provenance-filmstrip-columns": filmstripColumns,
     "--provenance-filmstrip-rows": filmstripRows,
   } as React.CSSProperties;
 
   return (
     <m.span
+      layout
       className="provenance-frame"
       data-provenance-frame={frame.key}
-      initial={{ height: 0, opacity: 0 }}
-      animate={{
-        height: open ? `${frameHeightRem}rem` : 0,
-        opacity: open ? 1 : 0,
-      }}
+      style={frameStyle}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: expanded ? 1 : 0 }}
       transition={{
         duration: reducedMotion ? 0 : 0.55,
         ease: [0.22, 0.61, 0.36, 1],
+        layout: {
+          duration: reducedMotion ? 0 : 0.55,
+          ease: [0.22, 0.61, 0.36, 1],
+        },
       }}
       onAnimationComplete={() => {
-        if (!open) onClosed(frame.key);
+        if (!open && !expanded) onClosed(frame.key);
       }}
     >
-      <span
+      <m.span
+        layout
         className={`provenance-frame__inner${
           mediaList.length > 1 ? " provenance-frame__inner--filmstrip" : ""
         }`}
-        style={frameInnerStyle}
+        style={{ height: `${frameHeightRem}rem` }}
       >
         {mediaList.length > 0 ? (
           mediaList.map((media) =>
@@ -100,7 +116,7 @@ const ProvenanceFrame = ({
             {accent?.url ? hostnameOf(accent.url) : ""}
           </span>
         )}
-      </span>
+      </m.span>
     </m.span>
   );
 };
