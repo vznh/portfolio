@@ -619,7 +619,7 @@ const ProvenanceSection = () => {
         color,
         textDecorationColor: isHighlighted ? color : "transparent",
       };
-      const accentClassName = `link provenance-accent${
+      const accentClassName = `link provenance-accent transition-colors duration-200${
         isHighlighted ? " provenance-accent--active" : ""
       }`;
 
