@@ -213,9 +213,13 @@ const ProvenanceSection = () => {
   useEffect(() => {
     const next: Record<string, string> = {};
 
-    oldestFirstStory.flat().filter(isAccent).forEach((part) => {
-      next[part.text] = MUTED_PALETTE[Math.floor(Math.random() * MUTED_PALETTE.length)];
-    });
+    for (const paragraph of oldestFirstStory) {
+      for (const part of paragraph) {
+        if (!isAccent(part)) continue;
+        next[part.text] =
+          MUTED_PALETTE[Math.floor(Math.random() * MUTED_PALETTE.length)];
+      }
+    }
 
     setColors(next);
   }, []);
