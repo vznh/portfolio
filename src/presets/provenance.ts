@@ -209,7 +209,10 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   ". If one of my friends entered a certain section of California, the Bay Area, specifically Fremont or Milpitas, a ping would go to each other's phones: \"Jason just entered your territory...\" and required the user to \"check-in\" with the owner of that territory. I own New York. ",
   { text: "Interactive invites and designs for home cafes, or large hangouts" },
   ". A ",
-  { text: "business card for the conference they went to so they could strike an impression" },
+  {
+    text: "business card for the conference they went to so they could strike an impression",
+    media: { type: "image", src: "/images/provenance/business-card-opennode.png" },
+  },
   ". A ",
   { text: "karaoke machine that links between phone and computer" },
   ". ",
