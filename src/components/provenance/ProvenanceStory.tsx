@@ -1,17 +1,14 @@
 import {
+  isAccent,
   oldestFirstStory,
-  type ProvenanceAccent,
   type ProvenanceStoryPart,
 } from "@/presets/provenance";
 import { m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
+import { PARAGRAPH_CLASS } from "./constants";
 import ProvenanceFrame, { type FrameSpec } from "./ProvenanceFrame";
-
-const isAccent = (
-  part: string | ProvenanceAccent,
-): part is ProvenanceAccent => typeof part !== "string";
 
 const accentKeyOf = (paragraphIndex: number, partIndex: number) =>
   `${paragraphIndex}:${partIndex}`;
@@ -117,100 +114,86 @@ const ProvenanceStory = ({
   reducedMotion: boolean;
   onFrameClosed: (key: string) => void;
 }) => {
-  const paragraphClassName =
-    "font-plex text-xl leading-7 tracking-tight text-justify text-[var(--text-color)]";
-
   return story.map((paragraph, paragraphIndex) => {
-    const paragraphFrames: FrameSpec[] = [];
-    for (const frame of frames) {
-      if (frame.paragraphIndex === paragraphIndex) {
-        paragraphFrames.push(frame);
-      }
-    }
-    paragraphFrames.sort(
-      (left, right) => left.splitOffset - right.splitOffset,
-    );
+    const paragraphFrames = frames
+      .filter((frame) => frame.paragraphIndex === paragraphIndex)
+      .sort((left, right) => left.splitOffset - right.splitOffset);
+
+    let children: React.ReactNode;
 
     if (paragraphFrames.length === 0) {
-      return (
-        <m.p
-          layout
-          key={paragraphIndex}
-          data-provenance-paragraph={paragraphIndex}
-          className={paragraphClassName}
-        >
-          {renderRange({
-            paragraph,
-            paragraphIndex,
-            from: 0,
-            to: Number.POSITIVE_INFINITY,
-            activeKey,
-            colors,
-          })}
-        </m.p>
+      children = renderRange({
+        paragraph,
+        paragraphIndex,
+        from: 0,
+        to: Number.POSITIVE_INFINITY,
+        activeKey,
+        colors,
+      });
+    } else {
+      const totalLength = paragraph.reduce(
+        (sum, part) => sum + (isAccent(part) ? part.text : part).length,
+        0,
       );
-    }
+      const chunks: React.ReactNode[] = [];
+      let from = 0;
 
-    const totalLength = paragraph.reduce(
-      (sum, part) => sum + (isAccent(part) ? part.text : part).length,
-      0,
-    );
-    const chunks: React.ReactNode[] = [];
-    let from = 0;
+      for (const frame of paragraphFrames) {
+        if (frame.splitOffset > from) {
+          chunks.push(
+            <m.span
+              layout
+              key={`segment-${from}`}
+              style={{
+                display: "block",
+                textAlignLast:
+                  frame.splitOffset < totalLength ? "justify" : undefined,
+              }}
+            >
+              {renderRange({
+                paragraph,
+                paragraphIndex,
+                from,
+                to: frame.splitOffset,
+                activeKey,
+                colors,
+              })}
+            </m.span>,
+          );
+        }
+        const accent = oldestFirstStory[paragraphIndex]?.[frame.partIndex];
+        chunks.push(
+          <ProvenanceFrame
+            key={frame.key}
+            frame={frame}
+            accent={accent && isAccent(accent) ? accent : null}
+            reducedMotion={reducedMotion}
+            onClosed={onFrameClosed}
+          />,
+        );
+        from = Math.max(from, frame.splitOffset);
+      }
 
-    for (const frame of paragraphFrames) {
-      if (frame.splitOffset > from) {
+      if (from < totalLength) {
         chunks.push(
           <m.span
             layout
             key={`segment-${from}`}
-            style={{
-              display: "block",
-              textAlignLast:
-                frame.splitOffset < totalLength ? "justify" : undefined,
-            }}
+            style={{ display: "block" }}
           >
             {renderRange({
               paragraph,
               paragraphIndex,
               from,
-              to: frame.splitOffset,
+              to: Number.POSITIVE_INFINITY,
               activeKey,
               colors,
             })}
           </m.span>,
         );
       }
-      const accent = oldestFirstStory[paragraphIndex]?.[frame.partIndex];
-      chunks.push(
-        <ProvenanceFrame
-          key={frame.key}
-          frame={frame}
-          accent={accent && isAccent(accent) ? accent : null}
-          reducedMotion={reducedMotion}
-          onClosed={onFrameClosed}
-        />,
-      );
-      from = Math.max(from, frame.splitOffset);
-    }
 
-    if (from < totalLength) {
-      chunks.push(
-        <m.span
-          layout
-          key={`segment-${from}`}
-          style={{ display: "block" }}
-        >
-          {renderRange({
-            paragraph,
-            paragraphIndex,
-            from,
-            to: Number.POSITIVE_INFINITY,
-            activeKey,
-            colors,
-          })}
-        </m.span>,
-      );
+      children = chunks;
     }
 
     return (
@@ -218,9 +201,9 @@ const ProvenanceStory = ({
         layout
         key={paragraphIndex}
         data-provenance-paragraph={paragraphIndex}
-        className={paragraphClassName}
+        className={PARAGRAPH_CLASS}
       >
-        {chunks}
+        {children}
       </m.p>
     );
   });

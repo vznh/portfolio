@@ -8,7 +8,7 @@ export const experiences: WorkRowProps[] = [
     role: "Software",
     img: "/images/logo/paradigm.png",
     imgClassName: "grayscale",
-    focusDesc: "Working with a portfolio company.",
+    focusDesc: "Working with a portfolio company",
   },
   {
     key: 0,
@@ -18,7 +18,7 @@ export const experiences: WorkRowProps[] = [
     images: ["/videos/Paradigm1.mov", "/videos/Paradigm2.mov", "/images/Kim.png", "/images/Picky1.png", "/images/AGMNTContent.png", "/images/Coinvest.png"],
     focusDate: "2025 - Present",
     focusLocation: "Brooklyn, New York",
-    focusDesc: "I currently create brand identities and digital experiences for ambitious founders."
+    focusDesc: "I currently create brand identities and digital experiences for ambitious founders"
   },
   {
     key: 1,
@@ -57,7 +57,7 @@ export const experiences: WorkRowProps[] = [
     imgClassName: "grayscale scale-[0.80]",
     focusDate: "2023 - 2024",
     focusLocation: "Seoul, South Korea",
-    focusDesc: "Sequence classification for historical data"
+    focusDesc: "Sequence classification for historical genomic data"
   },
   {
     key: 4,

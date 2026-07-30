@@ -7,20 +7,47 @@ import ImageOverlay from "@/components/ImageOverlay";
 import WorkSection from "@/components/WorkSection";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useHoverContext } from "@/hooks/useHoverContext";
+import { useNearViewportCenter } from "@/hooks/useNearViewportCenter";
 import { FEATURES } from "@/presets/features";
+import { socials } from "@/presets/socials";
 import { LazyMotion, domMax, m } from "framer-motion";
 import Link from "next/link";
 import React from "react";
 
+const DIM_OPACITY = 0.1;
+const dimTransition = "transition-opacity duration-500 ease-in-out";
+const SECTION_LABEL_CLASS =
+  "font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]";
+
+// Tagline prose and section headings both fade as one block; only the resolved
+// opacity differs, so the transition class lives in one place.
+const Dimmable = ({
+  opacity,
+  className = "",
+  children,
+}: {
+  opacity: number;
+  className?: string;
+  children: React.ReactNode;
+}) => (
+  <span className={`${className} ${dimTransition}`} style={{ opacity }}>
+    {children}
+  </span>
+);
+
 const IndexView = ({ version }: { version: string }) => {
   const { registerSection, getOpacity, getTransition } = useActiveSection(3000);
   const { focusedItem } = useHoverContext();
-  const [showCrypted, setShowCrypted] = React.useState(false);
-  const hasStartedRef = React.useRef(false);
   const [hoveredAnchor, setHoveredAnchor] = React.useState<null | 'vc' | 'sc' | 'sf'>(null);
   const [dimAnimating, setDimAnimating] = React.useState(false);
   const [footerRevealed, setFooterRevealed] = React.useState(false);
   const footerRef = React.useRef<HTMLDivElement>(null);
+
+  // The footer's scramble plays once, the first time it scrolls into view.
+  const showCrypted = useNearViewportCenter(footerRef, {
+    threshold: 0.6,
+    once: true,
+  });
 
   // One-shot fade-in for the footer once the hero/section reveals have played.
   React.useEffect(() => {
@@ -53,41 +80,9 @@ const IndexView = ({ version }: { version: string }) => {
     return () => document.removeEventListener('pointerdown', handlePointerDown);
   }, [hoveredAnchor]);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      if (!footerRef.current) return;
-
-      const rect = footerRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      const viewportCenter = viewportHeight / 2;
-
-      const elementCenter = rect.top + rect.height / 2;
-      const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-      const threshold = viewportHeight * 0.6;
-
-      const shouldShow = distanceFromCenter <= threshold;
-
-      if (shouldShow && !hasStartedRef.current) {
-        hasStartedRef.current = true;
-        setShowCrypted(true);
-      }
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
-
   // Dimming is derived from the active anchor and applied declaratively below.
   // A non-mouse pointer (touch/pen) toggles the anchor on tap, since synthetic
   // mouseenter/mouseleave events don't fire reliably on touch devices.
-  const DIM_OPACITY = 0.1;
-  const dimTransition = "transition-opacity duration-500 ease-in-out";
 
   // Anything focused — a header anchor or an antecedent row — dims the page.
   const anyFocus = hoveredAnchor !== null || focusedItem !== null;
@@ -113,6 +108,25 @@ const IndexView = ({ version }: { version: string }) => {
     },
   });
 
+  // Every scroll-revealed section shares the same entrance: near-invisible until
+  // the staggered reveal, then driven by whichever section is most in view. Only
+  // the resolved opacity and the stagger timing differ per section.
+  const sectionMotion = (
+    id: string,
+    opacity: number,
+    delay: number,
+    duration: number,
+  ) => ({
+    ref: registerSection(id),
+    "data-section": id,
+    initial: { opacity: 0.05 },
+    animate: { opacity },
+    exit: { opacity: 0 },
+    transition: dimAnimating
+      ? { duration: 0.5, ease: "easeInOut" }
+      : getTransition({ delay, duration, ease: "easeInOut" }),
+  });
+
   return (
     <LazyMotion features={domMax}>
     <div className="relative min-h-screen overflow-hidden">
@@ -132,7 +146,7 @@ const IndexView = ({ version }: { version: string }) => {
               Jason Son
             </h1>
             <span className="font-plex text-xl tracking-tight text-[var(--text-color)] vc-tagline">
-              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}>Engineer and </span>
+              <Dimmable opacity={mutedOpacity}>Engineer and </Dimmable>
               <span
                 className={`relative inline-block vc-anchor ${dimTransition}`}
                 style={{ opacity: anchorOpacity('vc') }}
@@ -146,7 +160,7 @@ const IndexView = ({ version }: { version: string }) => {
                   desc="I wrote a $10K check and was one of the first wires towards a lab. I am drawn to people with relentless ambition and care about the itty gritty details. I especially love crude ideas."
                 />
               </span>
-              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 22. Based in New York City as a researcher and full-stack generalist. I graduated </span>
+              <Dimmable opacity={mutedOpacity}> at 22. Based in New York City as a researcher and full-stack generalist. I graduated </Dimmable>
               <span
                 className={`link sc-anchor ${dimTransition}`}
                 style={{ opacity: anchorOpacity('sc') }}
@@ -154,7 +168,7 @@ const IndexView = ({ version }: { version: string }) => {
               >
                 Santa Cruz
               </span>
-              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}> at 20, and worked previously in </span>
+              <Dimmable opacity={mutedOpacity}> at 20, and worked previously in </Dimmable>
               <span
                 className={`link sf-anchor ${dimTransition}`}
                 style={{ opacity: anchorOpacity('sf') }}
@@ -162,28 +176,23 @@ const IndexView = ({ version }: { version: string }) => {
               >
                 San Francisco
               </span>
-              <span className={`opacity-50 ${dimTransition}`} style={{ opacity: mutedOpacity }}>.</span>
+              <Dimmable opacity={mutedOpacity}>.</Dimmable>
             </span>
             <div className="h-2" />
             <div
               className={`social-row flex flex-row flex-wrap items-center gap-x-3 gap-y-1 text-[var(--text-color)] ${dimTransition}`}
               style={{ opacity: blockOpacity }}
             >
-              <Link href="mailto:jasonvinhson@gmail.com" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
-                jasonvinhson@gmail.com
-              </Link>
-              <Link href="https://x.com/jasonvinhson" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
-                @jasonvinhson
-              </Link>
-              <Link href="https://linkedin.com/in/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
-                in/vznh
-              </Link>
-              <Link href="https://github.com/vznh" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
-                github/vznh
-              </Link>
-              <Link href="https://venh.substack.com" target="_blank" rel="noreferrer" className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]">
-                venh.substack.com
-              </Link>
+              {socials.map(({ href, label, external }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                  className="font-plex font-medium text-base tracking-tight opacity-50 transition-[color,opacity] duration-200 hover:opacity-100 hover:text-[#222]"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -193,52 +202,38 @@ const IndexView = ({ version }: { version: string }) => {
             <div className="h-12" />
 
             <m.div
-              ref={registerSection("work")}
-              data-section="work"
+              {...sectionMotion(
+                "work",
+                hoveredAnchor ? DIM_OPACITY : focusedItem ? 1 : (getOpacity("work") ?? 1),
+                1,
+                0.8,
+              )}
               className="work-section-container flex flex-col gap-y-3"
-              initial={{ opacity: 0.05 }}
-              animate={{ opacity: hoveredAnchor ? 0.1 : focusedItem ? 1 : (getOpacity("work") ?? 1) }}
-              exit={{ opacity: 0 }}
-              transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
-                delay: 1,
-                duration: 0.8,
-                ease: "easeInOut",
-              })}
             >
-              <div
-                className={`flex flex-row justify-between ${dimTransition}`}
-                style={{ opacity: focusedItem ? DIM_OPACITY : 1 }}
+              <Dimmable
+                className="flex flex-row justify-between"
+                opacity={focusedItem ? DIM_OPACITY : 1}
               >
-                <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
-                  Antecedents
-                </span>
-                <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
-                  Discipline
-                </span>
-              </div>
+                <span className={SECTION_LABEL_CLASS}>Antecedents</span>
+                <span className={SECTION_LABEL_CLASS}>Discipline</span>
+              </Dimmable>
               <WorkSection />
             </m.div>
 
             <div className="h-16" />
 
             <m.div
-              ref={registerSection("provenance")}
-              data-section="provenance"
+              {...sectionMotion(
+                "provenance",
+                hoveredAnchor ? DIM_OPACITY : focusedItem ? 1 : (getOpacity("provenance") ?? 1),
+                1,
+                0.8,
+              )}
               className="provenance-section-container flex flex-col gap-y-3"
-              initial={{ opacity: 0.05 }}
-              animate={{ opacity: hoveredAnchor ? 0.1 : focusedItem ? 1 : (getOpacity("provenance") ?? 1) }}
-              exit={{ opacity: 0 }}
-              transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
-                delay: 1,
-                duration: 0.8,
-                ease: "easeInOut",
-              })}
             >
-              <div className={dimTransition} style={{ opacity: focusedItem ? DIM_OPACITY : 1 }}>
-                <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
-                  Provenance
-                </span>
-              </div>
+              <Dimmable opacity={focusedItem ? DIM_OPACITY : 1}>
+                <span className={SECTION_LABEL_CLASS}>Provenance</span>
+              </Dimmable>
               <ProvenanceSection />
             </m.div>
           </>
@@ -248,21 +243,15 @@ const IndexView = ({ version }: { version: string }) => {
           <>
             <div className="h-16" />
             <m.div
-              ref={registerSection("projects")}
-              data-section="projects"
-              initial={{ opacity: 0.05 }}
-              animate={{ opacity: (hoveredAnchor || focusedItem) ? 0.1 : (getOpacity("projects") ?? 1) }}
-              exit={{ opacity: 0 }}
-              transition={dimAnimating ? { duration: 0.5, ease: "easeInOut" } : getTransition({
-                delay: 1.3,
-                duration: 1.0,
-                ease: "easeInOut",
-              })}
+              {...sectionMotion(
+                "projects",
+                (hoveredAnchor || focusedItem) ? DIM_OPACITY : (getOpacity("projects") ?? 1),
+                1.3,
+                1.0,
+              )}
               className="flex flex-col gap-y-4"
             >
-              <span className="font-plex font-normal tracking-tight opacity-50 text-[var(--text-color)]">
-                Projects
-              </span>
+              <span className={SECTION_LABEL_CLASS}>Projects</span>
               <ExperimentSection />
             </m.div>
           </>
