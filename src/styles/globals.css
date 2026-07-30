@@ -43,18 +43,11 @@
   filter: brightness(1.2) saturate(1.25);
 }
 
-.provenance-story {
-  /* Frame height changes must not make the browser compensate by moving the
-     viewport. Each frame stays anchored at its top and only pushes content
-     beneath it. */
-  overflow-anchor: none;
-}
-
 .provenance-preview {
   position: relative;
-  height: 7rem;
+  height: 10.5rem;
   overflow: hidden;
-  --provenance-fade-start: 3.5rem;
+  --provenance-fade-start: 7rem;
   -webkit-mask-image: linear-gradient(
     to bottom,
     #000 0%,
