@@ -15,7 +15,7 @@ export const experiences: WorkRowProps[] = [
     company: "Independent Design",
     role: "Creative",
     img: "/images/logo/hi.png",
-    images: ["/videos/Paradigm1.mov", "/videos/Paradigm2.mov", "/images/Kim.png", "/images/Picky1.png", "/images/AGMNTContent.png", "/images/Coinvest.png"],
+    images: ["/videos/work/paradigm-1.mp4", "/videos/work/paradigm-2.mp4", "/images/kim.png", "/images/picky-1.png", "/images/agmnt-content.png", "/images/coinvest.png"],
     focusDate: "2025 - Present",
     focusLocation: "Brooklyn, New York",
     focusDesc: "I currently create brand identities and digital experiences for ambitious founders"
@@ -47,7 +47,7 @@ export const experiences: WorkRowProps[] = [
     focusDate: "2023 - 2024",
     focusLocation: "Stanford, California",
     focusDesc: "I founded Polyglot, a language learning app. Polyglot participated in Stanford Launchpad.\n\nI co-founded Tokn, a social cryptocurrency analytics platform, owning all technical work. Exited in a multi-six acquisition.",
-    images: ["/images/projects/polyglot/Polyglot.png"]
+    images: ["/images/projects/polyglot/polyglot.png"]
   },
   {
     key: 7,
@@ -92,52 +92,52 @@ export interface ProjectProps {
 export const projects: ProjectProps[] = [
   {
     key: 0,
-    videoPath: "/images/projects/experiments/REACTIVE.mp4",
+    videoPath: "/videos/experiments/reactive.mp4",
     leftText: "REACTIVE / @vznh/components",
     rightText: "NPM PKG",
     url: "https://npmjs.com/@vznh/components"
   },
   {
     key: 1,
-    videoPath: "/images/projects/experiments/LED.mp4",
+    videoPath: "/videos/experiments/led.mp4",
     leftText: "LED / @vznh/components",
     rightText: "NPM PKG",
     url: "https://npmjs.com/@vznh/components",
   },
   {
     key: 2,
-    videoPath: "/images/projects/experiments/RECHORDED.mp4",
+    videoPath: "/videos/experiments/rechorded.mp4",
     leftText: "INTERACTIVITY / RECHORDED",
     rightText: "NEXT.JS",
   },
   {
     key: 3,
-    videoPath: "/images/projects/experiments/PATHFINDER.mp4",
+    videoPath: "/videos/experiments/pathfinder.mp4",
     leftText: "MAP NAVIGATION / PATHFINDER",
     rightText: "NEXT.JS",
   },
   {
     key: 4,
-    videoPath: "/images/projects/experiments/BRUTAL.mp4",
+    videoPath: "/videos/experiments/brutal.mp4",
     leftText: "DIAL AND INTERACTION / BRUTAL",
     rightText: "NEXT.JS",
   },
   {
     key: 5,
-    videoPath: "/images/projects/experiments/TOKN.mp4",
+    videoPath: "/videos/experiments/tokn.mp4",
     leftText: "WEB EXPERIENCE / TOKN",
     rightText: "NEXT.JS",
     url: "https://tokn.so",
   },
   {
     key: 6,
-    videoPath: "/images/projects/experiments/DREAMSCAPE.mp4",
+    videoPath: "/videos/experiments/dreamscape.mp4",
     leftText: "INTERFACE IMPL / DREAMSCAPE",
     rightText: "NEXT.JS",
   },
   {
     key: 7,
-    videoPath: "/images/projects/experiments/75.mp4",
+    videoPath: "/videos/experiments/75-day.mp4",
     leftText: "BOT FUNCTIONALITY / 75",
     rightText: "NODE",
     url: "https://github.com/vznh/75",

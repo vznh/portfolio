@@ -81,7 +81,7 @@ const ExperimentEntity: React.FC<ProjectProps> = ({
               className="absolute inset-0"
             >
               <Image
-                src="/images/projects/PLACEHOLDER.png"
+                src="/images/projects/placeholder.png"
                 alt="Project placeholder"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

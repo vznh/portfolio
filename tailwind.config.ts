@@ -12,7 +12,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         "jb": ["JB", "sans-serif"],
-        "plex": ["IBM Plex Sans", "Plex", "sans-serif"],
+        "plex": ["Plex", "sans-serif"],
         "lora": ["Lora", "serif"],
       },
     },
