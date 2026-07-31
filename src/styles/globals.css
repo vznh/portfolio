@@ -261,7 +261,7 @@
 
 @font-face {
   font-family: 'JB';
-  src: url('/fonts/JB.ttf') format('truetype');
+  src: url('/fonts/jb.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -269,7 +269,7 @@
 
 @font-face {
   font-family: 'Lora';
-  src: url('/fonts/Lora.ttf') format('truetype');
+  src: url('/fonts/lora.ttf') format('truetype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -285,7 +285,7 @@
    before first paint, so the block period is never actually observed. */
 @font-face {
   font-family: 'Plex';
-  src: url('/fonts/Plex.woff2') format('woff2');
+  src: url('/fonts/plex.woff2') format('woff2');
   font-weight: 100 700;
   font-style: normal;
   font-display: block;
