@@ -32,7 +32,10 @@ const BAR_VIEWPORT_RATIO = 0.45;
 const LINE_HEIGHT_REM = 1.75;
 const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
-const CANVAS_FONT_FAMILY = '"IBM Plex Sans"';
+// Must name the family that actually renders (see tailwind's font-plex). If
+// this resolves to nothing, canvas silently measures a fallback and every
+// split offset derived from it is wrong.
+const CANVAS_FONT_FAMILY = '"Plex"';
 const FRAME_ROWS = 6;
 const BAR_OVERLAP_THRESHOLD = 0.5;
 
@@ -225,21 +228,24 @@ const ProvenanceSection = () => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     let cancelled = false;
-    const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const fontPx = FONT_SIZE_REM * rootFontSize;
 
-    // Pretext needs Canvas + the real webfont; load both before any measuring.
-    Promise.all([
-      import("@chenglou/pretext"),
-      document.fonts.load(`400 ${fontPx}px ${CANVAS_FONT_FAMILY}`).catch(() => undefined),
-    ])
+    Promise.all([import("@chenglou/pretext"), document.fonts.ready])
       .then(([mod]) => {
         if (!cancelled) pretextRef.current = mod;
       })
       .catch(() => {});
 
+    // Neither `fonts.load` nor `fonts.ready` reliably gates this: for a family
+    // the browser hasn't registered yet they resolve immediately with zero
+    // faces, so pretext can still measure fallback metrics — 13% narrow — and
+    // cache a line layout that never recovers. Dropping those measurements
+    // whenever a face finishes loading is what actually fixes it.
+    const invalidateLayouts = () => paragraphLayoutsRef.current.clear();
+    document.fonts.addEventListener("loadingdone", invalidateLayouts);
+
     return () => {
       cancelled = true;
+      document.fonts.removeEventListener("loadingdone", invalidateLayouts);
     };
   }, []);
 
