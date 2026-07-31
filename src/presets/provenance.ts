@@ -138,7 +138,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   { text: "the doors would open when the NFC is within proximity" },
   " (similarly to old models!). On the side, I started a ",
   { text: "small design agency for my coterie" },
-  ", a term I use for my close companions. My cool clients include frontier labs to fashion collectives. I ended up making ",
+  ". My cool clients include AI labs to fashion collectives. I ended up making ",
   {
     text: "components of my favorite pieces",
     url: "https://github.com/vznh/devour",
