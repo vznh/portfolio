@@ -93,7 +93,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "create bulk calendar entries with just a normal sentence",
     url: "https://x.com/jasonvinhson/status/1915190716151849076",
-    media: { type: "video", src: "/images/provenance/calendar.mp4" },
+    media: { type: "video", src: "/videos/provenance/calendar.mp4" },
   },
   ". They found themselves allocating time to make events, which is ironic because in order to create time, you must block it out. But they found themselves blocking out time just to plan. It was my first work of app design. My friends used it in 2024. I released it to the public in 2025. I made an ",
   {
@@ -187,7 +187,7 @@ export const oldestFirstStory: ProvenanceStoryPart[][] = [
   {
     text: "made a Discord bot for my friends and I",
     url: "https://github.com/vznh/conviction",
-    media: { type: "video", src: "/images/projects/experiments/75.mp4" },
+    media: { type: "video", src: "/videos/experiments/75-day.mp4" },
     frameRows: 12,
   },
   " to keep us accountable. It was a 75-day commitment with a $20 entry. If you failed, you lost. If you committed through the end, the winners split the pot. The bot kept track of everything and pinged users toward the end of the day. I love unreleased music. I ",

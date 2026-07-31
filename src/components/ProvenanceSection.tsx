@@ -24,6 +24,11 @@ const EXPANSION_SCROLL_DURATION = 3000;
 const MASK_CLEAR_DURATION = 4000;
 const MASK_CLEAR_START_MS = 1750;
 const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
+// Scrolling during the reveal fast-forwards it instead of waiting it out.
+// The tail is long enough that easing ~900px of remaining height across it
+// moves no more per frame than the unhurried reveal does at its steepest.
+const SKIP_TAIL_MS = 450;
+const SKIP_GRACE_MS = 400;
 
 // Reading bar + reveal frame. The bar sits 45% down the viewport; the
 // values below must mirror the paragraph classes (text-xl leading-7
@@ -32,7 +37,10 @@ const BAR_VIEWPORT_RATIO = 0.45;
 const LINE_HEIGHT_REM = 1.75;
 const FONT_SIZE_REM = 1.25;
 const TRACKING_EM = -0.025;
-const CANVAS_FONT_FAMILY = '"IBM Plex Sans"';
+// Must name the family that actually renders (see tailwind's font-plex). If
+// this resolves to nothing, canvas silently measures a fallback and every
+// split offset derived from it is wrong.
+const CANVAS_FONT_FAMILY = '"Plex"';
 const FRAME_ROWS = 6;
 const BAR_OVERLAP_THRESHOLD = 0.5;
 
@@ -108,6 +116,20 @@ const easeReveal = (progress: number) => {
 
 const interpolate = (from: number, to: number, progress: number) =>
   from + (to - from) * progress;
+
+// Cubic Hermite that leaves `from` still travelling at `rate` (px/ms) and
+// arrives at `to` at rest. Used to hand the reveal over to its skip tail:
+// smoothstep would start from zero velocity and stall for a frame in the
+// middle of a movement the eye is already tracking.
+const glideToRest = (from: number, to: number, rate: number, t: number) => {
+  const span = to - from;
+  if (span === 0) return to;
+  // Normalized start tangent. Past 3 the curve stops being monotonic, and a
+  // negative one would send it backwards; neither is ever wanted here.
+  const m = Math.min(Math.max((rate * SKIP_TAIL_MS) / span, 0), 3);
+  const shaped = m * (t ** 3 - 2 * t ** 2 + t) + (3 * t ** 2 - 2 * t ** 3);
+  return from + span * shaped;
+};
 
 const FrameBlock = ({
   frame,
@@ -225,21 +247,24 @@ const ProvenanceSection = () => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     let cancelled = false;
-    const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const fontPx = FONT_SIZE_REM * rootFontSize;
 
-    // Pretext needs Canvas + the real webfont; load both before any measuring.
-    Promise.all([
-      import("@chenglou/pretext"),
-      document.fonts.load(`400 ${fontPx}px ${CANVAS_FONT_FAMILY}`).catch(() => undefined),
-    ])
+    Promise.all([import("@chenglou/pretext"), document.fonts.ready])
       .then(([mod]) => {
         if (!cancelled) pretextRef.current = mod;
       })
       .catch(() => {});
 
+    // Neither `fonts.load` nor `fonts.ready` reliably gates this: for a family
+    // the browser hasn't registered yet they resolve immediately with zero
+    // faces, so pretext can still measure fallback metrics — 13% narrow — and
+    // cache a line layout that never recovers. Dropping those measurements
+    // whenever a face finishes loading is what actually fixes it.
+    const invalidateLayouts = () => paragraphLayoutsRef.current.clear();
+    document.fonts.addEventListener("loadingdone", invalidateLayouts);
+
     return () => {
       cancelled = true;
+      document.fonts.removeEventListener("loadingdone", invalidateLayouts);
     };
   }, []);
 
@@ -267,7 +292,31 @@ const ProvenanceSection = () => {
     const initial = pendingExpansionRef.current;
     pendingExpansionRef.current = null;
 
+    // The reveal is a ~5.75s cinematic, and frames can't open under it: the
+    // height is pinned and the mask still covers the lower rows. A reader who
+    // starts scrolling has stopped watching and started reading, so hand the
+    // section over to them by playing the remainder out fast rather than
+    // making them wait out the full run.
     let revealFrame = 0;
+    let skippedAt: number | null = null;
+    const armSkipAt = performance.now() + SKIP_GRACE_MS;
+    const requestSkip = () => {
+      // Trackpad momentum from scrolling down to the section can still be
+      // firing as the click lands; ignore it so the reveal isn't stillborn.
+      const now = performance.now();
+      if (skippedAt === null && now >= armSkipAt) skippedAt = now;
+    };
+
+    const detachSkipListeners = () => {
+      window.removeEventListener("wheel", requestSkip);
+      window.removeEventListener("touchmove", requestSkip);
+      window.removeEventListener("keydown", requestSkip);
+    };
+
+    window.addEventListener("wheel", requestSkip, { passive: true });
+    window.addEventListener("touchmove", requestSkip, { passive: true });
+    window.addEventListener("keydown", requestSkip);
+
     const measureFrame = window.requestAnimationFrame(() => {
       const element = provenanceRef.current;
       if (!element) return;
@@ -280,11 +329,28 @@ const ProvenanceSection = () => {
       );
 
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        detachSkipListeners();
         setIsSettled(true);
         return;
       }
 
       const startedAt = performance.now();
+
+      // Values and speeds the section held on the frame the skip landed. The
+      // tail eases these to their finished state directly — compressing the
+      // *timeline* instead would replay the steepest part of the ease at ~16x
+      // and land as a lurch, which is the thing the skip exists to avoid.
+      let skipFrom:
+        | { height: number; fadeStart: number; heightRate: number; fadeRate: number }
+        | null = null;
+      let previous: { now: number; height: number; fadeStart: number } | null = null;
+
+      const settle = () => {
+        element.style.height = "";
+        element.style.removeProperty("--provenance-fade-start");
+        detachSkipListeners();
+        setIsSettled(true);
+      };
 
       const reveal = (now: number) => {
         const elapsed = now - startedAt;
@@ -303,8 +369,51 @@ const ProvenanceSection = () => {
               easeReveal(maskProgress),
             );
 
+        if (skippedAt !== null) {
+          if (!skipFrom) {
+            // Carry the speed the reveal was already moving at into the tail.
+            const step = previous ? now - previous.now : 0;
+            skipFrom = {
+              height: currentHeight,
+              fadeStart,
+              heightRate: step > 0 ? (currentHeight - previous!.height) / step : 0,
+              fadeRate: step > 0 ? (fadeStart - previous!.fadeStart) / step : 0,
+            };
+          }
+
+          // Clamped low as well as high: a wheel event is dispatched after the
+          // frame's rAF timestamp is stamped, so the first tail frame can see a
+          // negative age and would otherwise extrapolate backwards.
+          const tail = Math.min(Math.max((now - skippedAt) / SKIP_TAIL_MS, 0), 1);
+
+          element.style.height = `${glideToRest(
+            skipFrom.height,
+            naturalExpandedHeight,
+            skipFrom.heightRate,
+            tail,
+          )}px`;
+          element.style.setProperty(
+            "--provenance-fade-start",
+            `${glideToRest(
+              skipFrom.fadeStart,
+              naturalExpandedHeight + fadeDistance,
+              skipFrom.fadeRate,
+              tail,
+            )}px`,
+          );
+
+          if (tail < 1) {
+            revealFrame = window.requestAnimationFrame(reveal);
+            return;
+          }
+
+          settle();
+          return;
+        }
+
         element.style.height = `${interpolate(initial.height, naturalExpandedHeight, progress)}px`;
         element.style.setProperty("--provenance-fade-start", `${fadeStart}px`);
+        previous = { now, height: currentHeight, fadeStart };
 
         if (elapsed < MASK_CLEAR_END_MS) {
           revealFrame = window.requestAnimationFrame(reveal);
@@ -313,15 +422,14 @@ const ProvenanceSection = () => {
 
         // Fully revealed: drop the fixed height and mask so frames opening
         // below can grow the section instead of being clipped by it.
-        element.style.height = "";
-        element.style.removeProperty("--provenance-fade-start");
-        setIsSettled(true);
+        settle();
       };
 
       revealFrame = window.requestAnimationFrame(reveal);
     });
 
     return () => {
+      detachSkipListeners();
       window.cancelAnimationFrame(measureFrame);
       window.cancelAnimationFrame(revealFrame);
     };
