@@ -3,9 +3,9 @@
 import Head from "next/head"
 
 const SITE_URL = "https://www.hobin.dev"
-const TITLE = "Jason Son — Engineer, Researcher & Investor"
-const DESCRIPTION =
-  "Jason Son is an engineer, researcher, and early-stage investor in New York City. Explore his work, experiments, and projects."
+const TITLE = "JASON SON"
+const OG_TITLE = "Jason Son"
+const DESCRIPTION = "Personal website of Jason Son."
 const COVER_IMAGE = `${SITE_URL}/images/cover.png`
 
 const structuredData = {
@@ -44,7 +44,7 @@ const HeadPreset = () => {
       {/* Open Graph / Facebook */}
       <meta property="og:site_name" content="Jason Son" />
       <meta property="og:locale" content="en_US" />
-      <meta property="og:title" content={TITLE} />
+      <meta property="og:title" content={OG_TITLE} />
       <meta property="og:description" content={DESCRIPTION} />
       <meta property="og:image" content={COVER_IMAGE} />
       <meta property="og:image:secure_url" content={COVER_IMAGE} />
@@ -59,7 +59,7 @@ const HeadPreset = () => {
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content="@jasonvinhson" />
       <meta name="twitter:creator" content="@jasonvinhson" />
-      <meta name="twitter:title" content={TITLE} />
+      <meta name="twitter:title" content={OG_TITLE} />
       <meta name="twitter:description" content={DESCRIPTION} />
       <meta name="twitter:image" content={COVER_IMAGE} />
       <meta name="twitter:image:alt" content="Jason Son portfolio cover" />
