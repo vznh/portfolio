@@ -11,7 +11,6 @@ import type { PreparedTextWithSegments } from "@chenglou/pretext";
 import { m } from "framer-motion";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { createPortal } from "react-dom";
 
 const isAccent = (part: string | ProvenanceAccent): part is ProvenanceAccent =>
   typeof part !== "string";
@@ -30,7 +29,7 @@ const MASK_CLEAR_END_MS = MASK_CLEAR_START_MS + MASK_CLEAR_DURATION;
 const SKIP_TAIL_MS = 450;
 const SKIP_GRACE_MS = 400;
 
-// Reading bar + reveal frame. The bar sits 45% down the viewport; the
+// Reading position + reveal frame. The trigger sits 45% down the viewport; the
 // values below must mirror the paragraph classes (text-xl leading-7
 // tracking-tight font-plex) so pretext reproduces the browser's line breaks.
 const BAR_VIEWPORT_RATIO = 0.45;
@@ -73,15 +72,6 @@ type BarCandidate = {
 
 const accentKeyOf = (paragraphIndex: number, partIndex: number) =>
   `${paragraphIndex}:${partIndex}`;
-
-const barColorOf = (accent: ProvenanceAccent) => {
-  const hasLink = Boolean(accent.url);
-  const hasPreview = Boolean(accent.media);
-
-  if (hasLink && hasPreview) return "#002fa7";
-  if (hasLink || hasPreview) return "orange";
-  return "red";
-};
 
 const hostnameOf = (url: string) => {
   try {
@@ -214,12 +204,9 @@ const ProvenanceSection = () => {
   const [colors, setColors] = useState<Record<string, string>>({});
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSettled, setIsSettled] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [activeKey, setActiveKey] = useState<string | null>(null);
   const [frames, setFrames] = useState<FrameSpec[]>([]);
-  const [barVisible, setBarVisible] = useState(false);
   const provenanceRef = React.useRef<HTMLDivElement>(null);
   const pendingExpansionRef = React.useRef<{ height: number } | null>(null);
   const pretextRef = React.useRef<PretextModule | null>(null);
@@ -243,7 +230,6 @@ const ProvenanceSection = () => {
   }, []);
 
   useEffect(() => {
-    setIsMounted(true);
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
     let cancelled = false;
@@ -266,15 +252,6 @@ const ProvenanceSection = () => {
       cancelled = true;
       document.fonts.removeEventListener("loadingdone", invalidateLayouts);
     };
-  }, []);
-
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(query.matches);
-
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
   }, []);
 
   const expandProvenance = () => {
@@ -522,7 +499,6 @@ const ProvenanceSection = () => {
     if (!section) return;
 
     if (!isExpanded) {
-      setBarVisible(false);
       activeKeyRef.current = null;
       setActiveKey(null);
       return;
@@ -530,7 +506,7 @@ const ProvenanceSection = () => {
 
     const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
     const lineHeightPx = LINE_HEIGHT_REM * rootFontSize;
-    // Band midpoint at 45% of the viewport; must mirror .provenance-bar's CSS top.
+    // The invisible trigger band's midpoint sits at 45% of the viewport.
     const barTop = window.innerHeight * BAR_VIEWPORT_RATIO - lineHeightPx / 2;
     const barBottom = barTop + lineHeightPx;
     const sectionRect = section.getBoundingClientRect();
@@ -541,10 +517,6 @@ const ProvenanceSection = () => {
       ? 0
       : Math.sign(scrollY - previousScrollY);
     lastScrollYRef.current = scrollY;
-
-    // On touch screens the reading bar remains a positional trigger only. The
-    // layout shift is visible, but the bar itself would obstruct reading.
-    setBarVisible(!isMobile && visible);
 
     let best: BarCandidate | null = null;
     if (visible) {
@@ -675,7 +647,7 @@ const ProvenanceSection = () => {
 
   useEffect(() => {
     detectRef.current();
-  }, [isExpanded, isMobile, isSettled]);
+  }, [isExpanded, isSettled]);
 
   const removeFrame = React.useCallback((key: string) => {
     setFrames((prev) => {
@@ -766,12 +738,6 @@ const ProvenanceSection = () => {
   const story = isExpanded ? oldestFirstStory : previewStory;
   const paragraphClassName =
     "font-plex text-xl leading-7 tracking-tight text-justify text-[var(--text-color)]";
-  const activeBarColor = (() => {
-    if (!activeKey) return undefined;
-    const [paragraphIndex, partIndex] = activeKey.split(":").map(Number);
-    const accent = oldestFirstStory[paragraphIndex]?.[partIndex];
-    return accent && isAccent(accent) ? barColorOf(accent) : undefined;
-  })();
 
   return (
     <div>
@@ -864,22 +830,6 @@ const ProvenanceSection = () => {
         )}
       </div>
       {isExpanded && <div aria-hidden className="provenance-scroll-tail" />}
-      {isMounted &&
-        isExpanded &&
-        createPortal(
-          <span
-            aria-hidden
-            className={`provenance-bar${barVisible ? " provenance-bar--visible" : ""}${
-              activeKey ? " provenance-bar--active" : ""
-            }`}
-            style={
-              activeBarColor
-                ? ({ "--provenance-bar-active-color": activeBarColor } as React.CSSProperties)
-                : undefined
-            }
-          />,
-          document.body,
-        )}
     </div>
   );
 };
