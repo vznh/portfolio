@@ -1,55 +1,11 @@
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Shell } from "@/components/Layout";
 import { profile } from "@/presets/profile";
-import { socials, type SocialLink } from "@/presets/socials";
 import { sections, type Section } from "@/presets/content";
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-}
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
   return (
     <h2 className="font-heading text-[13px] text-black">{children}</h2>
-  );
-}
-
-function SocialRow({ link }: { link: SocialLink }) {
-  return (
-    <li>
-      <a
-        href={link.href}
-        {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
-        className="font-mono text-[11px] text-black no-underline transition-opacity hover:opacity-60 hover:underline"
-      >
-        {link.label}
-      </a>
-    </li>
-  );
-}
-
-function LocalTime() {
-  const [time, setTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    const formatter = new Intl.DateTimeFormat("en-US", {
-      timeZone: "America/New_York",
-      hour: "numeric",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    });
-    const tick = () => setTime(formatter.format(new Date()));
-    tick();
-    const interval = setInterval(tick, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <p className="font-mono text-[11px] text-gray-400">
-      Brooklyn {time ?? "--:--:--"}
-    </p>
   );
 }
 
@@ -94,29 +50,6 @@ function MiddlePanel() {
         <Prose key={section.id} section={section} />
       ))}
     </div>
-  );
-}
-
-function Nav() {
-  return (
-    <nav className="mt-6 flex flex-col gap-1">
-      {[
-        ...sections.map((s) => ({ id: s.id, label: s.heading })),
-        { id: "contact", label: "Contact" },
-      ].map((link) => (
-        <a
-          key={link.id}
-          href={`#${link.id}`}
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection(link.id);
-          }}
-          className="font-mono text-[11px] uppercase tracking-wide text-gray-400 no-underline transition-colors hover:text-black hover:underline"
-        >
-          {link.label}
-        </a>
-      ))}
-    </nav>
   );
 }
 
