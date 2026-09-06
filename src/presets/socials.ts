@@ -1,9 +1,6 @@
-// presets/socials
-
 export interface SocialLink {
   href: string;
   label: string;
-  // Opens in a new tab; the mailto handoff stays in place.
   external?: boolean;
 }
 
