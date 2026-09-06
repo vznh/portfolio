@@ -1,22 +1,17 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/views/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/presets/**/*.{js,ts,jsx,tsx,mdx}"
-  ],
+  content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        "jb": ["JB", "sans-serif"],
-        "plex": ["Plex", "sans-serif"],
-        "lora": ["Lora", "serif"],
+        heading: ["var(--font-heading)"],
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
       },
     },
   },
   plugins: [],
 };
+
 export default config;
