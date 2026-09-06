@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Shell } from "@/components/Layout";
 import { profile } from "@/presets/profile";
@@ -53,13 +54,41 @@ function MiddlePanel() {
   );
 }
 
+// Live HH:MM:SS clock for one time zone. Renders a placeholder until mounted
+// so the server and client markup match.
+function useClock(timeZone: string) {
+  const [time, setTime] = useState<string | null>(null);
+  useEffect(() => {
+    const formatter = new Intl.DateTimeFormat("en-GB", {
+      timeZone,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hourCycle: "h23",
+    });
+    const tick = () => setTime(formatter.format(new Date()));
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [timeZone]);
+  return time ?? "--:--:--";
+}
+
+function LocationRow({ name, timeZone, muted }: { name: string; timeZone: string; muted: boolean }) {
+  const time = useClock(timeZone);
+  return (
+    <li className={`flex justify-between gap-6 text-[13px] text-black ${muted ? "opacity-40" : ""}`}>
+      <span>{name}</span>
+      <span className="tabular-nums">{time}</span>
+    </li>
+  );
+}
+
 function RightPanel() {
   return (
-    <ul className="flex flex-col">
+    <ul className="flex max-w-[280px] flex-col">
       {profile.locations.map((place, i) => (
-        <li key={place} className={`text-[13px] text-black ${i === 0 ? "" : "opacity-40"}`}>
-          {place}
-        </li>
+        <LocationRow key={place.name} name={place.name} timeZone={place.timeZone} muted={i !== 0} />
       ))}
     </ul>
   );
