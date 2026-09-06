@@ -122,25 +122,13 @@ function Nav() {
 
 function RightPanel() {
   return (
-    <div>
-      <h1 className="font-heading text-[13px] text-black">{profile.name}</h1>
-      <p className="mt-3 text-[13px] leading-relaxed text-gray-500">{profile.intro}</p>
-      <p className="mt-1 text-[13px] text-gray-500">{profile.location}</p>
-
-      <Nav />
-
-      <div id="contact" className="mt-8">
-        <PanelLabel>Contact</PanelLabel>
-        <ul className="mt-3 flex flex-col gap-1">
-          {socials.map((link) => (
-            <SocialRow key={link.href} link={link} />
-          ))}
-        </ul>
-      </div>
-      <div className="mt-8">
-        <LocalTime />
-      </div>
-    </div>
+    <ul className="flex flex-col">
+      {profile.locations.map((place, i) => (
+        <li key={place} className={`text-[13px] text-black ${i === 0 ? "" : "opacity-40"}`}>
+          {place}
+        </li>
+      ))}
+    </ul>
   );
 }
 
