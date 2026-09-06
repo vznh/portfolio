@@ -2,256 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dinamo fonts (licensed). */
+@font-face {
+  font-family: "ABC Schengen A";
+  src: url("/fonts/schengen-a-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --bg-color: #F8FBF8;
-  --text-color: #1E1919;
-  --highlight: #222;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-
-  ::selection {
-    color: #fff;
-    background-color: #000;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-heading: "ABC Schengen A", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "ABC Schengen A", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
 }
 
-.link {
-  color: var(--text-color);
-  text-decoration: underline;
-  text-underline-offset: 1px;
-  text-decoration-color: var(--text-color);
-  text-decoration-thickness: 0.8px;
-  opacity: 1;
-  cursor: pointer;
+html,
+body {
+  background: #ffffff;
+  color: #111111;
+  font-size: 13px;
 }
 
-.provenance-accent--active {
-  filter: brightness(1.2) saturate(1.25);
-}
-
-.provenance-preview {
-  position: relative;
-  height: 10.5rem;
-  overflow: hidden;
-  --provenance-fade-start: 7rem;
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 var(--provenance-fade-start),
-    rgba(0, 0, 0, 0.98) calc(var(--provenance-fade-start) + 0.35rem),
-    rgba(0, 0, 0, 0.92) calc(var(--provenance-fade-start) + 0.7rem),
-    rgba(0, 0, 0, 0.82) calc(var(--provenance-fade-start) + 1.05rem),
-    rgba(0, 0, 0, 0.68) calc(var(--provenance-fade-start) + 1.4rem),
-    rgba(0, 0, 0, 0.52) calc(var(--provenance-fade-start) + 1.75rem),
-    rgba(0, 0, 0, 0.36) calc(var(--provenance-fade-start) + 2.1rem),
-    rgba(0, 0, 0, 0.2) calc(var(--provenance-fade-start) + 2.45rem),
-    rgba(0, 0, 0, 0.08) calc(var(--provenance-fade-start) + 2.8rem),
-    transparent calc(var(--provenance-fade-start) + 3.5rem)
-  );
-  mask-image: linear-gradient(
-    to bottom,
-    #000 0%,
-    #000 var(--provenance-fade-start),
-    rgba(0, 0, 0, 0.98) calc(var(--provenance-fade-start) + 0.35rem),
-    rgba(0, 0, 0, 0.92) calc(var(--provenance-fade-start) + 0.7rem),
-    rgba(0, 0, 0, 0.82) calc(var(--provenance-fade-start) + 1.05rem),
-    rgba(0, 0, 0, 0.68) calc(var(--provenance-fade-start) + 1.4rem),
-    rgba(0, 0, 0, 0.52) calc(var(--provenance-fade-start) + 1.75rem),
-    rgba(0, 0, 0, 0.36) calc(var(--provenance-fade-start) + 2.1rem),
-    rgba(0, 0, 0, 0.2) calc(var(--provenance-fade-start) + 2.45rem),
-    rgba(0, 0, 0, 0.08) calc(var(--provenance-fade-start) + 2.8rem),
-    transparent calc(var(--provenance-fade-start) + 3.5rem)
-  );
-}
-
-.provenance-preview__trigger {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: nesw-resize;
-}
-
-.provenance-preview__trigger:focus-visible {
-  outline: 1px dashed var(--text-color);
-  outline-offset: 0.25rem;
-}
-
-/* Lets the final text row reach the reveal trigger before the page bottoms out. */
-.provenance-scroll-tail {
-  height: 12vh;
-}
-
-/* Frame revealed between text lines while the trigger rests on a hyperlink. */
-.provenance-frame {
-  display: block;
-  overflow: hidden;
-  transform-origin: top;
-}
-
-.provenance-frame__inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  height: 10.5rem; /* six rows of leading-7 text */
-  padding: 0.4rem 0;
-  box-sizing: border-box;
-}
-
-.provenance-frame__media {
-  height: 100%;
-  width: auto; /* keep the asset's intrinsic aspect ratio */
-  min-width: 0; /* a filmstrip wider than the column shrinks... */
-  object-fit: cover; /* ...cropping each item from the center */
-}
-
-.provenance-frame__placeholder {
-  height: 100%;
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--text-color) 20%, transparent);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.5;
-}
-
-@media (max-width: 767px) {
-  .provenance-frame__inner--filmstrip {
-    display: grid;
-    grid-template-columns: repeat(
-      var(--provenance-filmstrip-columns),
-      minmax(0, 1fr)
-    );
-    grid-template-rows: repeat(
-      var(--provenance-filmstrip-rows),
-      minmax(0, 1fr)
-    );
-    gap: 0.25rem;
-  }
-
-  .provenance-frame__inner--filmstrip .provenance-frame__media {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
-  }
-}
-
-
-
-/* Gradient overlay - desktop only */
+/* Desktop: page itself never scrolls; only the middle panel scrolls. */
 @media (min-width: 768px) {
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 15vh;
-    background: linear-gradient(
-      to bottom,
-      rgba(248, 251, 248, 1) 0%,
-      rgba(248, 251, 248, 1) 11%,
-      rgba(248, 251, 248, 0.94) 24%,
-      rgba(248, 251, 248, 0.85) 35%,
-      rgba(248, 251, 248, 0.72) 46%,
-      rgba(248, 251, 248, 0.56) 57%,
-      rgba(248, 251, 248, 0.4) 68%,
-      rgba(248, 251, 248, 0.25) 79%,
-      rgba(248, 251, 248, 0.12) 90%,
-      rgba(248, 251, 248, 0) 100%
-    );
-    z-index: 10;
-    pointer-events: none;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 15vh;
-    background: linear-gradient(
-      to top,
-      rgba(248, 251, 248, 1) 0%,
-      rgba(248, 251, 248, 1) 11%,
-      rgba(248, 251, 248, 0.94) 24%,
-      rgba(248, 251, 248, 0.85) 35%,
-      rgba(248, 251, 248, 0.72) 46%,
-      rgba(248, 251, 248, 0.56) 57%,
-      rgba(248, 251, 248, 0.4) 68%,
-      rgba(248, 251, 248, 0.25) 79%,
-      rgba(248, 251, 248, 0.12) 90%,
-      rgba(248, 251, 248, 0) 100%
-    );
-    z-index: 10;
-    pointer-events: none;
+  html,
+  body {
+    overflow: hidden;
+    height: 100%;
+    overscroll-behavior: none;
   }
 }
 
-/* Respect users who ask the OS to minimize motion (WCAG 2.3.3). Neutralizes
-   CSS transitions/animations and smooth scroll; Framer trees fall back to
-   their initial/animate end states without the intermediate motion. */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: contain;
 }
-
-@font-face {
-  font-family: 'JB';
-  src: url('/fonts/jb.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Lora';
-  src: url('/fonts/lora.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* IBM Plex Sans, variable weight axis, latin subset — one 40KB file covering
-   both the 400 body text and the 500 footer links, replacing a Google Fonts
-   @import that cost three serial round-trips before the face even started
-   downloading.
-   `block` rather than `swap`: the provenance reader measures line breaks
-   against this face, and a swap mid-read reflows every justified paragraph
-   and invalidates those measurements. The preload in _document lands the file
-   before first paint, so the block period is never actually observed. */
-@font-face {
-  font-family: 'Plex';
-  src: url('/fonts/plex.woff2') format('woff2');
-  font-weight: 100 700;
-  font-style: normal;
-  font-display: block;
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
