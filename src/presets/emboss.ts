@@ -34,7 +34,9 @@ export const embossDefaults: EmbossParams = {
   fill: "#ffffff",
 };
 
-// A candidate for the left column: one saved DialKit version, character included.
+// A candidate for the left column: one saved DialKit version plus its subject.
+// `glyph` is a single character, or a path to an SVG under /public such as
+// "/assets/mark.svg", which is embossed as a shape in the version's fill color.
 export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }

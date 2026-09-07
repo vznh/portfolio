@@ -24,11 +24,19 @@ const HEADING_FONT = '"ABC Schengen A"';
 // Measurement size in SVG user units; the viewBox rescales to the box anyway.
 const EM = 100;
 
-// Ink bounds of `glyph` (not font metrics), measured via canvas so any
+// A glyph value is either a single character or a path to an SVG under
+// /public (e.g. "/assets/mark.svg"), which is embossed as a filled shape.
+export function isSvgSource(glyph: string) {
+  return glyph.startsWith("/") && glyph.toLowerCase().endsWith(".svg");
+}
+
+// Ink bounds of a text `glyph` (not font metrics), measured via canvas so any
 // character, letter or symbol, can be pinned to the top-left of its box.
+// SVG sources are not measured; their own viewBox decides.
 function useInkBox(glyph: string) {
   const [box, setBox] = useState<string | null>(null);
   useEffect(() => {
+    if (isSvgSource(glyph)) return;
     let cancelled = false;
     const measure = () => {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -193,21 +201,45 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           </filter>
         </defs>
       </svg>
-      {/* The glyph is SVG text whose viewBox is its own ink bounds, so its top
-          edge always meets the box's top edge and it scales to fit the box
-          (xMinYMin: top-left aligned). Hidden until measured to avoid a jump. */}
-      <svg
-        className="absolute inset-0 h-full w-full select-none"
-        viewBox={inkBox ?? `0 0 ${EM} ${EM}`}
-        preserveAspectRatio="xMinYMin meet"
-        style={{ filter: `url(#${id})`, opacity: inkBox ? 1 : 0 }}
-        aria-label={glyph}
-        role="img"
-      >
-        <text x={0} y={EM} fontSize={EM} fill={fill} className="font-heading">
-          {glyph}
-        </text>
-      </svg>
+      {isSvgSource(glyph) ? (
+        /* SVG source: the file is a mask over a fill-colored box, so the same
+           fill/emboss semantics apply as for text. The filter sits on the
+           parent because CSS applies filter before mask on a single element,
+           which would emboss the box's rectangle instead of the shape.
+           Contained and anchored top-left like the text glyph. */
+        <div className="absolute inset-0" style={{ filter: `url(#${id})` }} role="img" aria-label="">
+          <div
+            className="h-full w-full"
+            style={{
+              backgroundColor: fill,
+              maskImage: `url(${glyph})`,
+              maskSize: "contain",
+              maskPosition: "top left",
+              maskRepeat: "no-repeat",
+              WebkitMaskImage: `url(${glyph})`,
+              WebkitMaskSize: "contain",
+              WebkitMaskPosition: "top left",
+              WebkitMaskRepeat: "no-repeat",
+            }}
+          />
+        </div>
+      ) : (
+        /* Text glyph: SVG text whose viewBox is its own ink bounds, so its top
+           edge always meets the box's top edge and it scales to fit the box
+           (xMinYMin: top-left aligned). Hidden until measured to avoid a jump. */
+        <svg
+          className="absolute inset-0 h-full w-full select-none"
+          viewBox={inkBox ?? `0 0 ${EM} ${EM}`}
+          preserveAspectRatio="xMinYMin meet"
+          style={{ filter: `url(#${id})`, opacity: inkBox ? 1 : 0 }}
+          aria-label={glyph}
+          role="img"
+        >
+          <text x={0} y={EM} fontSize={EM} fill={fill} className="font-heading">
+            {glyph}
+          </text>
+        </svg>
+      )}
     </div>
   );
 }

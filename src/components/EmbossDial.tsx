@@ -10,7 +10,8 @@ import { EmbossedGlyph } from "./EmbossedGlyph";
 // is loaded, mirroring production. The "copyVersions" action copies every
 // saved version as an EmbossParams[] for src/presets/emboss.ts.
 const PANEL_ID = "emboss";
-// Seed for the panel's glyph field only; real characters live in saved versions.
+// Seed for the panel's glyph field only; real subjects live in saved versions.
+// The field takes a character or an SVG path like /assets/mark.svg.
 const DIAL_GLYPH = "A";
 
 // Preset values are stored flat with dotted keys ("highlight.opacity").
