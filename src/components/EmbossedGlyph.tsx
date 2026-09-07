@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useEffect, useId, useState } from "react";
 import type { EmbossParams } from "@/presets/emboss";
 
 interface EmbossedGlyphProps {
@@ -20,8 +20,39 @@ function toAzimuth(angle: number): number {
 export const GLYPH_BOX_CLASS =
   "relative aspect-[4/5] w-full max-w-[280px] md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto";
 
+const HEADING_FONT = '"ABC Schengen A"';
+// Measurement size in SVG user units; the viewBox rescales to the box anyway.
+const EM = 100;
+
+// Ink bounds of `glyph` (not font metrics), measured via canvas so any
+// character, letter or symbol, can be pinned to the top-left of its box.
+function useInkBox(glyph: string) {
+  const [box, setBox] = useState<string | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    const measure = () => {
+      const ctx = document.createElement("canvas").getContext("2d");
+      if (!ctx) return;
+      ctx.font = `${EM}px ${HEADING_FONT}`;
+      const m = ctx.measureText(glyph);
+      const w = m.actualBoundingBoxLeft + m.actualBoundingBoxRight;
+      const h = m.actualBoundingBoxAscent + m.actualBoundingBoxDescent;
+      if (!cancelled && w > 0 && h > 0) {
+        // Text baseline sits at y = EM; the box starts at the ink's top edge.
+        setBox(`${-m.actualBoundingBoxLeft} ${EM - m.actualBoundingBoxAscent} ${w} ${h}`);
+      }
+    };
+    document.fonts.load(`${EM}px ${HEADING_FONT}`).then(measure, measure);
+    return () => {
+      cancelled = true;
+    };
+  }, [glyph]);
+  return box;
+}
+
 export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) {
   const id = useId();
+  const inkBox = useInkBox(glyph);
   const { style, technique, depth, direction, size, soften, angle, altitude, highlight, shadow, fill } = params;
 
   // a. Height map — "Technique": how steep the bump-map edge is. Chisel
@@ -162,15 +193,21 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           </filter>
         </defs>
       </svg>
-      {/* Absolutely positioned so it never affects layout; the cap height is
-          trimmed to the top edge (text-box-trim) so the glyph's top always sits
-          on the box's top edge. 120cqw ≈ the 4/5 box height. */}
-      <span
-        className="glyph-trim absolute left-0 top-0 whitespace-nowrap font-heading select-none"
-        style={{ lineHeight: 1, fontSize: "120cqw", color: fill, filter: `url(#${id})` }}
+      {/* The glyph is SVG text whose viewBox is its own ink bounds, so its top
+          edge always meets the box's top edge and it scales to fit the box
+          (xMinYMin: top-left aligned). Hidden until measured to avoid a jump. */}
+      <svg
+        className="absolute inset-0 h-full w-full select-none"
+        viewBox={inkBox ?? `0 0 ${EM} ${EM}`}
+        preserveAspectRatio="xMinYMin meet"
+        style={{ filter: `url(#${id})`, opacity: inkBox ? 1 : 0 }}
+        aria-label={glyph}
+        role="img"
       >
-        {glyph}
-      </span>
+        <text x={0} y={EM} fontSize={EM} fill={fill} className="font-heading">
+          {glyph}
+        </text>
+      </svg>
     </div>
   );
 }
