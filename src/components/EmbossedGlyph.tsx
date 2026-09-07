@@ -62,7 +62,11 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
 
   return (
     <div
-      className={`flex aspect-[4/5] w-full max-w-[280px] items-center justify-center ${className ?? ""}`}
+      // Desktop: the box gives up height on short viewports so the two rows under
+      // it always keep at least 6rem each (60vh + 1.5rem remain under the 40vh
+      // line; minus 2 x 6rem rows and 3rem of cell padding). Width follows the
+      // 4/5 aspect. Mobile: full width, height from the aspect.
+      className={`flex aspect-[4/5] w-full max-w-[280px] items-center justify-center md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
       <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>

@@ -51,8 +51,11 @@ function SideColumn({
   // content itself still starts at exactly 40vh, level with the middle column.
   // The remainder is one row, or split equally across `below` rows. Row edges
   // are part of the grid reveal. Mobile: plain padded blocks in flow.
+  // `minmax(0, 1fr)` keeps the below rows strictly equal: a plain `1fr` has an
+  // `auto` minimum, so a row with content would refuse to shrink below it and
+  // steal space from an emptier sibling once the column runs tight.
   const remainder = Math.max(1, below.length);
-  const rows = `calc(40vh - 1.5rem) auto ${"1fr ".repeat(remainder).trim()}`;
+  const rows = `calc(40vh - 1.5rem) auto ${"minmax(0, 1fr) ".repeat(remainder).trim()}`;
   return (
     <aside
       className={`md:grid md:h-full md:overflow-visible ${
