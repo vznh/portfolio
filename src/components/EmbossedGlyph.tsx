@@ -62,11 +62,13 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
 
   return (
     <div
-      // Desktop: the box gives up height on short viewports so the two rows under
-      // it always keep at least 6rem each (60vh + 1.5rem remain under the 40vh
+      // The box is the glyph's allotted space: fixed by viewport math, never by
+      // the glyph itself, so swapping the character cannot shift the rows below.
+      // Desktop: it gives up height on short viewports so the two rows under it
+      // always keep at least 6rem each (60vh + 1.5rem remain under the 40vh
       // line; minus 2 x 6rem rows and 3rem of cell padding). Width follows the
       // 4/5 aspect. Mobile: full width, height from the aspect.
-      className={`flex aspect-[4/5] w-full max-w-[280px] items-center justify-center md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto ${className ?? ""}`}
+      className={`relative aspect-[4/5] w-full max-w-[280px] md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
       <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
@@ -155,11 +157,11 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           </filter>
         </defs>
       </svg>
-      {/* 120cqw ≈ fills the 4/5 box height (100cqw = 80% of height). The box
-          does not clip, so wide glyphs spill over the grid lines by design;
-          the Shell root clips at the viewport so nothing scrolls. */}
+      {/* Absolutely positioned so it never affects layout; the cap height is
+          trimmed to the top edge (text-box-trim) so the glyph's top always sits
+          on the box's top edge. 120cqw ≈ the 4/5 box height. */}
       <span
-        className="font-heading select-none"
+        className="glyph-trim absolute left-0 top-0 whitespace-nowrap font-heading select-none"
         style={{ lineHeight: 1, fontSize: "120cqw", color: fill, filter: `url(#${id})` }}
       >
         {glyph}

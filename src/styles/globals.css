@@ -44,3 +44,10 @@ body {
   width: 0;
   height: 0;
 }
+
+/* Trim the space above the cap height so a glyph's top sits on its box's top
+   edge. Browsers without text-box-trim fall back to the normal line box. */
+.glyph-trim {
+  text-box-trim: trim-start;
+  text-box-edge: cap alphabetic;
+}
