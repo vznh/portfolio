@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDialKitController, DialRoot } from "dialkit";
+import { useDialKitController, DialRoot, DialStore, type DialValue } from "dialkit";
 import { embossDefaults, type EmbossParams } from "@/presets/emboss";
 import { profile } from "@/presets/profile";
 import { EmbossedGlyph } from "./EmbossedGlyph";
@@ -7,7 +7,35 @@ import { EmbossedGlyph } from "./EmbossedGlyph";
 // Dev-only calibration panel mirroring Photoshop's Bevel & Emboss controls.
 // Names, ranges, and defaults match embossDefaults; press Copy in the DialKit
 // toolbar to export the current values as JSON for src/presets/emboss.ts.
-// Toggle the panel with Cmd/Ctrl+E.
+// Toggle the panel with Cmd/Ctrl+E. On mount a random saved version (preset)
+// is loaded, mirroring production. The "copyVersions" action copies every
+// saved version as an EmbossParams[] for src/presets/emboss.ts.
+const PANEL_ID = "emboss";
+
+// Preset values are stored flat with dotted keys ("highlight.opacity").
+function fromDialValues(values: Record<string, DialValue>): EmbossParams {
+  const pick = <T,>(key: string, fallback: T) => (values[key] === undefined ? fallback : (values[key] as T));
+  return {
+    style: pick("structure.style", embossDefaults.style),
+    technique: pick("structure.technique", embossDefaults.technique),
+    depth: pick("structure.depth", embossDefaults.depth),
+    direction: pick("structure.direction", embossDefaults.direction),
+    size: pick("structure.size", embossDefaults.size),
+    soften: pick("structure.soften", embossDefaults.soften),
+    angle: pick("shading.angle", embossDefaults.angle),
+    altitude: pick("shading.altitude", embossDefaults.altitude),
+    highlight: {
+      color: pick("highlight.color", embossDefaults.highlight.color),
+      opacity: pick("highlight.opacity", embossDefaults.highlight.opacity),
+    },
+    shadow: {
+      color: pick("shadow.color", embossDefaults.shadow.color),
+      opacity: pick("shadow.opacity", embossDefaults.shadow.opacity),
+    },
+    fill: pick("fill", embossDefaults.fill),
+  };
+}
+
 export function EmbossDial() {
   const dial = useDialKitController(
     "Bevel & Emboss",
@@ -42,9 +70,25 @@ export function EmbossDial() {
         opacity: [embossDefaults.shadow.opacity, 0, 1, 0.01],
       },
       fill: { type: "color", default: embossDefaults.fill },
+      copyVersions: { type: "action" },
     },
-    { id: "emboss", persist: true },
+    {
+      id: PANEL_ID,
+      persist: true,
+      onAction: (action) => {
+        if (action !== "copyVersions") return;
+        const versions = DialStore.getPresets(PANEL_ID).map((preset) => fromDialValues(preset.values));
+        void navigator.clipboard.writeText(JSON.stringify(versions, null, 2));
+      },
+    },
   );
+
+  // Pick a random saved version on mount, like production does.
+  useEffect(() => {
+    const presets = DialStore.getPresets(PANEL_ID);
+    if (presets.length === 0) return;
+    DialStore.loadPreset(PANEL_ID, presets[Math.floor(Math.random() * presets.length)].id);
+  }, []);
   const p = dial.values;
 
   // Panel toggle shortcut: Cmd/Ctrl+E. Undefined open state defers to
