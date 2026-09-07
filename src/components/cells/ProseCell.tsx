@@ -5,7 +5,7 @@ import { sections, type Section } from "@/presets/content";
 const LINK_CLASS = "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
-  return <h2 className="font-heading text-[13px] text-black">{children}</h2>;
+  return <h2 className="font-heading text-[13px] text-black opacity-80">{children}</h2>;
 }
 
 // Inline syntax: [text](url) -> link, [text](+id) -> expander. See presets/content.ts.
