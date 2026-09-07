@@ -41,7 +41,7 @@ function SideColumn({
       } ${edge}`}
     >
       <div className="hidden md:block" />
-      <div className={`p-6 md:border-y md:pt-0 ${edge}`}>{children}</div>
+      <div className={`p-6 md:border-y ${edge}`}>{children}</div>
       <div className="hidden md:block" />
     </aside>
   );
