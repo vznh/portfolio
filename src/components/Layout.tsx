@@ -31,12 +31,13 @@ function SideColumn({
   edge: string;
   children: ReactNode;
 }) {
-  // Desktop: three rows [40vh spacer | content | remainder]. The content row is
-  // the column's dedicated space; its top and bottom edges are part of the grid
-  // reveal. Mobile: plain padded block.
+  // Desktop: three rows [spacer | content | remainder]. The content row has
+  // 24px padding on every side and its top edge sits 24px above 40vh, so the
+  // content itself still starts at exactly 40vh, level with the middle column.
+  // Its top and bottom edges are part of the grid reveal. Mobile: plain padded block.
   return (
     <aside
-      className={`md:grid md:h-full md:grid-rows-[40vh_auto_1fr] md:overflow-hidden ${
+      className={`md:grid md:h-full md:grid-rows-[calc(40vh-1.5rem)_auto_1fr] md:overflow-hidden ${
         side === "left" ? "md:border-r" : "md:border-l"
       } ${edge}`}
     >
