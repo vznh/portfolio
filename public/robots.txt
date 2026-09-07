@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://hobin.dev/sitemap.xml
+Sitemap: https://www.hobin.dev/sitemap.xml

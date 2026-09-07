@@ -1,10 +1,10 @@
 import Head from "next/head";
 
-// Canonical host. jasonvinhson.com should 301 here at the DNS/host level.
-export const SITE_URL = "https://hobin.dev";
+// Canonical host. hobin.dev and jasonvinhson.com should 301 here at the DNS/host level.
+export const SITE_URL = "https://www.hobin.dev";
 const NAME = "Jason Son";
 const TITLE = "Jason Son";
-const DESCRIPTION = "Jason Son is an engineer and designer in New York. Software at Paradigm, previously Apple.";
+const DESCRIPTION = "Engineer and designer in New York.";
 const OG_IMAGE = `${SITE_URL}/og.png`;
 const THEME_COLOR = "#002FA7";
 const TWITTER = "@jasonvinhson";
@@ -23,12 +23,10 @@ const structuredData = {
       "@type": "Person",
       "@id": `${SITE_URL}/#person`,
       name: NAME,
-      alternateName: "Jason Vinh Son",
       url: `${SITE_URL}/`,
       image: OG_IMAGE,
       description: DESCRIPTION,
       jobTitle: "Engineer and designer",
-      worksFor: { "@type": "Organization", name: "Paradigm" },
       address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" },
       sameAs: [
         "https://jasonvinhson.com",
