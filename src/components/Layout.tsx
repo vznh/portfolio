@@ -1,13 +1,22 @@
 import type { ReactNode } from "react";
 import { useHeldKey } from "@/hooks/useHeldKey";
 
-interface ShellProps {
-  left: ReactNode;
-  // Rows under the left content row; together they fill the remaining viewport
+interface ColumnCells {
+  content: ReactNode;
+  // Rows under the content row; together they fill the remaining viewport
   // height in equal parts. Each row's bottom edge is part of the grid reveal.
-  leftBelow?: ReactNode[];
+  below?: ReactNode[];
+}
+
+interface ShellProps {
+  left: ColumnCells;
   middle: ReactNode;
-  right: ReactNode;
+  right: ColumnCells;
+}
+
+// One padded, bordered grid cell. Its bottom/top edges are part of the grid reveal.
+function Cell({ edge, className, children }: { edge: string; className?: string; children: ReactNode }) {
+  return <div className={`p-6 ${className ?? ""} ${edge}`}>{children}</div>;
 }
 
 /**
@@ -16,11 +25,12 @@ interface ShellProps {
  * Desktop (md+): fixed viewport, 3-column grid [narrow | wide | narrow].
  * Only the middle panel scrolls (hidden scrollbar, contained overscroll).
  *
- * Desktop side columns and middle content start 40vh from the top
- * (slightly above center); the middle column's inner wrapper carries
- * matching 40vh top/bottom padding so its scrollable area spans the
- * full column height. Mobile: single column in document flow, normal
- * page scrolling, order left -> middle -> right.
+ * Both side columns have the same shape: rows [spacer | content | below...].
+ * They and the middle content start 40vh from the top (slightly above
+ * center); the middle column's inner wrapper carries matching 40vh top/bottom
+ * padding so its scrollable area spans the full column height. Mobile:
+ * single column in document flow, normal page scrolling, order left ->
+ * middle -> right.
  *
  * Easter egg: holding Cmd for 350ms reveals the grid: the column edges plus
  * the top and bottom of each side column's content row. Fades out on release.
@@ -51,38 +61,37 @@ function SideColumn({
       style={{ gridTemplateRows: rows }}
     >
       <div className="hidden md:block" />
-      <div className={`p-6 md:border-y ${edge}`}>{children}</div>
+      <Cell edge={edge} className="md:border-y">
+        {children}
+      </Cell>
       {below.length === 0 ? (
         <div className="hidden md:block" />
       ) : (
         below.map((row, i) => (
-          <div
-            key={i}
-            className={`p-6 ${i < below.length - 1 ? "md:border-b" : ""} ${edge}`}
-          >
+          <Cell key={i} edge={edge} className={i < below.length - 1 ? "md:border-b" : ""}>
             {row}
-          </div>
+          </Cell>
         ))
       )}
     </aside>
   );
 }
 
-export function Shell({ left, leftBelow, middle, right }: ShellProps) {
+export function Shell({ left, middle, right }: ShellProps) {
   const revealed = useHeldKey("Meta", 350);
   // Borders are always present (transparent) so revealing them never shifts layout.
   const edge = `transition-colors duration-300 ease-out ${revealed ? "md:border-gray-200" : "md:border-transparent"}`;
 
   return (
     <div className="overflow-x-clip md:grid md:h-screen md:w-screen md:grid-cols-[1fr_2fr_1fr] md:overflow-hidden">
-      <SideColumn side="left" edge={edge} below={leftBelow}>
-        {left}
+      <SideColumn side="left" edge={edge} below={left.below}>
+        {left.content}
       </SideColumn>
       <main className="no-scrollbar md:h-full md:overflow-y-auto">
         <div className="p-6 md:pb-[40vh] md:pt-[40vh]">{middle}</div>
       </main>
-      <SideColumn side="right" edge={edge}>
-        {right}
+      <SideColumn side="right" edge={edge} below={right.below}>
+        {right.content}
       </SideColumn>
     </div>
   );
