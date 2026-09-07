@@ -1,7 +1,18 @@
-import { embossDefaults } from "@/presets/emboss";
+import { useEffect, useState } from "react";
+import { embossVersions } from "@/presets/emboss";
 import { profile } from "@/presets/profile";
 import { EmbossedGlyph } from "../EmbossedGlyph";
 import { EmbossDial } from "../EmbossDial";
+
+// Static glyph with a random calibrated version. The server renders version 0;
+// the client picks at random once mounted so server and client markup match.
+function RandomVersionGlyph() {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    setIndex(Math.floor(Math.random() * embossVersions.length));
+  }, []);
+  return <EmbossedGlyph glyph={profile.glyph} params={embossVersions[index]} />;
+}
 
 // Left column cell: chooser between the static glyph and the dev-only DialKit calibration panel.
 export function GlyphCell() {
@@ -10,5 +21,5 @@ export function GlyphCell() {
   if (process.env.NODE_ENV === "development") {
     return <EmbossDial />;
   }
-  return <EmbossedGlyph glyph={profile.glyph} params={embossDefaults} />;
+  return <RandomVersionGlyph />;
 }

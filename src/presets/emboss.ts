@@ -1,5 +1,6 @@
-// Calibrate in dev via the DialKit panel, press Copy in its toolbar, and paste
-// the JSON here. The fields mirror Photoshop's Layer Style → Bevel & Emboss.
+// The fields mirror Photoshop's Layer Style → Bevel & Emboss. Calibrate in
+// dev via the DialKit panel: save versions as presets, then press the panel's
+// "copyVersions" action and paste the resulting array into `embossVersions`.
 export interface EmbossParams {
   // Structure
   style: "inner-bevel" | "outer-bevel" | "emboss" | "pillow-emboss";
@@ -31,3 +32,7 @@ export const embossDefaults: EmbossParams = {
   shadow: { color: "#000000", opacity: 0.75 },
   fill: "#ffffff",
 };
+
+// One entry per saved DialKit version. The page picks one at random on each
+// render. Until the calibrated versions are pasted in, it holds the defaults.
+export const embossVersions: EmbossParams[] = [embossDefaults];
