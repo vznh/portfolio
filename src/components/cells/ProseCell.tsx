@@ -1,7 +1,7 @@
 import { sections, type Section } from "@/presets/content";
 
-// Brand blue from the favicon; the "notification" color for special hooks.
-const SPECIAL_CLASS = "text-[#002FA7]";
+// Special hooks are underlined only for now; a notification color comes later.
+const SPECIAL_CLASS = "underline decoration-gray-300 underline-offset-2";
 
 function PanelLabel({ children, special }: { children: React.ReactNode; special?: boolean }) {
   return (
