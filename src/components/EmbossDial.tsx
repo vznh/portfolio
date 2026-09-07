@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDialKitController, DialRoot, DialStore, type DialValue } from "dialkit";
-import { embossDefaults, type EmbossParams } from "@/presets/emboss";
-import { profile } from "@/presets/profile";
+import { embossDefaults, type EmbossParams, type EmbossVersion } from "@/presets/emboss";
 import { EmbossedGlyph } from "./EmbossedGlyph";
 
 // Dev-only calibration panel mirroring Photoshop's Bevel & Emboss controls.
@@ -11,11 +10,14 @@ import { EmbossedGlyph } from "./EmbossedGlyph";
 // is loaded, mirroring production. The "copyVersions" action copies every
 // saved version as an EmbossParams[] for src/presets/emboss.ts.
 const PANEL_ID = "emboss";
+// Seed for the panel's glyph field only; real characters live in saved versions.
+const DIAL_GLYPH = "A";
 
 // Preset values are stored flat with dotted keys ("highlight.opacity").
-function fromDialValues(values: Record<string, DialValue>): EmbossParams {
+function fromDialValues(values: Record<string, DialValue>): EmbossVersion {
   const pick = <T,>(key: string, fallback: T) => (values[key] === undefined ? fallback : (values[key] as T));
   return {
+    glyph: pick("glyph", DIAL_GLYPH),
     style: pick("structure.style", embossDefaults.style),
     technique: pick("structure.technique", embossDefaults.technique),
     depth: pick("structure.depth", embossDefaults.depth),
@@ -40,7 +42,7 @@ export function EmbossDial() {
   const dial = useDialKitController(
     "Bevel & Emboss",
     {
-      glyph: { type: "text", default: profile.glyph },
+      glyph: { type: "text", default: DIAL_GLYPH },
       structure: {
         style: {
           type: "select",

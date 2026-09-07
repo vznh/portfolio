@@ -9,8 +9,6 @@ export interface Profile {
   // Right column. First entry renders at full opacity, the rest at 40%.
   // Each shows a live HH:MM:SS clock for its IANA time zone.
   locations: Location[];
-  // Single character shown embossed in the left column.
-  glyph: string;
   // Source repository; the commit SHA on the page links into it.
   repoUrl: string;
 }
@@ -24,6 +22,5 @@ export const profile: Profile = {
     { name: "San Francisco", timeZone: "America/Los_Angeles" },
     { name: "San Jose", timeZone: "America/Los_Angeles" },
   ],
-  glyph: "J",
   repoUrl: "https://github.com/vznh/portfolio",
 };

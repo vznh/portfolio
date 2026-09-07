@@ -1,6 +1,7 @@
 // The fields mirror Photoshop's Layer Style → Bevel & Emboss. Calibrate in
-// dev via the DialKit panel: save versions as presets, then press the panel's
-// "copyVersions" action and paste the resulting array into `embossVersions`.
+// dev via the DialKit panel: save versions as presets (each with its own
+// glyph), then press the panel's "copyVersions" action and paste the resulting
+// array into `embossVersions`. `embossDefaults` only seeds the panel.
 export interface EmbossParams {
   // Structure
   style: "inner-bevel" | "outer-bevel" | "emboss" | "pillow-emboss";
@@ -33,6 +34,11 @@ export const embossDefaults: EmbossParams = {
   fill: "#ffffff",
 };
 
-// One entry per saved DialKit version. The page picks one at random on each
-// render. Until the calibrated versions are pasted in, it holds the defaults.
-export const embossVersions: EmbossParams[] = [embossDefaults];
+// A candidate for the left column: one saved DialKit version, character included.
+export interface EmbossVersion extends EmbossParams {
+  glyph: string;
+}
+
+// Exactly the saved DialKit versions, nothing else. The page picks one at
+// random on each render; while this is empty the box renders blank.
+export const embossVersions: EmbossVersion[] = [];

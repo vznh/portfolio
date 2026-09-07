@@ -15,6 +15,11 @@ function toAzimuth(angle: number): number {
   return (((360 - angle) % 360) + 360) % 360;
 }
 
+// The glyph's allotted space; shared with the blank fallback so the rows below
+// never move whether or not a candidate exists.
+export const GLYPH_BOX_CLASS =
+  "relative aspect-[4/5] w-full max-w-[280px] md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto";
+
 export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) {
   const id = useId();
   const { style, technique, depth, direction, size, soften, angle, altitude, highlight, shadow, fill } = params;
@@ -68,7 +73,7 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
       // always keep at least 6rem each (60vh + 1.5rem remain under the 40vh
       // line; minus 2 x 6rem rows and 3rem of cell padding). Width follows the
       // 4/5 aspect. Mobile: full width, height from the aspect.
-      className={`relative aspect-[4/5] w-full max-w-[280px] md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto ${className ?? ""}`}
+      className={`${GLYPH_BOX_CLASS} ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
       <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
