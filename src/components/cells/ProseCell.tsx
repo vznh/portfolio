@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { sections, type Section } from "@/presets/content";
+import { useExpandedSections } from "@/hooks/useExpandedSections";
 
 // Normal links and expanders share one look.
 const LINK_CLASS = "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
@@ -13,7 +13,7 @@ const INLINE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 function renderInline(
   paragraph: string,
-  expanded: Set<string>,
+  isExpanded: (id: string) => boolean,
   toggle: (id: string) => void,
 ) {
   const nodes: React.ReactNode[] = [];
@@ -30,7 +30,7 @@ function renderInline(
         <button
           key={start}
           type="button"
-          aria-expanded={expanded.has(id)}
+          aria-expanded={isExpanded(id)}
           aria-controls={id}
           onClick={() => toggle(id)}
           className={`${LINK_CLASS} cursor-pointer`}
@@ -57,25 +57,18 @@ function renderInline(
   return nodes;
 }
 
-function Prose({
-  section,
-  expanded,
-  toggle,
-}: {
-  section: Section;
-  expanded: Set<string>;
-  toggle: (id: string) => void;
-}) {
+function Prose({ section }: { section: Section }) {
+  const { isExpanded, toggle } = useExpandedSections();
   // Collapsed sections stay in the DOM but `hidden`, so an expander's
   // aria-controls always resolves and the content still exists for crawlers.
-  const hidden = Boolean(section.collapsed) && !expanded.has(section.id);
+  const hidden = Boolean(section.collapsed) && !isExpanded(section.id);
   return (
     <section id={section.id} className="mb-10 last:mb-0" hidden={hidden}>
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
           <p key={i} className="max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black">
-            {renderInline(paragraph, expanded, toggle)}
+            {renderInline(paragraph, isExpanded, toggle)}
           </p>
         ))}
       </div>
@@ -86,19 +79,10 @@ function Prose({
 // Middle column cell: the prose sections. Collapsed sections show only once
 // an expander has opened them; they appear in array order, in place.
 export function ProseCell() {
-  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
-  const toggle = (id: string) =>
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-
   return (
     <div>
       {sections.map((section) => (
-        <Prose key={section.id} section={section} expanded={expanded} toggle={toggle} />
+        <Prose key={section.id} section={section} />
       ))}
     </div>
   );
