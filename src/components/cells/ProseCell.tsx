@@ -1,42 +1,54 @@
+import { useState } from "react";
 import { sections, type Section } from "@/presets/content";
 
-// Special hooks are underlined only for now; a notification color comes later.
-const SPECIAL_CLASS = "underline decoration-gray-300 underline-offset-2";
+// Normal links and expanders share one look.
+const LINK_CLASS = "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
 
-function PanelLabel({ children, special }: { children: React.ReactNode; special?: boolean }) {
-  return (
-    <h2 className={`font-heading text-[13px] ${special ? SPECIAL_CLASS : "text-black"}`}>{children}</h2>
-  );
+function PanelLabel({ children }: { children: React.ReactNode }) {
+  return <h2 className="font-heading text-[13px] text-black">{children}</h2>;
 }
 
-// Inline syntax: [text](url) -> link, [text] -> special accent. See presets/content.ts.
-const INLINE = /\[([^\]]+)\](?:\(([^)]+)\))?/g;
+// Inline syntax: [text](url) -> link, [text](+id) -> expander. See presets/content.ts.
+const INLINE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
-function renderInline(paragraph: string) {
+function renderInline(
+  paragraph: string,
+  expanded: Set<string>,
+  toggle: (id: string) => void,
+) {
   const nodes: React.ReactNode[] = [];
   let last = 0;
   for (const match of paragraph.matchAll(INLINE)) {
-    const [raw, text, url] = match;
+    const [raw, text, target] = match;
     const start = match.index ?? 0;
     if (start > last) nodes.push(paragraph.slice(last, start));
-    if (url) {
-      const external = !url.startsWith("mailto:");
+    if (target.startsWith("+")) {
+      // Expander: a real button so keyboards and screen readers get it; it
+      // only reveals content in place, never moves focus or scrolls.
+      const id = target.slice(1);
+      nodes.push(
+        <button
+          key={start}
+          type="button"
+          aria-expanded={expanded.has(id)}
+          aria-controls={id}
+          onClick={() => toggle(id)}
+          className={`${LINK_CLASS} cursor-pointer`}
+        >
+          {text}
+        </button>,
+      );
+    } else {
+      const external = !target.startsWith("mailto:");
       nodes.push(
         <a
           key={start}
-          href={url}
+          href={target}
           {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-          className="underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black"
+          className={LINK_CLASS}
         >
           {text}
         </a>,
-      );
-    } else {
-      // Special hook: colored only, no scroll behavior yet.
-      nodes.push(
-        <span key={start} className={SPECIAL_CLASS}>
-          {text}
-        </span>,
       );
     }
     last = start + raw.length;
@@ -45,14 +57,25 @@ function renderInline(paragraph: string) {
   return nodes;
 }
 
-function Prose({ section }: { section: Section }) {
+function Prose({
+  section,
+  expanded,
+  toggle,
+}: {
+  section: Section;
+  expanded: Set<string>;
+  toggle: (id: string) => void;
+}) {
+  // Collapsed sections stay in the DOM but `hidden`, so an expander's
+  // aria-controls always resolves and the content still exists for crawlers.
+  const hidden = Boolean(section.collapsed) && !expanded.has(section.id);
   return (
-    <section id={section.id} className="mb-10 last:mb-0">
-      {section.heading && <PanelLabel special={section.kind === "special"}>{section.heading}</PanelLabel>}
+    <section id={section.id} className="mb-10 last:mb-0" hidden={hidden}>
+      {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
           <p key={i} className="max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black">
-            {renderInline(paragraph)}
+            {renderInline(paragraph, expanded, toggle)}
           </p>
         ))}
       </div>
@@ -60,12 +83,22 @@ function Prose({ section }: { section: Section }) {
   );
 }
 
-// Middle column cell: the prose sections.
+// Middle column cell: the prose sections. Collapsed sections show only once
+// an expander has opened them; they appear in array order, in place.
 export function ProseCell() {
+  const [expanded, setExpanded] = useState<Set<string>>(() => new Set());
+  const toggle = (id: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+
   return (
     <div>
       {sections.map((section) => (
-        <Prose key={section.id} section={section} />
+        <Prose key={section.id} section={section} expanded={expanded} toggle={toggle} />
       ))}
     </div>
   );
