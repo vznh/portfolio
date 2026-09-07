@@ -51,7 +51,7 @@ function Prose({ section }: { section: Section }) {
       {section.heading && <PanelLabel special={section.kind === "special"}>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
-          <p key={i} className="max-w-[52ch] text-[0.85rem] leading-relaxed tracking-[-0.025em] text-black">
+          <p key={i} className="max-w-[52ch] text-[12px] leading-relaxed tracking-[-0.025em] text-black">
             {renderInline(paragraph)}
           </p>
         ))}
