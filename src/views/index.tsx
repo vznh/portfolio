@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Shell } from "@/components/Layout";
+import { Emboss } from "@/components/Emboss";
 import { profile } from "@/presets/profile";
 import { sections, type Section } from "@/presets/content";
 
@@ -11,21 +11,7 @@ function PanelLabel({ children }: { children: React.ReactNode }) {
 }
 
 function LeftPanel() {
-  const image = profile.image;
-  if (!image) {
-    // Placeholder until an image is dropped into /public/images and set in presets/profile.ts
-    return <div className="aspect-[4/5] w-full max-w-[280px] bg-gray-100" aria-hidden />;
-  }
-  return (
-    <Image
-      src={image.src}
-      alt={image.alt}
-      width={image.width}
-      height={image.height}
-      priority
-      className="w-full max-w-[280px] h-auto"
-    />
-  );
+  return <Emboss />;
 }
 
 function Prose({ section }: { section: Section }) {
