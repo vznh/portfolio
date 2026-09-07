@@ -5,7 +5,7 @@ import { profile } from "@/presets/profile";
 export function SignatureCell() {
   const sha = process.env.NEXT_PUBLIC_COMMIT_SHA ?? "";
   return (
-    <p className="flex gap-3 text-[13px] text-black">
+    <p className="flex gap-1.5 text-[13px] text-black">
       <span>{profile.name}</span>
       {sha ? (
         <a
