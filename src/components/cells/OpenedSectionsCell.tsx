@@ -19,7 +19,7 @@ export function OpenedSectionsCell() {
     .filter((section) => section?.heading);
 
   return (
-    <ul className="flex flex-col gap-1">
+    <ul className="flex flex-col gap-2">
       {opened.map((section) => (
         <li key={section!.id} className="animate-fade-in">
           <button
