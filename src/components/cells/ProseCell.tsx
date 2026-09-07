@@ -63,7 +63,7 @@ function Prose({ section }: { section: Section }) {
   // aria-controls always resolves and the content still exists for crawlers.
   const hidden = Boolean(section.collapsed) && !isExpanded(section.id);
   return (
-    <section id={section.id} className="mb-10 last:mb-0" hidden={hidden}>
+    <section id={section.id} className="mb-[3.75rem] last:mb-0" hidden={hidden}>
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
