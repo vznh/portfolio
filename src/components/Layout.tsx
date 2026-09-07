@@ -45,7 +45,7 @@ function SideColumn({
   const rows = `calc(40vh - 1.5rem) auto ${"1fr ".repeat(remainder).trim()}`;
   return (
     <aside
-      className={`md:grid md:h-full md:overflow-hidden ${
+      className={`md:grid md:h-full md:overflow-visible ${
         side === "left" ? "md:border-r" : "md:border-l"
       } ${edge}`}
       style={{ gridTemplateRows: rows }}
@@ -74,7 +74,7 @@ export function Shell({ left, leftBelow, middle, right }: ShellProps) {
   const edge = `transition-colors duration-300 ease-out ${revealed ? "md:border-gray-200" : "md:border-transparent"}`;
 
   return (
-    <div className="md:grid md:h-screen md:w-screen md:grid-cols-[1fr_2fr_1fr] md:overflow-hidden">
+    <div className="overflow-x-clip md:grid md:h-screen md:w-screen md:grid-cols-[1fr_2fr_1fr] md:overflow-hidden">
       <SideColumn side="left" edge={edge} below={leftBelow}>
         {left}
       </SideColumn>

@@ -62,7 +62,7 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
 
   return (
     <div
-      className={`flex aspect-[4/5] w-full max-w-[280px] items-center justify-center overflow-hidden ${className ?? ""}`}
+      className={`flex aspect-[4/5] w-full max-w-[280px] items-center justify-center ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
       <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
@@ -151,7 +151,9 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           </filter>
         </defs>
       </svg>
-      {/* 120cqw ≈ fills the 4/5 box height (100cqw = 80% of height). */}
+      {/* 120cqw ≈ fills the 4/5 box height (100cqw = 80% of height). The box
+          does not clip, so wide glyphs spill over the grid lines by design;
+          the Shell root clips at the viewport so nothing scrolls. */}
       <span
         className="font-heading select-none"
         style={{ lineHeight: 1, fontSize: "120cqw", color: fill, filter: `url(#${id})` }}
