@@ -1,16 +1,17 @@
 import { execSync } from "node:child_process";
 
-// Short SHA of the commit being built, shown on the page as the "last updated"
-// marker. Vercel exposes the SHA as an env var; local builds ask git directly.
+// Full SHA of the commit being built. The page shows the short form as the
+// "last updated" marker and links to the commit. Vercel exposes the SHA as an
+// env var; local builds ask git directly.
 function commitSha() {
   const fromHost = process.env.VERCEL_GIT_COMMIT_SHA;
-  if (fromHost) return fromHost.slice(0, 7);
+  if (fromHost) return fromHost;
   try {
-    return execSync("git rev-parse --short HEAD", { stdio: ["ignore", "pipe", "ignore"] })
+    return execSync("git rev-parse HEAD", { stdio: ["ignore", "pipe", "ignore"] })
       .toString()
       .trim();
   } catch {
-    return "dev";
+    return "";
   }
 }
 
