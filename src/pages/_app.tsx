@@ -8,14 +8,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export default function App({ Component, pageProps }: AppProps) {
-  if (process.env.NODE_ENV === "development") {
-    const { DialRoot } = require("dialkit") as typeof import("dialkit");
-    return (
-      <>
-        <Component {...pageProps} />
-        <DialRoot position="bottom-right" />
-      </>
-    );
-  }
+  // DialRoot itself is rendered inside EmbossDial so it shares the same
+  // dialkit module instance; here we only load its global stylesheet.
   return <Component {...pageProps} />;
 }

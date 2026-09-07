@@ -1,4 +1,5 @@
-import { useDialKit } from "dialkit";
+import { useEffect } from "react";
+import { useDialKitController, DialRoot } from "dialkit";
 import { embossDefaults, type EmbossParams } from "@/presets/emboss";
 import { profile } from "@/presets/profile";
 import { EmbossedGlyph } from "./EmbossedGlyph";
@@ -6,8 +7,9 @@ import { EmbossedGlyph } from "./EmbossedGlyph";
 // Dev-only calibration panel mirroring Photoshop's Bevel & Emboss controls.
 // Names, ranges, and defaults match embossDefaults; press Copy in the DialKit
 // toolbar to export the current values as JSON for src/presets/emboss.ts.
+// Toggle the panel with Cmd/Ctrl+E.
 export function EmbossDial() {
-  const p = useDialKit(
+  const dial = useDialKitController(
     "Bevel & Emboss",
     {
       glyph: { type: "text", default: profile.glyph },
@@ -43,6 +45,28 @@ export function EmbossDial() {
     },
     { id: "emboss", persist: true },
   );
+  const p = dial.values;
+
+  // Panel toggle shortcut: Cmd/Ctrl+E. Undefined open state defers to
+  // DialRoot's defaultOpen (true), so treat undefined as open when toggling.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== "e") return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      e.preventDefault();
+      dial.setOpen(!(dial.getOpen() ?? true));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [dial]);
 
   // Select controls resolve to plain strings; narrow them back to the unions.
   const params: EmbossParams = {
@@ -59,5 +83,12 @@ export function EmbossDial() {
     fill: p.fill,
   };
 
-  return <EmbossedGlyph glyph={p.glyph} params={params} />;
+  // DialRoot must come from the same module instance as the hook: importing
+  // dialkit twice (ESM + CJS) yields two DialStores and an empty panel list.
+  return (
+    <>
+      <EmbossedGlyph glyph={p.glyph} params={params} />
+      <DialRoot position="bottom-right" />
+    </>
+  );
 }
