@@ -1,20 +1,58 @@
 import { sections, type Section } from "@/presets/content";
 
-function PanelLabel({ children }: { children: React.ReactNode }) {
+// Brand blue from the favicon; the "notification" color for special hooks.
+const SPECIAL_CLASS = "text-[#002FA7]";
+
+function PanelLabel({ children, special }: { children: React.ReactNode; special?: boolean }) {
   return (
-    <h2 className="font-heading text-[13px] text-black">{children}</h2>
+    <h2 className={`font-heading text-[13px] ${special ? SPECIAL_CLASS : "text-black"}`}>{children}</h2>
   );
 }
 
+// Inline syntax: [text](url) -> link, [text] -> special accent. See presets/content.ts.
+const INLINE = /\[([^\]]+)\](?:\(([^)]+)\))?/g;
+
+function renderInline(paragraph: string) {
+  const nodes: React.ReactNode[] = [];
+  let last = 0;
+  for (const match of paragraph.matchAll(INLINE)) {
+    const [raw, text, url] = match;
+    const start = match.index ?? 0;
+    if (start > last) nodes.push(paragraph.slice(last, start));
+    if (url) {
+      const external = !url.startsWith("mailto:");
+      nodes.push(
+        <a
+          key={start}
+          href={url}
+          {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+          className="underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black"
+        >
+          {text}
+        </a>,
+      );
+    } else {
+      // Special hook: colored only, no scroll behavior yet.
+      nodes.push(
+        <span key={start} className={SPECIAL_CLASS}>
+          {text}
+        </span>,
+      );
+    }
+    last = start + raw.length;
+  }
+  if (last < paragraph.length) nodes.push(paragraph.slice(last));
+  return nodes;
+}
+
 function Prose({ section }: { section: Section }) {
-  // `special` sections will get their own color + scroll target later; same look for now.
   return (
     <section id={section.id} className="mb-10 last:mb-0">
-      <PanelLabel>{section.heading}</PanelLabel>
-      <div className="mt-3 flex flex-col gap-3">
+      {section.heading && <PanelLabel special={section.kind === "special"}>{section.heading}</PanelLabel>}
+      <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
           <p key={i} className="max-w-[52ch] text-[13px] leading-relaxed text-black">
-            {paragraph}
+            {renderInline(paragraph)}
           </p>
         ))}
       </div>
