@@ -14,8 +14,7 @@ export interface Profile {
 
 export const profile: Profile = {
   name: "Jason Son",
-  intro:
-    "Engineer and designer. Currently at Paradigm, working with a portfolio company. Previously Apple.",
+  intro: "Engineer and designer. Currently at Paradigm, working with a portfolio company. Previously Apple.",
   locations: [
     { name: "Manhattan", timeZone: "America/New_York" },
     { name: "San Francisco", timeZone: "America/Los_Angeles" },

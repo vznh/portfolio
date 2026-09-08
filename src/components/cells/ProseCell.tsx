@@ -1,7 +1,8 @@
 import { sections, type Block, type Section } from "@/presets/content";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
 
-const LINK_CLASS = "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
+const LINK_CLASS =
+  "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
   return <h2 className="font-heading text-[13px] text-black opacity-80">{children}</h2>;
@@ -9,11 +10,7 @@ function PanelLabel({ children }: { children: React.ReactNode }) {
 
 const INLINE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
-function renderInline(
-  paragraph: string,
-  isExpanded: (id: string) => boolean,
-  toggle: (id: string) => void,
-) {
+function renderInline(paragraph: string, isExpanded: (id: string) => boolean, toggle: (id: string) => void) {
   const nodes: React.ReactNode[] = [];
   let last = 0;
   for (const match of paragraph.matchAll(INLINE)) {

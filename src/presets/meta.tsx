@@ -26,7 +26,12 @@ const structuredData = {
       image: OG_IMAGE,
       description: DESCRIPTION,
       jobTitle: "Engineer and designer",
-      address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "New York",
+        addressRegion: "NY",
+        addressCountry: "US",
+      },
       sameAs: [
         "https://jasonvinhson.com",
         "https://x.com/jasonvinhson",

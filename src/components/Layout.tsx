@@ -46,7 +46,10 @@ function SideColumn({
       ) : (
         below.map((row, i) =>
           row == null ? (
-            <div key={i} className={`hidden p-6 md:block ${i < below.length - 1 ? "md:border-b" : ""} ${edge}`} />
+            <div
+              key={i}
+              className={`hidden p-6 md:block ${i < below.length - 1 ? "md:border-b" : ""} ${edge}`}
+            />
           ) : (
             <Cell
               key={i}

@@ -82,11 +82,9 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
     <>
       <feColorMatrix in={light} type="luminanceToAlpha" result={`${prefix}-lum`} />
       <feComponentTransfer in={`${prefix}-lum`} result={`${prefix}-hl-mask`}>
-
         <feFuncA type="linear" slope={1 / (1 - flat)} intercept={-flat / (1 - flat)} />
       </feComponentTransfer>
       <feComponentTransfer in={`${prefix}-lum`} result={`${prefix}-sh-mask`}>
-
         <feFuncA type="linear" slope={-1 / flat} intercept={1} />
       </feComponentTransfer>
       <feFlood floodColor={highlight.color} floodOpacity={highlight.opacity} result={`${prefix}-hl-fill`} />
@@ -109,27 +107,13 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
     >
       <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
         <defs>
-          <filter
-            id={id}
-            colorInterpolationFilters="sRGB"
-            x="-50%"
-            y="-50%"
-            width="200%"
-            height="200%"
-          >
-
+          <filter id={id} colorInterpolationFilters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur in="SourceAlpha" stdDeviation={blur} result="height" />
 
-            <feDiffuseLighting
-              in="height"
-              surfaceScale={surfaceScale}
-              lightingColor="#ffffff"
-              result="light"
-            >
+            <feDiffuseLighting in="height" surfaceScale={surfaceScale} lightingColor="#ffffff" result="light">
               <feDistantLight azimuth={azimuth} elevation={altitude} />
             </feDiffuseLighting>
             {needsFlipped && (
-
               <feDiffuseLighting
                 in="height"
                 surfaceScale={surfaceScale}
@@ -157,7 +141,6 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
             )}
             {needsFlipped && (
               <>
-
                 <feComposite in="f-sh" in2="SourceAlpha" operator="in" result="f-sh-in" />
                 <feComposite in="f-hl" in2="SourceAlpha" operator="in" result="f-hl-in" />
                 <feComposite in="n-sh" in2="SourceAlpha" operator="out" result="n-sh-out" />
@@ -189,7 +172,6 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
         </defs>
       </svg>
       {isSvgSource(glyph) ? (
-
         <div className="absolute inset-0" style={{ filter: `url(#${id})` }} role="img" aria-label="">
           <div
             className="h-full w-full"
@@ -207,7 +189,6 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           />
         </div>
       ) : (
-
         <svg
           className="absolute inset-0 h-full w-full select-none"
           viewBox={inkBox ?? `0 0 ${EM} ${EM}`}
