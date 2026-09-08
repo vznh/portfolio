@@ -93,12 +93,6 @@ export const sections: Section[] = [
         image: { src: "/assets/records/chordal.jpg", width: 1314, height: 894 },
       },
       {
-        date: "07 2025",
-        title: "Relic",
-        category: "Personal",
-        image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
-      },
-      {
         date: "0N 2025",
         title: "081x",
         category: "Personal",
@@ -124,6 +118,12 @@ export const sections: Section[] = [
       { date: "01 2025", title: "Splat", category: "Personal" },
       { date: "12 2024", title: "Sovereign", category: "Personal" },
       { date: "12 2024", title: "Fullauto", category: "Personal" },
+      {
+        date: "07 2024",
+        title: "Relic",
+        category: "Personal",
+        image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
+      },
       { date: "02 2021", title: "Jukebox", category: "Personal" },
       { date: "07 2019", title: "Preme", category: "Venture" },
     ],
