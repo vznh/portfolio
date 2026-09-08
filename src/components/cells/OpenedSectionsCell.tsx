@@ -6,6 +6,14 @@ function scrollToHeading(id: string) {
   heading?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  document.querySelector("main")?.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+const ITEM_CLASS =
+  "cursor-pointer font-heading text-[13px] text-black opacity-80 transition-opacity hover:opacity-100";
+
 export function OpenedSectionsCell() {
   const { expanded } = useExpandedSections();
   const opened = expanded
@@ -13,18 +21,21 @@ export function OpenedSectionsCell() {
     .filter((section) => section?.heading);
 
   return (
-    <ul className="flex flex-col gap-4">
+    <ul className="flex flex-row flex-wrap gap-4 md:flex-col">
       {opened.map((section) => (
         <li key={section!.id} className="animate-fade-in">
-          <button
-            type="button"
-            onClick={() => scrollToHeading(section!.id)}
-            className="cursor-pointer font-heading text-[13px] text-black opacity-80 transition-opacity hover:opacity-100"
-          >
+          <button type="button" onClick={() => scrollToHeading(section!.id)} className={ITEM_CLASS}>
             {section!.heading}
           </button>
         </li>
       ))}
+      {opened.length > 0 && (
+        <li className="animate-fade-in md:hidden">
+          <button type="button" onClick={scrollToTop} className={ITEM_CLASS}>
+            Top
+          </button>
+        </li>
+      )}
     </ul>
   );
 }
