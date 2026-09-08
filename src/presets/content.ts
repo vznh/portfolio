@@ -60,6 +60,7 @@ export const sections: Section[] = [
       { date: "05 2026", title: "Komune", category: "Advisory" },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
       { date: "01 2026", title: "Augment", category: "Advisory" },
+      { date: "07 2019", title: "Preme", category: "Venture" },
     ],
   },
   {
