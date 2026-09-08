@@ -1,6 +1,5 @@
 import Head from "next/head";
 
-// Canonical host. hobin.dev and jasonvinhson.com should 301 here at the DNS/host level.
 export const SITE_URL = "https://www.hobin.dev";
 const NAME = "Jason Son";
 const TITLE = "Jason Son";
@@ -49,7 +48,6 @@ export function Meta() {
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <link rel="canonical" href={`${SITE_URL}/`} />
 
-      {/* Open Graph */}
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={NAME} />
       <meta property="og:locale" content="en_US" />
@@ -62,7 +60,6 @@ export function Meta() {
       <meta property="og:image:height" content="630" />
       <meta property="og:image:alt" content={NAME} />
 
-      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={TWITTER} />
       <meta name="twitter:creator" content={TWITTER} />
@@ -71,7 +68,6 @@ export function Meta() {
       <meta name="twitter:image" content={OG_IMAGE} />
       <meta name="twitter:image:alt" content={NAME} />
 
-      {/* Icons */}
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/site.webmanifest" />

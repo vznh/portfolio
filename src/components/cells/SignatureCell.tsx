@@ -1,7 +1,5 @@
 import { profile } from "@/presets/profile";
 
-// Left column cell below the glyph: name, then the short SHA of the deployed
-// commit, linking to that commit on GitHub.
 export function SignatureCell() {
   const sha = process.env.NEXT_PUBLIC_COMMIT_SHA ?? "";
   return (

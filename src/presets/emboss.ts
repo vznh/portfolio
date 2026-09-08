@@ -1,22 +1,17 @@
-// The fields mirror Photoshop's Layer Style → Bevel & Emboss. Calibrate in
-// dev via the DialKit panel: save versions as presets (each with its own
-// glyph), then press the panel's "copyVersions" action and paste the resulting
-// array into `embossVersions`. `embossDefaults` only seeds the panel.
 export interface EmbossParams {
-  // Structure
   style: "inner-bevel" | "outer-bevel" | "emboss" | "pillow-emboss";
   technique: "smooth" | "chisel-hard" | "chisel-soft";
-  depth: number; // percent 1..1000
+  depth: number;
   direction: "up" | "down";
-  size: number; // px 0..60
-  soften: number; // px 0..16
-  // Shading
-  angle: number; // degrees -180..180, global light angle
-  altitude: number; // degrees 0..90
-  // Highlight / Shadow
-  highlight: { color: string; opacity: number }; // opacity 0..1
-  shadow: { color: string; opacity: number }; // opacity 0..1
-  // Glyph fill; defaults to the canvas color so only the edges show
+  size: number;
+  soften: number;
+
+  angle: number;
+  altitude: number;
+
+  highlight: { color: string; opacity: number };
+  shadow: { color: string; opacity: number };
+
   fill: string;
 }
 
@@ -34,13 +29,8 @@ export const embossDefaults: EmbossParams = {
   fill: "#ffffff",
 };
 
-// A candidate for the left column: one saved DialKit version plus its subject.
-// `glyph` is a single character, or a path to an SVG under /public such as
-// "/assets/mark.svg", which is embossed as a shape in the version's fill color.
 export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }
 
-// Exactly the saved DialKit versions, nothing else. The page picks one at
-// random on each render; while this is empty the box renders blank.
 export const embossVersions: EmbossVersion[] = [];

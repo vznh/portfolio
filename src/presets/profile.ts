@@ -6,10 +6,9 @@ export interface Location {
 export interface Profile {
   name: string;
   intro: string;
-  // Right column. First entry renders at full opacity, the rest at 40%.
-  // Each shows a live HH:MM:SS clock for its IANA time zone.
+
   locations: Location[];
-  // Source repository; the commit SHA on the page links into it.
+
   repoUrl: string;
 }
 

@@ -3,8 +3,7 @@ import { useHeldKey } from "@/hooks/useHeldKey";
 
 interface ColumnCells {
   content: ReactNode;
-  // Rows under the content row; together they fill the remaining viewport
-  // height in equal parts. Each row's bottom edge is part of the grid reveal.
+
   below?: ReactNode[];
 }
 
@@ -14,27 +13,10 @@ interface ShellProps {
   right: ColumnCells;
 }
 
-// One padded, bordered grid cell. Its bottom/top edges are part of the grid reveal.
 function Cell({ edge, className, children }: { edge: string; className?: string; children: ReactNode }) {
   return <div className={`p-6 ${className ?? ""} ${edge}`}>{children}</div>;
 }
 
-/**
- * Three-panel shell.
- *
- * Desktop (md+): fixed viewport, 3-column grid [narrow | wide | narrow].
- * Only the middle panel scrolls (hidden scrollbar, contained overscroll).
- *
- * Both side columns have the same shape: rows [spacer | content | below...].
- * They and the middle content start 40vh from the top (slightly above
- * center); the middle column's inner wrapper carries matching 40vh top/bottom
- * padding so its scrollable area spans the full column height. Mobile:
- * single column in document flow, normal page scrolling, order left ->
- * middle -> right.
- *
- * Easter egg: holding Cmd for 350ms reveals the grid: the column edges plus
- * the top and bottom of each side column's content row. Fades out on release.
- */
 function SideColumn({
   side,
   edge,
@@ -46,14 +28,6 @@ function SideColumn({
   below?: ReactNode[];
   children: ReactNode;
 }) {
-  // Desktop: rows [spacer | content | remainder...]. The content row has 24px
-  // padding on every side and its top edge sits 24px above 40vh, so the
-  // content itself still starts at exactly 40vh, level with the middle column.
-  // The remainder is one row, or split equally across `below` rows. Row edges
-  // are part of the grid reveal. Mobile: plain padded blocks in flow.
-  // `minmax(0, 1fr)` keeps the below rows strictly equal: a plain `1fr` has an
-  // `auto` minimum, so a row with content would refuse to shrink below it and
-  // steal space from an emptier sibling once the column runs tight.
   const remainder = Math.max(1, below.length);
   const rows = `calc(40vh - 1.5rem) auto ${"minmax(0, 1fr) ".repeat(remainder).trim()}`;
   return (
@@ -82,7 +56,7 @@ function SideColumn({
 
 export function Shell({ left, middle, right }: ShellProps) {
   const revealed = useHeldKey("Meta", 350);
-  // Borders are always present (transparent) so revealing them never shifts layout.
+
   const edge = `transition-colors duration-300 ease-out ${revealed ? "md:border-gray-200" : "md:border-transparent"}`;
 
   return (

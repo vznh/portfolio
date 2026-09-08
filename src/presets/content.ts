@@ -1,15 +1,7 @@
-// Middle column content: a sequence of sections, each an optional subheading
-// plus paragraphs. Paragraphs are plain strings with two inline forms that
-// look identical on the page:
-//   [text](https://url)  -> normal link
-//   [text](+section-id)  -> expander: reveals the collapsed section with that
-//                           id, in place, without moving focus or scrolling
-// A section with `collapsed: true` stays hidden until an expander opens it.
-
 export interface Section {
-  id: string; // anchor target; expanders reference it with (+id)
+  id: string;
   heading?: string;
-  body: string[]; // one string per paragraph
+  body: string[];
   collapsed?: boolean;
 }
 
@@ -28,14 +20,14 @@ export const sections: Section[] = [
     id: "antecedents",
     heading: "Antecedents",
     collapsed: true,
-    // Text to come.
+
     body: [],
   },
   {
     id: "provenance",
     heading: "Provenance",
     collapsed: true,
-    // Seeded with the opening line from the previous site. Replace and extend.
+
     body: ["Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them."],
   },
 ];

@@ -3,18 +3,10 @@ import { useDialKitController, DialRoot, DialStore, type DialValue } from "dialk
 import { embossDefaults, type EmbossParams, type EmbossVersion } from "@/presets/emboss";
 import { EmbossedGlyph } from "./EmbossedGlyph";
 
-// Dev-only calibration panel mirroring Photoshop's Bevel & Emboss controls.
-// Names, ranges, and defaults match embossDefaults; press Copy in the DialKit
-// toolbar to export the current values as JSON for src/presets/emboss.ts.
-// Toggle the panel with Cmd/Ctrl+E. On mount a random saved version (preset)
-// is loaded, mirroring production. The "copyVersions" action copies every
-// saved version as an EmbossParams[] for src/presets/emboss.ts.
 const PANEL_ID = "emboss";
-// Seed for the panel's glyph field only; real subjects live in saved versions.
-// The field takes a character or an SVG path like /assets/mark.svg.
+
 const DIAL_GLYPH = "A";
 
-// Preset values are stored flat with dotted keys ("highlight.opacity").
 function fromDialValues(values: Record<string, DialValue>): EmbossVersion {
   const pick = <T,>(key: string, fallback: T) => (values[key] === undefined ? fallback : (values[key] as T));
   return {
@@ -86,7 +78,6 @@ export function EmbossDial() {
     },
   );
 
-  // Pick a random saved version on mount, like production does.
   useEffect(() => {
     const presets = DialStore.getPresets(PANEL_ID);
     if (presets.length === 0) return;
@@ -94,8 +85,6 @@ export function EmbossDial() {
   }, []);
   const p = dial.values;
 
-  // Panel toggle shortcut: Cmd/Ctrl+E. Undefined open state defers to
-  // DialRoot's defaultOpen (true), so treat undefined as open when toggling.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!(e.metaKey || e.ctrlKey) || e.key.toLowerCase() !== "e") return;
@@ -115,7 +104,6 @@ export function EmbossDial() {
     return () => window.removeEventListener("keydown", onKey);
   }, [dial]);
 
-  // Select controls resolve to plain strings; narrow them back to the unions.
   const params: EmbossParams = {
     style: p.structure.style as EmbossParams["style"],
     technique: p.structure.technique as EmbossParams["technique"],
@@ -130,8 +118,6 @@ export function EmbossDial() {
     fill: p.fill,
   };
 
-  // DialRoot must come from the same module instance as the hook: importing
-  // dialkit twice (ESM + CJS) yields two DialStores and an empty panel list.
   return (
     <>
       <EmbossedGlyph glyph={p.glyph} params={params} />

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { profile } from "@/presets/profile";
 
-// Live HH:MM:SS clock for one time zone. Renders a placeholder until mounted
-// so the server and client markup match.
 function useClock(timeZone: string) {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
@@ -24,8 +22,7 @@ function useClock(timeZone: string) {
 function LocationRow({ name, timeZone, muted }: { name: string; timeZone: string; muted: boolean }) {
   const time = useClock(timeZone);
   return (
-    // display: contents lets the two spans sit in the grid columns directly;
-    // opacity goes on the spans because a contents box does not paint.
+
     <li className="contents text-[13px] text-black">
       <span className={muted ? "opacity-40" : ""}>{name}</span>
       <span className={`tabular-nums ${muted ? "opacity-40" : ""}`}>{time}</span>
@@ -33,7 +30,6 @@ function LocationRow({ name, timeZone, muted }: { name: string; timeZone: string
   );
 }
 
-// Right column cell: locations, each with a live clock in its time zone.
 export function LocationsCell() {
   return (
     <ul className="grid w-fit grid-cols-[auto_auto] gap-x-16 gap-y-0">

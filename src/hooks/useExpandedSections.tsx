@@ -1,7 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 
-// Which collapsed sections the user has opened, in the order they opened them.
-// Shared so the middle column's expanders and the right column's list agree.
 interface ExpandedSections {
   expanded: string[];
   isExpanded: (id: string) => boolean;

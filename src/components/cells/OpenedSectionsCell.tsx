@@ -1,17 +1,11 @@
 import { sections } from "@/presets/content";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
 
-// Scroll the middle column so the section's subheading sits at the vertical
-// midpoint of the viewport. scrollIntoView targets the nearest scrollable
-// ancestor: the middle column on desktop, the document on mobile.
 function scrollToHeading(id: string) {
   const heading = document.getElementById(id)?.querySelector("h2");
   heading?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-// Right column cell below the clocks: the subheadings of every section the
-// user has opened, in the order they opened them. Each line fades in on
-// arrival and leaves when its section is closed. Clicking one scrolls to it.
 export function OpenedSectionsCell() {
   const { expanded } = useExpandedSections();
   const opened = expanded

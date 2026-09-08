@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 
-/**
- * True once `key` has been held down for at least `holdMs`, false the
- * moment it is released (or the window loses focus, which swallows keyup).
- */
 export function useHeldKey(key: string, holdMs: number) {
   const [held, setHeld] = useState(false);
 
@@ -17,7 +13,6 @@ export function useHeldKey(key: string, holdMs: number) {
     };
 
     const onKeyDown = (e: KeyboardEvent) => {
-      // keydown repeats while held; only arm the timer once.
       if (e.key !== key || timer) return;
       timer = setTimeout(() => setHeld(true), holdMs);
     };

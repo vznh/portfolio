@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dinamo fonts (licensed). */
 @font-face {
   font-family: "ABC Schengen A";
   src: url("/fonts/schengen-a-regular.otf") format("opentype");
@@ -24,7 +23,6 @@ body {
   font-size: 13px;
 }
 
-/* Desktop: page itself never scrolls; only the middle panel scrolls. */
 @media (min-width: 768px) {
   html,
   body {
