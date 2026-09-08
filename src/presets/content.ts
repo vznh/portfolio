@@ -63,7 +63,12 @@ export const sections: Section[] = [
       { date: "08 2026", title: "[unnamed]", category: "Commission" },
       { date: "07 2026", title: "Break It Down", category: "Personal" },
       { date: "07 2026", title: "Portmanteau", category: "Personal" },
-      { date: "07 2026", title: "A business card", category: "Commission" },
+      {
+        date: "07 2026",
+        title: "A business card",
+        category: "Commission",
+        image: { src: "/assets/records/a-business-card.jpg", width: 1128, height: 646 },
+      },
       { date: "07 2026", title: "Stake", category: "Commission" },
       { date: "05 2026", title: "Komune", category: "Advisory" },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
