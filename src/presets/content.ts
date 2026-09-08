@@ -57,7 +57,12 @@ export const sections: Section[] = [
       { date: "08 2026", title: "Transmute", category: "Personal", url: "https://github.com/vznh/transmute" },
       { date: "08 2026", title: "Agamemnon", category: "Venture" },
       { date: "08 2026", title: "Charms", category: "Personal" },
-      { date: "08 2026", title: "Corgi", category: "Commission" },
+      {
+        date: "08 2026",
+        title: "Corgi",
+        category: "Commission",
+        image: { src: "/assets/records/corgi.jpg", width: 800, height: 800 },
+      },
       { date: "08 2026", title: "Britnie", category: "Commission" },
       { date: "08 2026", title: "5f", category: "Venture" },
       { date: "08 2026", title: "[unnamed]", category: "Commission" },
