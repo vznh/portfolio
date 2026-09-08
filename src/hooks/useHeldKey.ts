@@ -29,7 +29,7 @@ export function useHeldKey(key: string, holdMs: number) {
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("blur", release);
     return () => {
-      clear();
+      if (timer) clearTimeout(timer);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
       window.removeEventListener("blur", release);
