@@ -1,4 +1,4 @@
-import { sections, type Section } from "@/presets/content";
+import { sections, type Block, type Section } from "@/presets/content";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
 
 const LINK_CLASS = "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
@@ -53,6 +53,33 @@ function renderInline(
   return nodes;
 }
 
+const BODY_CLASS = "max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
+
+function renderBlock(
+  block: Block,
+  key: number,
+  isExpanded: (id: string) => boolean,
+  toggle: (id: string) => void,
+) {
+  if (typeof block === "string") {
+    return (
+      <p key={key} className={BODY_CLASS}>
+        {renderInline(block, isExpanded, toggle)}
+      </p>
+    );
+  }
+  return (
+    <ul key={key} className={`${BODY_CLASS} flex flex-col`}>
+      {block.list.map((item, i) => (
+        <li key={i} className="flex gap-2">
+          <span aria-hidden>–</span>
+          <span>{renderInline(item, isExpanded, toggle)}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 function Prose({ section }: { section: Section }) {
   const { isExpanded, toggle } = useExpandedSections();
 
@@ -62,12 +89,18 @@ function Prose({ section }: { section: Section }) {
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph, i) => (
-          <p key={i} className="max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black">
+          <p key={i} className={BODY_CLASS}>
             {renderInline(paragraph, isExpanded, toggle)}
           </p>
         ))}
+        {section.entries?.map((entry) => (
+          <div key={entry.year} className="flex flex-col gap-3">
+            <p className={`${BODY_CLASS} opacity-80`}>{entry.year}</p>
+            {entry.blocks.map((block, i) => renderBlock(block, i, isExpanded, toggle))}
+          </div>
+        ))}
         {section.projects?.map((project) => (
-          <p key={project.name} className="max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black">
+          <p key={project.name} className={BODY_CLASS}>
             <span className="block">{project.name}</span>
             <span className="block opacity-80">{project.description}</span>
           </p>
