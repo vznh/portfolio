@@ -76,12 +76,7 @@ function renderBlock(block: Block, isExpanded: (id: string) => boolean, toggle: 
 function Prose({ section }: { section: Section }) {
   const { isExpanded, toggle } = useExpandedSections();
 
-  const empty =
-    section.body.length === 0 &&
-    !section.projects?.length &&
-    !section.entries?.length &&
-    !section.records?.length;
-  const hidden = empty || (Boolean(section.collapsed) && !isExpanded(section.id));
+  const hidden = Boolean(section.collapsed) && !isExpanded(section.id);
   return (
     <section id={section.id} className="mb-[3.75rem] last:mb-0" hidden={hidden}>
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
