@@ -33,4 +33,20 @@ export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }
 
-export const embossVersions: EmbossVersion[] = [{ glyph: "♰", ...embossDefaults }];
+export const embossVersions: EmbossVersion[] = [
+  { glyph: "♰", ...embossDefaults },
+  {
+    glyph: "∭",
+    style: "pillow-emboss",
+    technique: "smooth",
+    depth: 1000,
+    direction: "up",
+    size: 4,
+    soften: 0,
+    angle: 180,
+    altitude: 24,
+    highlight: { color: "#ffffff", opacity: 0 },
+    shadow: { color: "#000000", opacity: 1 },
+    fill: "#000000",
+  },
+];
