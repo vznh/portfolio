@@ -45,12 +45,15 @@ export const sections: Section[] = [
     collapsed: true,
     body: [],
     records: [
+      { date: "09 2026", title: "Famish", category: "Personal" },
       { date: "08 2026", title: "Capt", category: "Personal" },
       { date: "08 2026", title: "Transmute", category: "Personal" },
       { date: "08 2026", title: "Agamemnon", category: "Venture" },
       { date: "08 2026", title: "Charms", category: "Personal" },
       { date: "08 2026", title: "Corgi", category: "Design" },
       { date: "08 2026", title: "Britnie", category: "Design" },
+      { date: "08 2026", title: "5f", category: "Venture" },
+      { date: "08 2026", title: "[unnamed]", category: "Commission" },
     ],
   },
   {
