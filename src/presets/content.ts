@@ -84,7 +84,12 @@ export const sections: Section[] = [
       { date: "04 2026", title: "Paradigm", category: "Commission" },
       { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
       { date: "10 2025", title: "Axiom", category: "Personal" },
-      { date: "09 2025", title: "Substack, SDK", category: "Personal" },
+      {
+        date: "09 2025",
+        title: "Substack, SDK",
+        category: "Personal",
+        url: "https://github.com/vznh/substack",
+      },
       { date: "09 2025", title: "75", category: "Personal" },
       {
         date: "08 2025",
