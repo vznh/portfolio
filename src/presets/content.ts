@@ -75,7 +75,7 @@ export const sections: Section[] = [
         image: { src: "/assets/records/a-business-card.jpg", width: 1128, height: 646 },
       },
       { date: "07 2026", title: "Stake", category: "Commission" },
-      { date: "05 2026", title: "Komune", category: "Advisory" },
+      { date: "05 2026", title: "Komune", category: "Advisory", url: "https://komune.space" },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
       { date: "01 2026", title: "Augment", category: "Advisory" },
       { date: "10 2025", title: "Axiom", category: "Personal" },
