@@ -1,16 +1,27 @@
 import { useEffect, useState } from "react";
 import { profile } from "@/presets/profile";
 
-function useClock(timeZone: string) {
-  const [time, setTime] = useState<string | null>(null);
-  useEffect(() => {
-    const formatter = new Intl.DateTimeFormat("en-GB", {
+const formatters = new Map<string, Intl.DateTimeFormat>();
+
+function formatterFor(timeZone: string) {
+  let formatter = formatters.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-GB", {
       timeZone,
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
       hourCycle: "h23",
     });
+    formatters.set(timeZone, formatter);
+  }
+  return formatter;
+}
+
+function useClock(timeZone: string) {
+  const [time, setTime] = useState<string | null>(null);
+  useEffect(() => {
+    const formatter = formatterFor(timeZone);
     const tick = () => setTime(formatter.format(new Date()));
     tick();
     const interval = setInterval(tick, 1000);
