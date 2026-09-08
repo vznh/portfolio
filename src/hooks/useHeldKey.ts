@@ -6,9 +6,13 @@ export function useHeldKey(key: string, holdMs: number) {
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const release = () => {
+    const clear = () => {
       if (timer) clearTimeout(timer);
       timer = null;
+    };
+
+    const release = () => {
+      clear();
       setHeld(false);
     };
 
@@ -25,7 +29,7 @@ export function useHeldKey(key: string, holdMs: number) {
     window.addEventListener("keyup", onKeyUp);
     window.addEventListener("blur", release);
     return () => {
-      release();
+      clear();
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("keyup", onKeyUp);
       window.removeEventListener("blur", release);
