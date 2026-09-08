@@ -33,4 +33,4 @@ export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }
 
-export const embossVersions: EmbossVersion[] = [];
+export const embossVersions: EmbossVersion[] = [{ glyph: "♰", ...embossDefaults }];
