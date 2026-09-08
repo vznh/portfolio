@@ -16,17 +16,17 @@ export interface EmbossParams {
 }
 
 export const embossDefaults: EmbossParams = {
-  style: "inner-bevel",
-  technique: "smooth",
-  depth: 100,
+  style: "pillow-emboss",
+  technique: "chisel-soft",
+  depth: 556,
   direction: "up",
-  size: 8,
+  size: 4,
   soften: 0,
-  angle: 120,
-  altitude: 30,
-  highlight: { color: "#ffffff", opacity: 0.75 },
-  shadow: { color: "#000000", opacity: 0.75 },
-  fill: "#ffffff",
+  angle: -78,
+  altitude: 90,
+  highlight: { color: "#ffffff", opacity: 0 },
+  shadow: { color: "#6f6f6f", opacity: 1 },
+  fill: "#000000",
 };
 
 export interface EmbossVersion extends EmbossParams {

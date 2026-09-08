@@ -5,7 +5,7 @@ import { EmbossedGlyph } from "./EmbossedGlyph";
 
 const PANEL_ID = "emboss";
 
-const DIAL_GLYPH = "A";
+const DIAL_GLYPH = "♰";
 
 function fromDialValues(values: Record<string, DialValue>): EmbossVersion {
   const pick = <T,>(key: string, fallback: T) => (values[key] === undefined ? fallback : (values[key] as T));
