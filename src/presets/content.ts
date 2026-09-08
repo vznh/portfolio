@@ -112,7 +112,12 @@ export const sections: Section[] = [
         category: "Academia",
         image: { src: "/assets/records/pathfinder.jpg", width: 2444, height: 1334 },
       },
-      { date: "01 2025", title: "Grandiose", category: "Personal" },
+      {
+        date: "01 2025",
+        title: "Grandiose",
+        category: "Personal",
+        image: { src: "/assets/records/grandiose.jpg", width: 1648, height: 818 },
+      },
       { date: "01 2025", title: "Permanence", category: "Personal" },
       { date: "01 2025", title: "Veil", category: "Academia" },
       { date: "01 2025", title: "Splat", category: "Personal" },
