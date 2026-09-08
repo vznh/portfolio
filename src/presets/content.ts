@@ -169,7 +169,7 @@ export const sections: Section[] = [
         ],
       },
       {
-        year: "2018",
+        year: "2019",
         blocks: [
           "I played a lot of Phantom Forces, Apocalypse Rising, and Jail Break on ROBLOX. I was not a fair player. I ended up using Magitan, which had a significant problem: spawning items or performing actions were singular. I had reverse-engineered Magitan with Ghidra, and made small changes to cheat better. This was not publicly released.",
         ],
