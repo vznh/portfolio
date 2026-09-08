@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import type { Record } from "@/presets/content";
 
@@ -11,12 +11,10 @@ function RecordRow({
   record,
   dimmed,
   onHover,
-  onSelect,
 }: {
   record: Record;
   dimmed: boolean;
   onHover: (y: number) => void;
-  onSelect: () => void;
 }) {
   const cells = (
     <>
@@ -40,23 +38,6 @@ function RecordRow({
       </li>
     );
   }
-  if (record.image) {
-    return (
-      <li>
-        <button
-          type="button"
-          className={`${className} w-full cursor-pointer`}
-          onPointerEnter={hover}
-          onClick={(e) => {
-            e.stopPropagation();
-            onSelect();
-          }}
-        >
-          {cells}
-        </button>
-      </li>
-    );
-  }
   return (
     <li className={className} onPointerEnter={hover}>
       {cells}
@@ -67,28 +48,12 @@ function RecordRow({
 export function Records({ records }: { records: Record[] }) {
   const [line, setLine] = useState<{ y: number; key: number } | null>(null);
   const [active, setActive] = useState<Record | null>(null);
-  const [focused, setFocused] = useState(false);
-
-  useEffect(() => {
-    if (!focused) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setFocused(false);
-    };
-    const onClick = () => setFocused(false);
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("click", onClick);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("click", onClick);
-    };
-  }, [focused]);
-
   return (
     <>
       <ul
         className="flex max-w-[52ch] flex-col"
         onPointerLeave={(e) => {
-          if (e.pointerType === "mouse" && !focused) setActive(null);
+          if (e.pointerType === "mouse") setActive(null);
         }}
       >
         {records.map((record) => (
@@ -97,13 +62,8 @@ export function Records({ records }: { records: Record[] }) {
             record={record}
             dimmed={active !== null && active !== record}
             onHover={(y) => {
-              if (focused) return;
               setActive(record);
               if (READING_LINE) setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }));
-            }}
-            onSelect={() => {
-              setActive(record);
-              setFocused((prev) => !(prev && active === record));
             }}
           />
         ))}
@@ -111,17 +71,14 @@ export function Records({ records }: { records: Record[] }) {
       {active?.image && (
         <div
           aria-hidden
-          onClick={(e) => e.stopPropagation()}
-          className={`fixed left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 transition-transform duration-300 ease-out md:block ${
-            focused ? "z-10 scale-125" : "pointer-events-none z-[-1] scale-100"
-          }`}
+          className="pointer-events-none fixed left-1/2 top-1/2 z-0 hidden -translate-x-1/2 -translate-y-1/2 md:block"
         >
           <Image
             src={active.image.src}
             alt=""
             width={active.image.width}
             height={active.image.height}
-            sizes="60vw"
+            sizes="47.5vw"
             className="h-auto max-h-[42.8vh] w-auto max-w-[47.5vw] object-contain"
           />
         </div>
