@@ -57,6 +57,7 @@ export const sections: Section[] = [
       { date: "07 2026", title: "Break It Down", category: "Personal" },
       { date: "07 2026", title: "Portmanteau", category: "Personal" },
       { date: "07 2026", title: "A business card", category: "Commission" },
+      { date: "01 2026", title: "Augment", category: "Advisory" },
     ],
   },
   {
