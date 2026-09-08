@@ -57,20 +57,29 @@ function useBoxScale() {
   return { ref, scale };
 }
 
-export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) {
-  const id = useId();
-  const inkBox = useInkBox(glyph);
-  const { ref, scale } = useBoxScale();
-  const { style, technique, depth, direction, angle, altitude, highlight, shadow, fill } = params;
-  const size = params.size * scale;
-  const soften = params.soften * scale;
+interface EmbossFilterProps {
+  id: string;
+  style: EmbossParams["style"];
+  blur: number;
+  surfaceScale: number;
+  azimuth: number;
+  altitude: number;
+  soften: number;
+  highlight: EmbossParams["highlight"];
+  shadow: EmbossParams["shadow"];
+}
 
-  const blur =
-    technique === "smooth" ? size : technique === "chisel-soft" ? size * 0.35 : Math.max(0.01, size * 0.1);
-
-  const surfaceScale = (depth / 100) * size * (direction === "up" ? 1 : -1);
-  const azimuth = toAzimuth(angle);
-
+function EmbossFilter({
+  id,
+  style,
+  blur,
+  surfaceScale,
+  azimuth,
+  altitude,
+  soften,
+  highlight,
+  shadow,
+}: EmbossFilterProps) {
   const flat = Math.min(0.999, Math.max(0.001, Math.sin((altitude * Math.PI) / 180)));
   const lightSplit = (light: string, prefix: string) => (
     <>
@@ -92,6 +101,89 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
   const clipped = style === "inner-bevel" || style === "outer-bevel" || needsFlipped;
   const shadowSource = clipped ? "shadow" : "n-sh";
   const highlightSource = clipped ? "highlight" : "n-hl";
+  return (
+    <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
+      <defs>
+        <filter id={id} colorInterpolationFilters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation={blur} result="height" />
+
+          <feDiffuseLighting in="height" surfaceScale={surfaceScale} lightingColor="#ffffff" result="light">
+            <feDistantLight azimuth={azimuth} elevation={altitude} />
+          </feDiffuseLighting>
+          {needsFlipped && (
+            <feDiffuseLighting
+              in="height"
+              surfaceScale={surfaceScale}
+              lightingColor="#ffffff"
+              result="light-flipped"
+            >
+              <feDistantLight azimuth={(azimuth + 180) % 360} elevation={altitude} />
+            </feDiffuseLighting>
+          )}
+
+          {lightSplit("light", "n")}
+          {needsFlipped && lightSplit("light-flipped", "f")}
+
+          {style === "inner-bevel" && (
+            <>
+              <feComposite in="n-sh" in2="SourceAlpha" operator="in" result="shadow" />
+              <feComposite in="n-hl" in2="SourceAlpha" operator="in" result="highlight" />
+            </>
+          )}
+          {style === "outer-bevel" && (
+            <>
+              <feComposite in="n-sh" in2="SourceAlpha" operator="out" result="shadow" />
+              <feComposite in="n-hl" in2="SourceAlpha" operator="out" result="highlight" />
+            </>
+          )}
+          {needsFlipped && (
+            <>
+              <feComposite in="f-sh" in2="SourceAlpha" operator="in" result="f-sh-in" />
+              <feComposite in="f-hl" in2="SourceAlpha" operator="in" result="f-hl-in" />
+              <feComposite in="n-sh" in2="SourceAlpha" operator="out" result="n-sh-out" />
+              <feComposite in="n-hl" in2="SourceAlpha" operator="out" result="n-hl-out" />
+              <feMerge result="shadow">
+                <feMergeNode in="f-sh-in" />
+                <feMergeNode in="n-sh-out" />
+              </feMerge>
+              <feMerge result="highlight">
+                <feMergeNode in="f-hl-in" />
+                <feMergeNode in="n-hl-out" />
+              </feMerge>
+            </>
+          )}
+
+          {soften > 0 && (
+            <>
+              <feGaussianBlur in={shadowSource} stdDeviation={soften} result="shadow-soft" />
+              <feGaussianBlur in={highlightSource} stdDeviation={soften} result="highlight-soft" />
+            </>
+          )}
+
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode in={soften > 0 ? "shadow-soft" : shadowSource} />
+            <feMergeNode in={soften > 0 ? "highlight-soft" : highlightSource} />
+          </feMerge>
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) {
+  const id = useId();
+  const inkBox = useInkBox(glyph);
+  const { ref, scale } = useBoxScale();
+  const { style, technique, depth, direction, angle, altitude, highlight, shadow, fill } = params;
+  const size = params.size * scale;
+  const soften = params.soften * scale;
+
+  const blur =
+    technique === "smooth" ? size : technique === "chisel-soft" ? size * 0.35 : Math.max(0.01, size * 0.1);
+
+  const surfaceScale = (depth / 100) * size * (direction === "up" ? 1 : -1);
+  const azimuth = toAzimuth(angle);
 
   return (
     <div
@@ -99,72 +191,17 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
       className={`${GLYPH_BOX_CLASS} ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
-      <svg width={0} height={0} aria-hidden style={{ position: "absolute" }}>
-        <defs>
-          <filter id={id} colorInterpolationFilters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation={blur} result="height" />
-
-            <feDiffuseLighting in="height" surfaceScale={surfaceScale} lightingColor="#ffffff" result="light">
-              <feDistantLight azimuth={azimuth} elevation={altitude} />
-            </feDiffuseLighting>
-            {needsFlipped && (
-              <feDiffuseLighting
-                in="height"
-                surfaceScale={surfaceScale}
-                lightingColor="#ffffff"
-                result="light-flipped"
-              >
-                <feDistantLight azimuth={(azimuth + 180) % 360} elevation={altitude} />
-              </feDiffuseLighting>
-            )}
-
-            {lightSplit("light", "n")}
-            {needsFlipped && lightSplit("light-flipped", "f")}
-
-            {style === "inner-bevel" && (
-              <>
-                <feComposite in="n-sh" in2="SourceAlpha" operator="in" result="shadow" />
-                <feComposite in="n-hl" in2="SourceAlpha" operator="in" result="highlight" />
-              </>
-            )}
-            {style === "outer-bevel" && (
-              <>
-                <feComposite in="n-sh" in2="SourceAlpha" operator="out" result="shadow" />
-                <feComposite in="n-hl" in2="SourceAlpha" operator="out" result="highlight" />
-              </>
-            )}
-            {needsFlipped && (
-              <>
-                <feComposite in="f-sh" in2="SourceAlpha" operator="in" result="f-sh-in" />
-                <feComposite in="f-hl" in2="SourceAlpha" operator="in" result="f-hl-in" />
-                <feComposite in="n-sh" in2="SourceAlpha" operator="out" result="n-sh-out" />
-                <feComposite in="n-hl" in2="SourceAlpha" operator="out" result="n-hl-out" />
-                <feMerge result="shadow">
-                  <feMergeNode in="f-sh-in" />
-                  <feMergeNode in="n-sh-out" />
-                </feMerge>
-                <feMerge result="highlight">
-                  <feMergeNode in="f-hl-in" />
-                  <feMergeNode in="n-hl-out" />
-                </feMerge>
-              </>
-            )}
-
-            {soften > 0 && (
-              <>
-                <feGaussianBlur in={shadowSource} stdDeviation={soften} result="shadow-soft" />
-                <feGaussianBlur in={highlightSource} stdDeviation={soften} result="highlight-soft" />
-              </>
-            )}
-
-            <feMerge>
-              <feMergeNode in="SourceGraphic" />
-              <feMergeNode in={soften > 0 ? "shadow-soft" : shadowSource} />
-              <feMergeNode in={soften > 0 ? "highlight-soft" : highlightSource} />
-            </feMerge>
-          </filter>
-        </defs>
-      </svg>
+      <EmbossFilter
+        id={id}
+        style={style}
+        blur={blur}
+        surfaceScale={surfaceScale}
+        azimuth={azimuth}
+        altitude={altitude}
+        soften={soften}
+        highlight={highlight}
+        shadow={shadow}
+      />
       {isSvgSource(glyph) ? (
         <div className="absolute inset-0" style={{ filter: `url(#${id})` }} role="img" aria-label="">
           <div
