@@ -1,0 +1,4 @@
+- [ ] One change per commit
+- [ ] `bun run check` passes
+- [ ] No comments added
+- [ ] I confirm this contribution was written without AI assistance.
