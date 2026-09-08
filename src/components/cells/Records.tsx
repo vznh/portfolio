@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 import type { Record } from "@/presets/content";
 
 const READING_LINE = false;
@@ -68,21 +69,23 @@ export function Records({ records }: { records: Record[] }) {
           />
         ))}
       </ul>
-      {active?.image && (
-        <div
-          aria-hidden
-          className="pointer-events-none fixed left-1/2 top-1/2 z-0 hidden -translate-x-1/2 -translate-y-1/2 md:block"
-        >
-          <Image
-            src={active.image.src}
-            alt=""
-            width={active.image.width}
-            height={active.image.height}
-            sizes="47.5vw"
-            className="h-auto max-h-[42.8vh] w-auto max-w-[47.5vw] object-contain"
-          />
-        </div>
-      )}
+      {active?.image &&
+        createPortal(
+          <div
+            aria-hidden
+            className="pointer-events-none fixed left-1/2 top-1/2 z-0 hidden -translate-x-1/2 -translate-y-1/2 md:block"
+          >
+            <Image
+              src={active.image.src}
+              alt=""
+              width={active.image.width}
+              height={active.image.height}
+              sizes="47.5vw"
+              className="h-auto max-h-[42.8vh] w-auto max-w-[47.5vw] object-contain"
+            />
+          </div>,
+          document.body,
+        )}
       {line && (
         <div
           key={line.key}
