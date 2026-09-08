@@ -44,11 +44,15 @@ function SideColumn({
       {below.length === 0 ? (
         <div className="hidden md:block" />
       ) : (
-        below.map((row, i) => (
-          <Cell key={i} edge={edge} className={i < below.length - 1 ? "md:border-b" : ""}>
-            {row}
-          </Cell>
-        ))
+        below.map((row, i) =>
+          row == null ? (
+            <div key={i} className={`hidden p-6 md:block ${i < below.length - 1 ? "md:border-b" : ""} ${edge}`} />
+          ) : (
+            <Cell key={i} edge={edge} className={i < below.length - 1 ? "md:border-b" : ""}>
+              {row}
+            </Cell>
+          ),
+        )
       )}
     </aside>
   );
