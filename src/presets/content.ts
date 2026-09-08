@@ -3,11 +3,19 @@ export interface Project {
   description: string;
 }
 
+export type Block = string | { list: string[] };
+
+export interface Entry {
+  year: string;
+  blocks: Block[];
+}
+
 export interface Section {
   id: string;
   heading?: string;
   body: string[];
   projects?: Project[];
+  entries?: Entry[];
   collapsed?: boolean;
 }
 
@@ -45,5 +53,49 @@ export const sections: Section[] = [
     collapsed: true,
 
     body: ["Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them."],
+    entries: [
+      {
+        year: "2017",
+        blocks: [
+          "I bought fake Supreme in middle school. Got made fun of and fed up. I taught myself Python, then automated it. Ended up selling it on OGUsers for a set price, and transacted around 300. This all funneled back into reselling, and I dealt Off-White, Supreme, Anti-Social-Social-Club, and the like.",
+        ],
+      },
+      {
+        year: "2018",
+        blocks: [
+          "I played a lot of Phantom Forces, Apocalypse Rising, and Jail Break on ROBLOX. I was not a fair player. I ended up using Magitan, which had a significant problem: spawning items or performing actions were singular. I had reverse-engineered Magitan with Ghidra, and made small changes to cheat better. This was not publicly released.",
+        ],
+      },
+      {
+        year: "2020",
+        blocks: [
+          "I was planning on being a nurse, similarly to my successful sisters. I pride myself on humanitarianism, and found gratification in taking care of people. I ended up re-visiting coding for two people:",
+          "For my first love, I had bought a mahogany box, a Raspberry Pi 3B+, 50 RFiD cards, and a scanner. My first physical project was a jukebox, where 50 of those cards contained her favorite songs at the time. Scanning it would play it on her Sennheiser speaker that was connected to the box.",
+          "For my mom, where one of those extra RFiD cards were glued under a thin part of her nightstand, and when tapped, hits a route that sends a message containing the following:",
+          {
+            list: [
+              "3 of the most popular articles in California",
+              "2 of the most popular articles in the U.S.",
+              "2 political topics being debated about in the U.S.",
+            ],
+          },
+          "… all translated in Vietnamese.",
+        ],
+      },
+      {
+        year: "2021",
+        blocks: [
+          "I started my addiction for hackathons. I also automated a tool to find permutations of short usernames on Riot Games, Instagram, Twitter, and Ubisoft.",
+        ],
+      },
+      {
+        year: "2022",
+        blocks: [
+          "I had started a branch of [Hack Club](https://hackclub.com/), and was sponsored by my city to teach a volunteering cohort of students practical programming. This included creating:",
+          { list: ["Your own Discord bot", "A messaging service", "A self portfolio"] },
+          "I started my first internship coming out of high school. I had a lot to learn from here, and I’m grateful for my time and mentors.",
+        ],
+      },
+    ],
   },
 ];
