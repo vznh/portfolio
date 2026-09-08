@@ -66,6 +66,12 @@ function Prose({ section }: { section: Section }) {
             {renderInline(paragraph, isExpanded, toggle)}
           </p>
         ))}
+        {section.projects?.map((project) => (
+          <p key={project.name} className="max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black">
+            <span className="block">{project.name}</span>
+            <span className="block opacity-80">{project.description}</span>
+          </p>
+        ))}
       </div>
     </section>
   );
