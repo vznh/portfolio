@@ -16,16 +16,17 @@ const ITEM_CLASS =
 
 export function OpenedSectionsCell() {
   const { expanded } = useExpandedSections();
-  const opened = expanded
-    .map((id) => sections.find((section) => section.id === id))
-    .filter((section) => section?.heading);
+  const opened = expanded.flatMap((id) => {
+    const section = sections.find((candidate) => candidate.id === id);
+    return section?.heading ? [{ id: section.id, heading: section.heading }] : [];
+  });
 
   return (
     <ul className="flex flex-row flex-wrap gap-4 md:flex-col">
       {opened.map((section) => (
-        <li key={section!.id} className="animate-fade-in">
-          <button type="button" onClick={() => scrollToHeading(section!.id)} className={ITEM_CLASS}>
-            {section!.heading}
+        <li key={section.id} className="animate-fade-in">
+          <button type="button" onClick={() => scrollToHeading(section.id)} className={ITEM_CLASS}>
+            {section.heading}
           </button>
         </li>
       ))}
