@@ -82,7 +82,12 @@ export const sections: Section[] = [
         category: "Personal",
         image: { src: "/assets/records/chordal.jpg", width: 1314, height: 894 },
       },
-      { date: "07 2025", title: "Relic", category: "Personal" },
+      {
+        date: "07 2025",
+        title: "Relic",
+        category: "Personal",
+        image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
+      },
       {
         date: "0N 2025",
         title: "081x",
