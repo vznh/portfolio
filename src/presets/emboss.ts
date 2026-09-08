@@ -77,4 +77,18 @@ export const embossVersions: EmbossVersion[] = [
     shadow: { color: "#000000", opacity: 1 },
     fill: "#000000",
   },
+  {
+    glyph: "♱",
+    style: "emboss",
+    technique: "chisel-hard",
+    depth: 1000,
+    direction: "up",
+    size: 60,
+    soften: 0,
+    angle: 100,
+    altitude: 90,
+    highlight: { color: "#ffffff", opacity: 0 },
+    shadow: { color: "#000000", opacity: 1 },
+    fill: "#000000",
+  },
 ];
