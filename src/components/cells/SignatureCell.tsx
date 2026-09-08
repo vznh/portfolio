@@ -10,12 +10,12 @@ export function SignatureCell() {
           href={`${profile.repoUrl}/commit/${sha}`}
           target="_blank"
           rel="noreferrer"
-          className="cursor-pointer tabular-nums opacity-40 transition-opacity hover:opacity-100"
+          className="cursor-pointer tabular-nums opacity-[0.55] transition-opacity hover:opacity-100"
         >
           {sha.slice(0, 7)}
         </a>
       ) : (
-        <span className="tabular-nums opacity-40">dev</span>
+        <span className="tabular-nums opacity-[0.55]">dev</span>
       )}
     </p>
   );

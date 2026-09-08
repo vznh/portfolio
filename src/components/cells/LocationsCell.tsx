@@ -23,8 +23,8 @@ function LocationRow({ name, timeZone, muted }: { name: string; timeZone: string
   const time = useClock(timeZone);
   return (
     <li className="contents text-[13px] text-black">
-      <span className={muted ? "opacity-40" : ""}>{name}</span>
-      <span className={`tabular-nums ${muted ? "opacity-40" : ""}`}>{time}</span>
+      <span className={muted ? "opacity-[0.55]" : ""}>{name}</span>
+      <span className={`tabular-nums ${muted ? "opacity-[0.55]" : ""}`}>{time}</span>
     </li>
   );
 }
