@@ -1,6 +1,7 @@
 import { sections, type Block, type Section } from "@/presets/content";
 import { Records } from "./Records";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
+import { scrollToHeading } from "@/lib/scrollToHeading";
 
 const LINK_CLASS =
   "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
@@ -26,7 +27,12 @@ function renderInline(paragraph: string, isExpanded: (id: string) => boolean, to
           type="button"
           aria-expanded={isExpanded(id)}
           aria-controls={id}
-          onClick={() => toggle(id)}
+          onClick={() => {
+            toggle(id);
+            if (window.matchMedia("(max-width: 767px)").matches) {
+              window.requestAnimationFrame(() => scrollToHeading(id));
+            }
+          }}
           className={`${LINK_CLASS} cursor-pointer`}
         >
           {text}

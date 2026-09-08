@@ -1,10 +1,6 @@
 import { sections } from "@/presets/content";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
-
-function scrollToHeading(id: string) {
-  const heading = document.getElementById(id)?.querySelector("h2");
-  heading?.scrollIntoView({ behavior: "smooth", block: "center" });
-}
+import { scrollToHeading } from "@/lib/scrollToHeading";
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });

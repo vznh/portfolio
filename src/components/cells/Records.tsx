@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { ReadingGuide } from "./ReadingGuide";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import type { Record } from "@/presets/content";
+import { useRecordsScrollSpace } from "@/hooks/useRecordsScrollSpace";
 
 const READING_LINE = false;
 
@@ -53,14 +55,19 @@ function RecordRow({
 }
 
 export function Records({ records }: { records: Record[] }) {
+  const listRef = useRef<HTMLUListElement>(null);
+  useRecordsScrollSpace(listRef);
   const [line, setLine] = useState<{ y: number; key: number } | null>(null);
-  const [active, setActive] = useState<Record | null>(null);
+  const [hovered, setHovered] = useState<Record | null>(null);
+  const [readingIndex, setReadingIndex] = useState<number | null>(null);
+  const active = readingIndex !== null ? records[readingIndex] : hovered;
   return (
     <>
       <ul
+        ref={listRef}
         className="flex max-w-[52ch] flex-col"
         onPointerLeave={(e) => {
-          if (e.pointerType === "mouse") setActive(null);
+          if (e.pointerType === "mouse") setHovered(null);
         }}
       >
         {records.map((record) => (
@@ -69,25 +76,26 @@ export function Records({ records }: { records: Record[] }) {
             record={record}
             dimmed={active !== null && active !== record}
             onHover={(y) => {
-              setActive(record);
+              setHovered(record);
               if (READING_LINE) setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }));
             }}
           />
         ))}
       </ul>
+      <ReadingGuide listRef={listRef} onActiveRowChange={setReadingIndex} />
       {active?.image &&
         createPortal(
           <div
             aria-hidden
-            className="pointer-events-none fixed left-1/2 top-1/2 z-0 hidden -translate-x-1/2 -translate-y-1/2 md:block"
+            className="pointer-events-none fixed bottom-[8dvh] left-1/2 z-0 -translate-x-1/2 md:bottom-auto md:top-1/2 md:-translate-y-1/2"
           >
             <Image
               src={active.image.src}
               alt=""
               width={active.image.width}
               height={active.image.height}
-              sizes="47.5vw"
-              className="h-auto max-h-[42.8vh] w-auto max-w-[47.5vw] object-contain"
+              sizes="(max-width: 767px) 78vw, 47.5vw"
+              className="h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw]"
             />
           </div>,
           document.body,
