@@ -1,7 +1,13 @@
+export interface Project {
+  name: string;
+  description: string;
+}
+
 export interface Section {
   id: string;
   heading?: string;
   body: string[];
+  projects?: Project[];
   collapsed?: boolean;
 }
 
@@ -20,8 +26,18 @@ export const sections: Section[] = [
     id: "antecedents",
     heading: "Antecedents",
     collapsed: true,
-
     body: [],
+    projects: [
+      {
+        name: "Polyglot",
+        description:
+          "Learn languages through bite-sized modules that mimic assimilation. We teach reading, writing, typing, and verbal conversation.",
+      },
+      {
+        name: "Tokn",
+        description: "Trade, track, and chat coins in one app.",
+      },
+    ],
   },
   {
     id: "provenance",
