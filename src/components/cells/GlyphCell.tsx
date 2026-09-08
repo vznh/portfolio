@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { embossVersions } from "@/presets/emboss";
-import { EmbossedGlyph, GLYPH_BOX_CLASS } from "../EmbossedGlyph";
+import { GLYPH_BOX_CLASS } from "@/lib/glyph";
+import { EmbossedGlyph } from "../EmbossedGlyph";
 import { EmbossDial } from "../EmbossDial";
 
 function RandomVersionGlyph() {

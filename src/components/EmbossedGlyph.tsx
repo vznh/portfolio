@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { EmbossParams } from "@/presets/emboss";
+import { GLYPH_BOX_CLASS, isSvgSource } from "@/lib/glyph";
 
 interface EmbossedGlyphProps {
   glyph: string;
@@ -11,16 +12,9 @@ function toAzimuth(angle: number): number {
   return (((360 - angle) % 360) + 360) % 360;
 }
 
-export const GLYPH_BOX_CLASS =
-  "relative aspect-[4/5] w-full max-w-[32px] md:h-[min(350px,calc(60vh+1.5rem-15rem))] md:w-auto md:max-w-[280px]";
-
 const HEADING_FONT = '"ABC Schengen A"';
 
 const EM = 100;
-
-export function isSvgSource(glyph: string) {
-  return glyph.startsWith("/") && glyph.toLowerCase().endsWith(".svg");
-}
 
 function useInkBox(glyph: string) {
   const [box, setBox] = useState<string | null>(null);
