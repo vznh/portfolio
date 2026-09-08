@@ -63,7 +63,12 @@ export const sections: Section[] = [
         category: "Commission",
         image: { src: "/assets/records/corgi.jpg", width: 800, height: 800 },
       },
-      { date: "08 2026", title: "Britnie", category: "Commission" },
+      {
+        date: "08 2026",
+        title: "Britnie",
+        category: "Commission",
+        image: { src: "/assets/records/britnie.jpg", width: 1200, height: 1200 },
+      },
       { date: "08 2026", title: "5f", category: "Venture" },
       { date: "08 2026", title: "[unnamed]", category: "Commission" },
       { date: "07 2026", title: "Break It Down", category: "Personal" },
