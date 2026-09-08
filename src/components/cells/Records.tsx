@@ -1,11 +1,21 @@
 import { useState } from "react";
+import Image from "next/image";
 import type { Record } from "@/presets/content";
 
 const READING_LINE = false;
 
-const ROW_CLASS = "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
+const ROW_CLASS =
+  "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
 
-function RecordRow({ record, onHover }: { record: Record; onHover: (y: number) => void }) {
+function RecordRow({
+  record,
+  dimmed,
+  onHover,
+}: {
+  record: Record;
+  dimmed: boolean;
+  onHover: (y: number) => void;
+}) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
@@ -13,6 +23,7 @@ function RecordRow({ record, onHover }: { record: Record; onHover: (y: number) =
       <span className="text-right opacity-[0.55]">{record.category}</span>
     </>
   );
+  const className = `${ROW_CLASS} ${dimmed ? "opacity-40" : ""}`;
   const hover = (e: React.PointerEvent<HTMLElement>) => {
     if (e.pointerType !== "mouse") return;
     const r = e.currentTarget.getBoundingClientRect();
@@ -21,14 +32,14 @@ function RecordRow({ record, onHover }: { record: Record; onHover: (y: number) =
   if (record.url) {
     return (
       <li>
-        <a href={record.url} target="_blank" rel="noreferrer" className={ROW_CLASS} onPointerEnter={hover}>
+        <a href={record.url} target="_blank" rel="noreferrer" className={className} onPointerEnter={hover}>
           {cells}
         </a>
       </li>
     );
   }
   return (
-    <li className={ROW_CLASS} onPointerEnter={hover}>
+    <li className={className} onPointerEnter={hover}>
       {cells}
     </li>
   );
@@ -36,17 +47,35 @@ function RecordRow({ record, onHover }: { record: Record; onHover: (y: number) =
 
 export function Records({ records }: { records: Record[] }) {
   const [line, setLine] = useState<{ y: number; key: number } | null>(null);
+  const [active, setActive] = useState<Record | null>(null);
   return (
     <>
-      <ul className="flex max-w-[52ch] flex-col">
+      <ul
+        className="flex max-w-[52ch] flex-col"
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") setActive(null);
+        }}
+      >
         {records.map((record) => (
           <RecordRow
             key={`${record.date} ${record.title}`}
             record={record}
-            onHover={(y) => READING_LINE && setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }))}
+            dimmed={active !== null && active !== record}
+            onHover={(y) => {
+              setActive(record);
+              if (READING_LINE) setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }));
+            }}
           />
         ))}
       </ul>
+      {active?.image && (
+        <div
+          aria-hidden
+          className="pointer-events-none fixed left-1/2 top-1/2 z-10 hidden aspect-video w-[47.5vw] -translate-x-1/2 -translate-y-1/2 bg-black md:block"
+        >
+          <Image src={active.image} alt="" fill sizes="47.5vw" className="object-cover" />
+        </div>
+      )}
       {line && (
         <div
           key={line.key}

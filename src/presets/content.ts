@@ -15,6 +15,7 @@ export interface Record {
   title: string;
   category: string;
   url?: string;
+  image?: string;
 }
 
 export interface Section {
