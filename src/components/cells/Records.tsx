@@ -1,6 +1,8 @@
 import { useState } from "react";
 import type { Record } from "@/presets/content";
 
+const READING_LINE = false;
+
 const ROW_CLASS =
   "grid grid-cols-[auto_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
 
@@ -42,7 +44,7 @@ export function Records({ records }: { records: Record[] }) {
           <RecordRow
             key={`${record.date} ${record.title}`}
             record={record}
-            onHover={(y) => setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }))}
+            onHover={(y) => READING_LINE && setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }))}
           />
         ))}
       </ul>
