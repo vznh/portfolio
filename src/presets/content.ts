@@ -94,6 +94,38 @@ export const sections: Section[] = [
           "I had started a branch of [Hack Club](https://hackclub.com/), and was sponsored by my city to teach a volunteering cohort of students practical programming. This included creating:",
           { list: ["Your own Discord bot", "A messaging service", "A self portfolio"] },
           "I started my first internship coming out of high school. I had a lot to learn from here, and I’m grateful for my time and mentors.",
+          "My roommate was my best friend. We shared a trauma bond after our [first roommate](https://abcnews.com/US/21-year-charged-murder-bay-area-woman-walking/story?id=123996136) had threatened to shoot us. For him and mutual friends we shared, I made:",
+          {
+            list: [
+              "An LED light to indicate if someone’s home",
+              "A physical door opener using a servo + locked pliers because we lost our keycard a lot",
+            ],
+          },
+        ],
+      },
+      {
+        year: "2023",
+        blocks: [
+          "I was unsure about if I wanted to go into the field, or pursue academia. I joined a lab at my university that experimented with text-to-video prompting under [Dr. Allen](https://film.ucsc.edu/directory/eshanken/). Our product generated variable output at 15s/30fps/720p maximum.",
+          "I also dove into crypto. I co-founded Tokn, where you can trade, track, and chat with others in one app. I took a minority split in the acquisition.",
+          "After, I joined Stanford Launchpad momentarily to start Polyglot, a language learning app. We pitched to:",
+          { list: ["Y Combinator", "PearVC", "Antler", "Techstars", "Bronco", "South Park"] },
+          "I failed, and hurt people. I learned a lot in this process and continue to reflect on it as I experience new things.",
+          "I pursued biotechnology for a bit, leading automation for CMU Neuro Tech, and SNU Genomics. I additionally experimented in low-level systems, game design, theoretical math, and quant. I had realized academia is too slow for me, and I enjoy to get dirty rather theoretical.",
+        ],
+      },
+      {
+        year: "2024",
+        blocks: [
+          "I have an underclassman that really wanted to get to his dream university. In order to do so, his club must be more legitimate than it already is. I designed his website and allocated strict management:",
+          {
+            list: [
+              "I will work on it whenever I am absolutely free",
+              "This is not a priority by any means",
+              "Please do not expect anything spectacular",
+            ],
+          },
+          "And ended up falling in love with the rabbit hole of design. I could say much about how much I fucked up while making it, but it boils down to the relationship between taste and ability being vastly parted.",
         ],
       },
     ],
