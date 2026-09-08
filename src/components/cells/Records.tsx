@@ -3,14 +3,13 @@ import type { Record } from "@/presets/content";
 
 const READING_LINE = false;
 
-const ROW_CLASS =
-  "grid grid-cols-[auto_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
+const ROW_CLASS = "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
 
 function RecordRow({ record, onHover }: { record: Record; onHover: (y: number) => void }) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
-      <span className="ml-[2ch]">{record.title}</span>
+      <span>{record.title}</span>
       <span className="text-right opacity-[0.55]">{record.category}</span>
     </>
   );
