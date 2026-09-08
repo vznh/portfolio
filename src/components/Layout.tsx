@@ -38,7 +38,7 @@ function SideColumn({
       style={{ gridTemplateRows: rows }}
     >
       <div className="hidden md:block" />
-      <Cell edge={edge} className={`md:border-y ${below.length > 0 ? "pb-1.5 md:pb-6" : ""}`}>
+      <Cell edge={edge} className={`md:border-y ${below.length > 0 ? "pb-3 md:pb-6" : ""}`}>
         {children}
       </Cell>
       {below.length === 0 ? (
