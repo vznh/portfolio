@@ -52,23 +52,18 @@ function renderInline(paragraph: string, isExpanded: (id: string) => boolean, to
 
 const BODY_CLASS = "max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
 
-function renderBlock(
-  block: Block,
-  key: number,
-  isExpanded: (id: string) => boolean,
-  toggle: (id: string) => void,
-) {
+function renderBlock(block: Block, isExpanded: (id: string) => boolean, toggle: (id: string) => void) {
   if (typeof block === "string") {
     return (
-      <p key={key} className={BODY_CLASS}>
+      <p key={block} className={BODY_CLASS}>
         {renderInline(block, isExpanded, toggle)}
       </p>
     );
   }
   return (
-    <ul key={key} className={`${BODY_CLASS} flex flex-col`}>
-      {block.list.map((item, i) => (
-        <li key={i} className="flex gap-2">
+    <ul key={block.list.join()} className={`${BODY_CLASS} flex flex-col`}>
+      {block.list.map((item) => (
+        <li key={item} className="flex gap-2">
           <span aria-hidden>–</span>
           <span>{renderInline(item, isExpanded, toggle)}</span>
         </li>
@@ -85,8 +80,8 @@ function Prose({ section }: { section: Section }) {
     <section id={section.id} className="mb-[3.75rem] last:mb-0" hidden={hidden}>
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
-        {section.body.map((paragraph, i) => (
-          <p key={i} className={BODY_CLASS}>
+        {section.body.map((paragraph) => (
+          <p key={paragraph} className={BODY_CLASS}>
             {renderInline(paragraph, isExpanded, toggle)}
           </p>
         ))}
@@ -95,7 +90,7 @@ function Prose({ section }: { section: Section }) {
             {section.entries.map((entry) => (
               <div key={entry.year} className="flex flex-col gap-1.5">
                 <p className={`${BODY_CLASS} opacity-80`}>{entry.year}</p>
-                {entry.blocks.map((block, i) => renderBlock(block, i, isExpanded, toggle))}
+                {entry.blocks.map((block) => renderBlock(block, isExpanded, toggle))}
               </div>
             ))}
           </div>
