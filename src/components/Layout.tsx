@@ -32,7 +32,7 @@ function SideColumn({
   const rows = `calc(40vh - 1.5rem) auto ${"minmax(0, 1fr) ".repeat(remainder).trim()}`;
   return (
     <aside
-      className={`md:grid md:h-full md:overflow-visible ${
+      className={`relative z-10 md:grid md:h-full md:overflow-visible ${
         side === "left" ? "md:border-r" : "md:border-l"
       } ${edge}`}
       style={{ gridTemplateRows: rows }}
@@ -75,7 +75,7 @@ export function Shell({ left, middle, right }: ShellProps) {
       <SideColumn side="left" edge={edge} below={left.below}>
         {left.content}
       </SideColumn>
-      <main className="no-scrollbar md:h-full md:overflow-y-auto">
+      <main className="no-scrollbar relative z-10 md:h-full md:overflow-y-auto">
         <div className="p-6 md:pb-[40vh] md:pt-[40vh]">{middle}</div>
       </main>
       <SideColumn side="right" edge={edge} below={right.below}>

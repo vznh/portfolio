@@ -11,7 +11,7 @@ const ExpandedSectionsContext = createContext<ExpandedSections | null>(null);
 export function ExpandedSectionsProvider({ children }: { children: ReactNode }) {
   const [expanded, setExpanded] = useState<string[]>([]);
   const toggle = useCallback((id: string) => {
-    setExpanded((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    setExpanded((prev) => (prev.includes(id) ? prev : [...prev, id]));
   }, []);
   const value = useMemo<ExpandedSections>(
     () => ({ expanded, isExpanded: (id) => expanded.includes(id), toggle }),

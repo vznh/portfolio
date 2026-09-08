@@ -10,12 +10,27 @@ export interface Entry {
   blocks: Block[];
 }
 
+export interface RecordImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
+export interface Record {
+  date: string;
+  title: string;
+  category: string;
+  url?: string;
+  image?: RecordImage;
+}
+
 export interface Section {
   id: string;
   heading?: string;
   body: string[];
   projects?: Project[];
   entries?: Entry[];
+  records?: Record[];
   collapsed?: boolean;
 }
 
@@ -24,10 +39,103 @@ export const sections: Section[] = [
     id: "about",
     body: [
       "My name is Jason. I’m an engineer first, designer second. I’m based in New York City. I graduated Santa Cruz at 20, and worked previously in San Francisco, Seoul, Pennsylvania, and Santa Cruz.",
+      "I do engineering, research, and design in New York. I used to do systems and interfacing at Apple. I started two [start-ups](+antecedents) and sold one. Then machine learning at Carnegie Mellon, Seoul National, Santa Cruz. Leading up to and in university, full-stack engineering for an urban engineering start-up as one of two interns.",
+      "My [works](+records) are displayed below.",
+      "I can tell a further tale about my [provenance](+provenance).",
       "I’m #43,020 on Beli right now. I join runs for basketball near Lower East Side often. I play tennis and pickleball socially. My closet is compiled from Acne Studios, Enfants Riches Déprimés, COS, Our Legacy, No Maintenance, Blackmerle, Chrome Hearts, and more. I model commercial rarely. I enjoy playing with fabrics through repair or experiment. I also like conceptually designing for my favorite artists and things. I watch a lot of [anime](https://anilist.co/user/vznh) and read a lot of manga and manhwa. I [write on an irregular cadence](https://venh.substack.com), and inversely am introductory to reading books. I host events with my friends, from home cafes to DJ sets. I play games recreationally, but used to be #479 on VALORANT for a brief amount of time.",
       "The best ways to reach out are through my [e-mail](mailto:jasonvinhson@gmail.com), or through my [Twitter](https://x.com/jasonvinhson). I’m least accessible through my [LinkedIn](https://linkedin.com/in/vznh). I often create for myself and friends, or contribute to open-source on [GitHub](https://github.com/vznh) like [Repomix](https://github.com/yamadashy/repomix), [biome](https://github.com/biomejs/biome), [Zed](https://github.com/zed-industries/zed/fork), and [bb](https://github.com/get-bb/bb).",
-      "I do engineering, research, and design in New York. I used to do systems and interfacing at Apple. I started two [start-ups](+antecedents) and sold one. Then machine learning at Carnegie Mellon, Seoul National, Santa Cruz. Leading up to and in university, full-stack engineering for an urban engineering start-up as one of two interns.",
-      "I can tell a further tale about my [provenance](+provenance).",
+    ],
+  },
+  {
+    id: "records",
+    heading: "Records",
+    collapsed: true,
+    body: [],
+    records: [
+      { date: "09 2026", title: "Famish", category: "Personal" },
+      { date: "08 2026", title: "Capt", category: "Personal", url: "https://github.com/vznh/capt" },
+      { date: "08 2026", title: "Transmute", category: "Personal", url: "https://github.com/vznh/transmute" },
+      { date: "08 2026", title: "Agamemnon", category: "Venture" },
+      { date: "08 2026", title: "Charms", category: "Personal" },
+      {
+        date: "08 2026",
+        title: "Corgi",
+        category: "Commission",
+        image: { src: "/assets/records/corgi.jpg", width: 800, height: 800 },
+      },
+      {
+        date: "08 2026",
+        title: "Britnie",
+        category: "Commission",
+        image: { src: "/assets/records/britnie.jpg", width: 1200, height: 1200 },
+      },
+      { date: "08 2026", title: "5f", category: "Venture" },
+      { date: "08 2026", title: "[unnamed]", category: "Commission" },
+      { date: "07 2026", title: "Break It Down", category: "Personal" },
+      { date: "07 2026", title: "Portmanteau", category: "Personal" },
+      {
+        date: "07 2026",
+        title: "A business card",
+        category: "Commission",
+        image: { src: "/assets/records/a-business-card.jpg", width: 1128, height: 646 },
+      },
+      { date: "07 2026", title: "Stake", category: "Commission" },
+      { date: "05 2026", title: "Komune", category: "Advisory", url: "https://komune.space" },
+      { date: "04 2026", title: "Paradigm", category: "Commission" },
+      { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
+      { date: "10 2025", title: "Axiom", category: "Personal" },
+      {
+        date: "09 2025",
+        title: "Substack, SDK",
+        category: "Personal",
+        url: "https://github.com/vznh/substack",
+      },
+      { date: "09 2025", title: "75", category: "Personal" },
+      {
+        date: "08 2025",
+        title: "Chordal",
+        category: "Personal",
+        image: { src: "/assets/records/chordal.jpg", width: 1314, height: 894 },
+      },
+      {
+        date: "0N 2025",
+        title: "081x",
+        category: "Personal",
+        image: { src: "/assets/records/081x.jpg", width: 800, height: 800 },
+      },
+      {
+        date: "04 2025",
+        title: "Chronolex",
+        category: "Personal",
+        image: { src: "/assets/records/chronolex.jpg", width: 2186, height: 1440 },
+      },
+      { date: "03 2025", title: "Newtor", category: "Personal" },
+      { date: "02 2025", title: "Devour", category: "Personal" },
+      {
+        date: "01 2025",
+        title: "Pathfinder",
+        category: "Academia",
+        image: { src: "/assets/records/pathfinder.jpg", width: 2444, height: 1334 },
+      },
+      {
+        date: "01 2025",
+        title: "Grandiose",
+        category: "Personal",
+        image: { src: "/assets/records/grandiose.jpg", width: 1648, height: 818 },
+      },
+      { date: "01 2025", title: "Permanence", category: "Personal" },
+      { date: "01 2025", title: "Veil", category: "Academia" },
+      { date: "01 2025", title: "Splat", category: "Personal" },
+      { date: "12 2024", title: "Sovereign", category: "Personal" },
+      { date: "12 2024", title: "Fullauto", category: "Personal" },
+      {
+        date: "07 2024",
+        title: "Relic",
+        category: "Personal",
+        image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
+      },
+      { date: "02 2021", title: "Jukebox", category: "Personal" },
+      { date: "07 2019", title: "Preme", category: "Venture" },
     ],
   },
   {
