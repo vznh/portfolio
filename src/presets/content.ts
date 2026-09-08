@@ -10,12 +10,20 @@ export interface Entry {
   blocks: Block[];
 }
 
+export interface Record {
+  date: string;
+  title: string;
+  category: string;
+  url?: string;
+}
+
 export interface Section {
   id: string;
   heading?: string;
   body: string[];
   projects?: Project[];
   entries?: Entry[];
+  records?: Record[];
   collapsed?: boolean;
 }
 

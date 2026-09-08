@@ -1,4 +1,5 @@
 import { sections, type Block, type Section } from "@/presets/content";
+import { Records } from "./Records";
 import { useExpandedSections } from "@/hooks/useExpandedSections";
 
 const LINK_CLASS =
@@ -95,6 +96,7 @@ function Prose({ section }: { section: Section }) {
             ))}
           </div>
         )}
+        {section.records && <Records records={section.records} />}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
             <span className="block">{project.name}</span>
