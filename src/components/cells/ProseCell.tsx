@@ -93,12 +93,16 @@ function Prose({ section }: { section: Section }) {
             {renderInline(paragraph, isExpanded, toggle)}
           </p>
         ))}
-        {section.entries?.map((entry) => (
-          <div key={entry.year} className="flex flex-col gap-3">
-            <p className={`${BODY_CLASS} opacity-80`}>{entry.year}</p>
-            {entry.blocks.map((block, i) => renderBlock(block, i, isExpanded, toggle))}
+        {section.entries && (
+          <div className="flex flex-col gap-6">
+            {section.entries.map((entry) => (
+              <div key={entry.year} className="flex flex-col gap-1.5">
+                <p className={`${BODY_CLASS} opacity-80`}>{entry.year}</p>
+                {entry.blocks.map((block, i) => renderBlock(block, i, isExpanded, toggle))}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
             <span className="block">{project.name}</span>
