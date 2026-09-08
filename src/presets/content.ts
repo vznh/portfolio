@@ -77,7 +77,7 @@ export const sections: Section[] = [
       { date: "07 2026", title: "Stake", category: "Commission" },
       { date: "05 2026", title: "Komune", category: "Advisory", url: "https://komune.space" },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
-      { date: "01 2026", title: "Augment", category: "Advisory" },
+      { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
       { date: "10 2025", title: "Axiom", category: "Personal" },
       { date: "09 2025", title: "Substack, SDK", category: "Personal" },
       { date: "09 2025", title: "75", category: "Personal" },
