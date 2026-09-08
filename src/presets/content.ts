@@ -10,12 +10,18 @@ export interface Entry {
   blocks: Block[];
 }
 
+export interface RecordImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
 export interface Record {
   date: string;
   title: string;
   category: string;
   url?: string;
-  image?: string;
+  image?: RecordImage;
 }
 
 export interface Section {

@@ -71,9 +71,16 @@ export function Records({ records }: { records: Record[] }) {
       {active?.image && (
         <div
           aria-hidden
-          className="pointer-events-none fixed left-1/2 top-1/2 z-10 hidden aspect-video w-[47.5vw] -translate-x-1/2 -translate-y-1/2 bg-black md:block"
+          className="pointer-events-none fixed left-1/2 top-1/2 z-10 hidden -translate-x-1/2 -translate-y-1/2 md:block"
         >
-          <Image src={active.image} alt="" fill sizes="47.5vw" className="object-cover" />
+          <Image
+            src={active.image.src}
+            alt=""
+            width={active.image.width}
+            height={active.image.height}
+            sizes="47.5vw"
+            className="h-auto max-h-[42.8vh] w-auto max-w-[47.5vw] object-contain"
+          />
         </div>
       )}
       {line && (
