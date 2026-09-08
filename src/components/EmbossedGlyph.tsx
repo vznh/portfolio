@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { EmbossParams } from "@/presets/emboss";
 
 interface EmbossedGlyphProps {
@@ -46,10 +46,30 @@ function useInkBox(glyph: string) {
   return box;
 }
 
+const CALIBRATION_WIDTH = 280;
+
+function useBoxScale() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setScale(el.getBoundingClientRect().width / CALIBRATION_WIDTH);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return { ref, scale };
+}
+
 export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) {
   const id = useId();
   const inkBox = useInkBox(glyph);
-  const { style, technique, depth, direction, size, soften, angle, altitude, highlight, shadow, fill } = params;
+  const { ref, scale } = useBoxScale();
+  const { style, technique, depth, direction, angle, altitude, highlight, shadow, fill } = params;
+  const size = params.size * scale;
+  const soften = params.soften * scale;
 
   const blur =
     technique === "smooth" ? size : technique === "chisel-soft" ? size * 0.35 : Math.max(0.01, size * 0.1);
@@ -83,7 +103,7 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
 
   return (
     <div
-
+      ref={ref}
       className={`${GLYPH_BOX_CLASS} ${className ?? ""}`}
       style={{ containerType: "inline-size" }}
     >
