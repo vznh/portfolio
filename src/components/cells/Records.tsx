@@ -33,7 +33,13 @@ function RecordRow({
   if (record.url) {
     return (
       <li>
-        <a href={record.url} target="_blank" rel="noreferrer" className={className} onPointerEnter={hover}>
+        <a
+          href={record.url}
+          target="_blank"
+          rel="noreferrer"
+          className={`${className} cursor-pointer`}
+          onPointerEnter={hover}
+        >
           {cells}
         </a>
       </li>
