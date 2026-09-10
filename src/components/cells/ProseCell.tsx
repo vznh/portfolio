@@ -1,7 +1,6 @@
 import { sections, type Block, type Section } from "@/presets/content";
 import { Records } from "./Records";
-import { useExpandedSections } from "@/hooks/useExpandedSections";
-import { scrollToHeading } from "@/lib/scrollToHeading";
+import { handleSectionLinkClick } from "@/lib/scrollToHeading";
 
 const LINK_CLASS =
   "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
@@ -12,7 +11,7 @@ function PanelLabel({ children }: { children: React.ReactNode }) {
 
 const INLINE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
-function renderInline(paragraph: string, isExpanded: (id: string) => boolean, toggle: (id: string) => void) {
+function renderInline(paragraph: string) {
   const nodes: React.ReactNode[] = [];
   let last = 0;
   for (const match of paragraph.matchAll(INLINE)) {
@@ -22,21 +21,9 @@ function renderInline(paragraph: string, isExpanded: (id: string) => boolean, to
     if (target.startsWith("+")) {
       const id = target.slice(1);
       nodes.push(
-        <button
-          key={start}
-          type="button"
-          aria-expanded={isExpanded(id)}
-          aria-controls={id}
-          onClick={() => {
-            toggle(id);
-            if (window.matchMedia("(max-width: 767px)").matches) {
-              window.requestAnimationFrame(() => scrollToHeading(id));
-            }
-          }}
-          className={`${LINK_CLASS} cursor-pointer`}
-        >
+        <a key={start} href={`#${id}`} onClick={handleSectionLinkClick} className={LINK_CLASS}>
           {text}
-        </button>,
+        </a>,
       );
     } else {
       const external = !target.startsWith("mailto:");
@@ -59,11 +46,11 @@ function renderInline(paragraph: string, isExpanded: (id: string) => boolean, to
 
 const BODY_CLASS = "max-w-[52ch] text-[13px] leading-relaxed tracking-[-0.0125em] text-black";
 
-function renderBlock(block: Block, isExpanded: (id: string) => boolean, toggle: (id: string) => void) {
+function renderBlock(block: Block) {
   if (typeof block === "string") {
     return (
       <p key={block} className={BODY_CLASS}>
-        {renderInline(block, isExpanded, toggle)}
+        {renderInline(block)}
       </p>
     );
   }
@@ -72,7 +59,7 @@ function renderBlock(block: Block, isExpanded: (id: string) => boolean, toggle: 
       {block.list.map((item) => (
         <li key={item} className="flex gap-2">
           <span aria-hidden>–</span>
-          <span>{renderInline(item, isExpanded, toggle)}</span>
+          <span>{renderInline(item)}</span>
         </li>
       ))}
     </ul>
@@ -80,16 +67,13 @@ function renderBlock(block: Block, isExpanded: (id: string) => boolean, toggle: 
 }
 
 function Prose({ section }: { section: Section }) {
-  const { isExpanded, toggle } = useExpandedSections();
-
-  const hidden = Boolean(section.collapsed) && !isExpanded(section.id);
   return (
-    <section id={section.id} className="mb-[3.75rem] last:mb-0" hidden={hidden}>
+    <section id={section.id} className="mb-[3.75rem] last:mb-0">
       {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph) => (
           <p key={paragraph} className={BODY_CLASS}>
-            {renderInline(paragraph, isExpanded, toggle)}
+            {renderInline(paragraph)}
           </p>
         ))}
         {section.entries && (
@@ -97,7 +81,7 @@ function Prose({ section }: { section: Section }) {
             {section.entries.map((entry) => (
               <div key={entry.year} className="flex flex-col gap-1.5">
                 <p className={`${BODY_CLASS} opacity-80`}>{entry.year}</p>
-                {entry.blocks.map((block) => renderBlock(block, isExpanded, toggle))}
+                {entry.blocks.map((block) => renderBlock(block))}
               </div>
             ))}
           </div>

@@ -31,7 +31,6 @@ export interface Section {
   projects?: Project[];
   entries?: Entry[];
   records?: Record[];
-  collapsed?: boolean;
 }
 
 export const sections: Section[] = [
@@ -49,7 +48,6 @@ export const sections: Section[] = [
   {
     id: "records",
     heading: "Records",
-    collapsed: true,
     body: [],
     records: [
       { date: "09 2026", title: "Famish", category: "Personal" },
@@ -141,7 +139,6 @@ export const sections: Section[] = [
   {
     id: "antecedents",
     heading: "Antecedents",
-    collapsed: true,
     body: [],
     projects: [
       {
@@ -158,7 +155,6 @@ export const sections: Section[] = [
   {
     id: "provenance",
     heading: "Provenance",
-    collapsed: true,
 
     body: ["Over the course of 9 years, I started 102 projects, finished 52, and launched 24 of them."],
     entries: [
