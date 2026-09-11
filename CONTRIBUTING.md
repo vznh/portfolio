@@ -11,6 +11,7 @@
 - One commit per change. Each commit should be a single, self-contained change.
 - No code comments. Do not add `//`, `/* */`, JSDoc, or JSX comments anywhere in the codebase.
 - Do not change visual behavior or page markup unless the change is explicitly about that.
+- All outbound website links must open in a new tab/window with `target="_blank"` and `rel="noreferrer"`, including links added in the future.
 
 ## No AI-generated contributions
 
