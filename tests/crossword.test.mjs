@@ -1,0 +1,101 @@
+import assert from "node:assert/strict";
+import { test } from "node:test";
+import { buildCrossword, isCrosswordSolved, nextClue, nextSquare } from "../src/lib/crossword.ts";
+import { miniCrossword } from "../src/presets/crossword.ts";
+
+const puzzle = buildCrossword(miniCrossword);
+
+test("Tab visits clues in display order and wraps through Across and Down", () => {
+  const first = puzzle.entries.find((entry) => entry.number === 1 && entry.direction === "across");
+  let current = first;
+  const visited = [];
+  for (let i = 0; i < puzzle.entries.length; i++) {
+    visited.push(`${current.number} ${current.direction}`);
+    current = nextClue(puzzle.entries, current, 1);
+  }
+  assert.deepEqual(visited, [
+    "1 across",
+    "4 across",
+    "5 across",
+    "6 across",
+    "7 across",
+    "1 down",
+    "2 down",
+    "3 down",
+    "4 down",
+    "5 down",
+  ]);
+  assert.equal(current, first);
+});
+
+test("Shift+Tab reverses every clue transition, including wraparound", () => {
+  for (const entry of puzzle.entries) {
+    assert.equal(nextClue(puzzle.entries, nextClue(puzzle.entries, entry, 1), -1), entry);
+    assert.equal(nextClue(puzzle.entries, nextClue(puzzle.entries, entry, -1), 1), entry);
+  }
+  const first = puzzle.entries.find((entry) => entry.number === 1 && entry.direction === "across");
+  const previous = nextClue(puzzle.entries, first, -1);
+  assert.equal(previous.number, 5);
+  assert.equal(previous.direction, "down");
+});
+
+test("the mini has unique answers, valid crossings, and a clue for every entry", () => {
+  assert.equal(puzzle.width, 5);
+  assert.equal(puzzle.height, 5);
+  assert.equal(puzzle.entries.length, 10);
+  assert.equal(new Set(puzzle.entries.map((entry) => entry.answer)).size, 10);
+  for (const direction of ["across", "down"]) {
+    const entries = puzzle.entries.filter((entry) => entry.direction === direction);
+    assert.deepEqual(
+      entries.map((entry) => entry.number),
+      Object.keys(miniCrossword.clues[direction]).map(Number),
+    );
+  }
+  puzzle.cells.forEach((letter, index) => {
+    assert.equal(letter === "#", puzzle.cells.at(-index - 1) === "#", "grid is rotationally symmetric");
+    if (letter === "#") return;
+    const crossings = puzzle.entries.filter((entry) => entry.cells.includes(index));
+    assert.equal(crossings.length, 2);
+    assert.deepEqual(new Set(crossings.map((entry) => entry.direction)), new Set(["across", "down"]));
+    for (const entry of crossings) assert.equal(entry.answer[entry.cells.indexOf(index)], letter);
+  });
+});
+
+test("rejects oversized, malformed, or unclued puzzles", () => {
+  assert.throws(() => buildCrossword({ ...miniCrossword, rows: Array(11).fill("ABCDE") }), /at most 10/);
+  assert.throws(() => buildCrossword({ ...miniCrossword, rows: ["ABCDEFGHIJK"] }), /at most 10/);
+  assert.throws(() => buildCrossword({ ...miniCrossword, rows: ["ABC", "AB"] }), /rectangular/);
+  assert.throws(() => buildCrossword({ ...miniCrossword, clues: { across: {}, down: {} } }), /clue/);
+});
+
+test("navigation stays within the grid and never lands on a block or wraps a row", () => {
+  for (let index = 0; index < puzzle.cells.length; index++) {
+    if (puzzle.cells[index] === "#") continue;
+    for (const delta of [-5, -1, 1, 5]) {
+      const target = nextSquare(puzzle.cells, puzzle.width, index, delta);
+      assert.ok(target >= 0 && target < puzzle.cells.length);
+      assert.notEqual(puzzle.cells[target], "#");
+      if (Math.abs(delta) === 1) assert.equal(Math.floor(target / 5), Math.floor(index / 5));
+      else assert.equal(target % 5, index % 5);
+    }
+  }
+  assert.equal(nextSquare(puzzle.cells, 5, 4, 1), 4);
+  assert.equal(nextSquare(puzzle.cells, 5, 2, -1), 2);
+  assert.equal(nextSquare(puzzle.cells, 5, 10, 5), 15);
+});
+
+test("completion requires every open square to be correct", () => {
+  assert.equal(
+    isCrosswordSolved(
+      puzzle.cells,
+      puzzle.cells.map(() => ""),
+    ),
+    false,
+  );
+  assert.equal(isCrosswordSolved(puzzle.cells, puzzle.cells), true);
+  const letters = [...puzzle.cells];
+  letters[2] = "Z";
+  assert.equal(isCrosswordSolved(puzzle.cells, letters), false);
+  letters[2] = "";
+  assert.equal(isCrosswordSolved(puzzle.cells, letters), false);
+});

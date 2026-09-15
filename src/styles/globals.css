@@ -42,3 +42,17 @@ body {
   width: 0;
   height: 0;
 }
+
+/* Keep the full portfolio in the initial HTML, with native fragment navigation.
+   Existing links such as #records and #provenance still open their sections. */
+.portfolio-content {
+  display: none;
+}
+
+.home-views:has(.portfolio-content:target, .portfolio-content :target) .portfolio-content {
+  display: block;
+}
+
+.home-views:has(.portfolio-content:target, .portfolio-content :target) .crossword-landing {
+  display: none;
+}
