@@ -1,4 +1,5 @@
 import { useEffect, useRef, type RefObject } from "react";
+import { getReadingGuide } from "@/lib/readingGuide";
 
 export function ReadingGuide({
   listRef,
@@ -15,6 +16,7 @@ export function ReadingGuide({
     if (!section || !guide || typeof onActiveRowChange !== "function") return;
 
     const mobile = window.matchMedia("(max-width: 767px)");
+    const viewport = window.visualViewport;
     let frame = 0;
 
     const update = () => {
@@ -26,18 +28,17 @@ export function ReadingGuide({
         return;
       }
 
-      const bounds = section.getBoundingClientRect();
-      const y = window.innerHeight * 0.25;
-      const inZone = bounds.top <= y && bounds.bottom > y;
       const rows = Array.from(section.children, (child) => child.getBoundingClientRect());
-      const nextIndex = rows.findIndex((rect) => rect.bottom > y);
-      const index = nextIndex === -1 ? rows.length - 1 : nextIndex;
-      const rowHeight = rows[index].height;
+      const { top, height, index } = getReadingGuide(
+        rows,
+        viewport?.height ?? window.innerHeight,
+        viewport?.offsetTop ?? 0,
+      );
 
-      guide.style.top = `${y}px`;
-      guide.style.height = `${rowHeight}px`;
-      guide.dataset.active = String(inZone);
-      onActiveRowChange(inZone ? index : null);
+      guide.style.top = `${top}px`;
+      guide.style.height = `${height}px`;
+      guide.dataset.active = String(index !== null);
+      onActiveRowChange(index);
     };
 
     const schedule = () => {
@@ -48,6 +49,8 @@ export function ReadingGuide({
     observer.observe(section);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    viewport?.addEventListener("scroll", schedule, { passive: true });
+    viewport?.addEventListener("resize", schedule);
     mobile.addEventListener("change", schedule);
     update();
 
@@ -56,6 +59,8 @@ export function ReadingGuide({
       observer.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      viewport?.removeEventListener("scroll", schedule);
+      viewport?.removeEventListener("resize", schedule);
       mobile.removeEventListener("change", schedule);
     };
   }, [listRef, onActiveRowChange]);
