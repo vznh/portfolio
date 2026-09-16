@@ -9,8 +9,7 @@ Layouts favor interlocking answers: 3,508 of 4,500 answers (78%) cross at least 
 other answers, and 707 of the 1,000 puzzles contain a loop of crossings. Three-answer
 puzzles necessarily retain two single-crossing ends. Catalog generation compares
 48 eligible candidates per slot, prioritizing crossing count, then how many answers
-have multiple crossings, then favoring less-used answers before compactness. Regression checks require at least 75%
-multiply-crossed answers and 70% of layouts with loops.
+have multiple crossings, then favoring less-used answers before compactness.
 
 `src/presets/crosswordWords.ts` contains 158 curated answer/clue pairs from visible text in
 `content.ts` and `profile.ts`, grouped into related themes.
@@ -37,7 +36,7 @@ To regenerate the constants after editing the word bank:
 ```sh
 bun scripts/generate-crossword-permutations.ts
 bunx prettier --write src/presets/crosswordPermutations.ts
-node --experimental-strip-types --test tests/crossword*.test.mjs
+bun run check
 ```
 
 The grid has a reserved square area, at most 360×360 px, which shrinks to fit narrow
@@ -74,10 +73,6 @@ This is a word-placement prototype. It does not invent clues, fill a fixed silho
 guarantee symmetry, guarantee that every supplied word fits, or generate fully checked
 newspaper-style grids. Wide and tall options set bounds, not an exact outline.
 
-Validation: `node --experimental-strip-types --test tests/crossword*.test.mjs`.
-Generator tests cover 90 seeded layouts across the three shapes, including clue matching,
-crossings, numbering, connectedness, size limits, reproducibility, and failure cases.
-Catalog tests validate all 1,000 stored layouts, unique answer sets, 3–6 connected answers,
-theme membership, source-word provenance, concise clues, and the silhouette guard.
-Rotation tests cover reload advancement, duplicate refresh, wraparound, stale tabs, and
-corrupt or unavailable browser storage.
+Run `bun run check` for type checking, linting, and a production build.
+After changing puzzle behavior, manually check clue navigation, crossings, completion,
+refresh, reload rotation, and saved progress in the browser.

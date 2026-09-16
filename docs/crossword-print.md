@@ -176,8 +176,8 @@ defaults, not a visitor's locally saved tuning values. Turn both effects off for
 
 ## Validation notes
 
-The scatter generator is deterministic and bounded, with tests covering preset
-selection, manual edits, spacing, jitter, seed, and geometry preservation. SVG specimens
+The scatter generator is deterministic and bounded. Manually check preset selection,
+manual edits, spacing, jitter, seed, and geometry preservation after changes. SVG specimens
 were checked with Sharp; its renderer cannot nest SVG inputs inside `feImage`, so only
 the specimen inputs were rasterized at 4× for that check. The web implementation keeps
 SVG data-URI inputs. Live browser appearance is being tested by the user.
