@@ -69,7 +69,7 @@ export const sections: Section[] = [
       },
       { date: "08 2026", title: "5f", category: "Venture", url: "https://5f.hobin.dev" },
       { date: "08 2026", title: "[unnamed]", category: "Commission" },
-      { date: "07 2026", title: "Break It Down", category: "Personal" },
+      { date: "07 2026", title: "노래 (Norae)", category: "Personal" },
       { date: "07 2026", title: "Portmanteau", category: "Personal" },
       {
         date: "07 2026",
