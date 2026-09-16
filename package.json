@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "check": "bun run typecheck && bun run lint && NEXT_DIST_DIR=.next-build bun run build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
