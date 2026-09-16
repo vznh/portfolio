@@ -29,7 +29,14 @@ export function CrosswordStrokeFilter({
   return (
     <svg className={styles.filterDefinitions} width="0" height="0" aria-hidden="true" focusable="false">
       <defs>
-        <filter id={id} x="-150%" y="-100%" width="400%" height="300%" colorInterpolationFilters="sRGB">
+        <filter
+          id={id}
+          x={shape ? "-150%" : "-5%"}
+          y={shape ? "-100%" : "-20%"}
+          width={shape ? "400%" : "110%"}
+          height={shape ? "300%" : "140%"}
+          colorInterpolationFilters="sRGB"
+        >
           {shape ? (
             <>
               <feOffset in="SourceAlpha" dx="0" dy="0" result="glyph-alpha" />
