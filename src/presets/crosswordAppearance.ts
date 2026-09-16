@@ -50,11 +50,11 @@ export interface CrosswordAppearance {
 
 export const crosswordAppearanceDefaults: CrosswordAppearance = {
   halftone: {
-    enabled: false,
-    opacity: 0.11,
-    scale: 0.35,
+    enabled: true,
+    opacity: 1,
+    scale: 0.25,
     rotation: 0,
-    contrast: 0.5,
+    contrast: 1.8,
     blend: "screen",
     offsetX: 0,
     offsetY: 0,

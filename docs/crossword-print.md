@@ -60,8 +60,8 @@ without intercepting input. Cell interiors and empty spaces remain clean. The li
 mask follows the rendered cells when the grid resizes.
 Opacity, scale, rotation, contrast, offsets, and blend mode are adjustable. Screen lightens
 the ink; Multiply darkens the lines; Soft light gives a gentler contrast treatment.
-The approved defaults keep the static halftone disabled, with Screen blending,
-11% opacity, 0.35 scale, and 0.5 contrast ready if enabled. The previous automatic
+The approved defaults enable the static halftone with Screen blending,
+100% opacity, 0.25 scale, and 1.8 contrast. The previous automatic
 Multiply migration has been removed. Entrance and completion animations remain active.
 
 Toggle **Halftone → Preview** to exaggerate the texture on the grid lines.
