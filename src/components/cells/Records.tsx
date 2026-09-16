@@ -5,20 +5,10 @@ import { createPortal } from "react-dom";
 import type { Record } from "@/presets/content";
 import { useRecordsScrollSpace } from "@/hooks/useRecordsScrollSpace";
 
-const READING_LINE = false;
-
 const ROW_CLASS =
   "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
 
-function RecordRow({
-  record,
-  dimmed,
-  onHover,
-}: {
-  record: Record;
-  dimmed: boolean;
-  onHover: (y: number) => void;
-}) {
+function RecordRow({ record, dimmed, onHover }: { record: Record; dimmed: boolean; onHover: () => void }) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
@@ -29,8 +19,7 @@ function RecordRow({
   const className = `${ROW_CLASS} ${dimmed ? "opacity-40" : ""}`;
   const hover = (e: React.PointerEvent<HTMLElement>) => {
     if (e.pointerType !== "mouse") return;
-    const r = e.currentTarget.getBoundingClientRect();
-    onHover(r.top + r.height / 2);
+    onHover();
   };
   if (record.url) {
     return (
@@ -57,7 +46,6 @@ function RecordRow({
 export function Records({ records }: { records: Record[] }) {
   const listRef = useRef<HTMLUListElement>(null);
   useRecordsScrollSpace(listRef);
-  const [line, setLine] = useState<{ y: number; key: number } | null>(null);
   const [hovered, setHovered] = useState<Record | null>(null);
   const [readingIndex, setReadingIndex] = useState<number | null>(null);
   const active = readingIndex !== null ? records[readingIndex] : hovered;
@@ -75,10 +63,7 @@ export function Records({ records }: { records: Record[] }) {
             key={`${record.date} ${record.title}`}
             record={record}
             dimmed={active !== null && active !== record}
-            onHover={(y) => {
-              setHovered(record);
-              if (READING_LINE) setLine((prev) => ({ y, key: (prev?.key ?? 0) + 1 }));
-            }}
+            onHover={() => setHovered(record)}
           />
         ))}
       </ul>
@@ -100,15 +85,6 @@ export function Records({ records }: { records: Record[] }) {
           </div>,
           listRef.current?.closest("#content") ?? document.body,
         )}
-      {line && (
-        <div
-          key={line.key}
-          aria-hidden
-          className="pointer-events-none fixed left-[25%] h-px w-[50%] animate-reading-line bg-[#002fa7] md:left-[6.25vw] md:w-[75vw]"
-          style={{ top: line.y }}
-          onAnimationEnd={() => setLine(null)}
-        />
-      )}
     </>
   );
 }
