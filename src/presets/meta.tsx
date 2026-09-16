@@ -4,8 +4,7 @@ import { profile } from "@/presets/profile";
 export const SITE_URL = "https://www.hobin.dev";
 const NAME = profile.name;
 const TITLE = NAME;
-const DESCRIPTION =
-  "Jason Son does engineering, research, and design in New York.";
+const DESCRIPTION = "Jason Son does engineering, research, and design in New York.";
 const OG_IMAGE = `${SITE_URL}/og.png`;
 const OG_IMAGE_ALT = "Klein-blue background for Jason Son’s portfolio.";
 const THEME_COLOR = "#002FA7";
