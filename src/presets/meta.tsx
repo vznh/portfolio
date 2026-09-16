@@ -3,11 +3,11 @@ import { profile } from "@/presets/profile";
 
 export const SITE_URL = "https://www.hobin.dev";
 const NAME = profile.name;
-const TITLE = `${NAME} — Engineer and Designer`;
+const TITLE = NAME;
 const DESCRIPTION =
-  "Engineering, research, and design in New York. Explore Jason Son’s projects, writing, and interactive crossword.";
+  "Jason Son does engineering, research, and design in New York.";
 const OG_IMAGE = `${SITE_URL}/og.png`;
-const OG_IMAGE_ALT = "Solid cobalt-blue background for Jason Son’s portfolio.";
+const OG_IMAGE_ALT = "Klein-blue background for Jason Son’s portfolio.";
 const THEME_COLOR = "#002FA7";
 const TWITTER = "@jasonvinhson";
 const CANONICAL_URL = `${SITE_URL}/`;
