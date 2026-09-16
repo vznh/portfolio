@@ -1,12 +1,19 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { buildCrossword, isCrosswordSolved, nextClue, nextSquare } from "../src/lib/crossword.ts";
+import {
+  buildCrossword,
+  isCrosswordSolved,
+  nextClue,
+  nextSquare,
+} from "../src/lib/crossword.ts";
 import { miniCrossword } from "../src/presets/crossword.ts";
 
 const puzzle = buildCrossword(miniCrossword);
 
 test("Tab visits clues in display order and wraps through Across and Down", () => {
-  const first = puzzle.entries.find((entry) => entry.number === 1 && entry.direction === "across");
+  const first = puzzle.entries.find(
+    (entry) => entry.number === 1 && entry.direction === "across",
+  );
   let current = first;
   const visited = [];
   for (let i = 0; i < puzzle.entries.length; i++) {
@@ -30,10 +37,18 @@ test("Tab visits clues in display order and wraps through Across and Down", () =
 
 test("Shift+Tab reverses every clue transition, including wraparound", () => {
   for (const entry of puzzle.entries) {
-    assert.equal(nextClue(puzzle.entries, nextClue(puzzle.entries, entry, 1), -1), entry);
-    assert.equal(nextClue(puzzle.entries, nextClue(puzzle.entries, entry, -1), 1), entry);
+    assert.equal(
+      nextClue(puzzle.entries, nextClue(puzzle.entries, entry, 1), -1),
+      entry,
+    );
+    assert.equal(
+      nextClue(puzzle.entries, nextClue(puzzle.entries, entry, -1), 1),
+      entry,
+    );
   }
-  const first = puzzle.entries.find((entry) => entry.number === 1 && entry.direction === "across");
+  const first = puzzle.entries.find(
+    (entry) => entry.number === 1 && entry.direction === "across",
+  );
   const previous = nextClue(puzzle.entries, first, -1);
   assert.equal(previous.number, 5);
   assert.equal(previous.direction, "down");
@@ -45,27 +60,51 @@ test("the mini has unique answers, valid crossings, and a clue for every entry",
   assert.equal(puzzle.entries.length, 10);
   assert.equal(new Set(puzzle.entries.map((entry) => entry.answer)).size, 10);
   for (const direction of ["across", "down"]) {
-    const entries = puzzle.entries.filter((entry) => entry.direction === direction);
+    const entries = puzzle.entries.filter(
+      (entry) => entry.direction === direction,
+    );
     assert.deepEqual(
       entries.map((entry) => entry.number),
       Object.keys(miniCrossword.clues[direction]).map(Number),
     );
   }
   puzzle.cells.forEach((letter, index) => {
-    assert.equal(letter === "#", puzzle.cells.at(-index - 1) === "#", "grid is rotationally symmetric");
+    assert.equal(
+      letter === "#",
+      puzzle.cells.at(-index - 1) === "#",
+      "grid is rotationally symmetric",
+    );
     if (letter === "#") return;
-    const crossings = puzzle.entries.filter((entry) => entry.cells.includes(index));
+    const crossings = puzzle.entries.filter((entry) =>
+      entry.cells.includes(index),
+    );
     assert.equal(crossings.length, 2);
-    assert.deepEqual(new Set(crossings.map((entry) => entry.direction)), new Set(["across", "down"]));
-    for (const entry of crossings) assert.equal(entry.answer[entry.cells.indexOf(index)], letter);
+    assert.deepEqual(
+      new Set(crossings.map((entry) => entry.direction)),
+      new Set(["across", "down"]),
+    );
+    for (const entry of crossings)
+      assert.equal(entry.answer[entry.cells.indexOf(index)], letter);
   });
 });
 
 test("rejects oversized, malformed, or unclued puzzles", () => {
-  assert.throws(() => buildCrossword({ ...miniCrossword, rows: Array(11).fill("ABCDE") }), /at most 10/);
-  assert.throws(() => buildCrossword({ ...miniCrossword, rows: ["ABCDEFGHIJK"] }), /at most 10/);
-  assert.throws(() => buildCrossword({ ...miniCrossword, rows: ["ABC", "AB"] }), /rectangular/);
-  assert.throws(() => buildCrossword({ ...miniCrossword, clues: { across: {}, down: {} } }), /clue/);
+  assert.throws(
+    () => buildCrossword({ ...miniCrossword, rows: Array(16).fill("ABCDE") }),
+    /at most 15/,
+  );
+  assert.throws(
+    () => buildCrossword({ ...miniCrossword, rows: ["ABCDEFGHIJKLMNOP"] }),
+    /at most 15/,
+  );
+  assert.throws(
+    () => buildCrossword({ ...miniCrossword, rows: ["ABC", "AB"] }),
+    /rectangular/,
+  );
+  assert.throws(
+    () => buildCrossword({ ...miniCrossword, clues: { across: {}, down: {} } }),
+    /clue/,
+  );
 });
 
 test("navigation stays within the grid and never lands on a block or wraps a row", () => {
@@ -75,7 +114,8 @@ test("navigation stays within the grid and never lands on a block or wraps a row
       const target = nextSquare(puzzle.cells, puzzle.width, index, delta);
       assert.ok(target >= 0 && target < puzzle.cells.length);
       assert.notEqual(puzzle.cells[target], "#");
-      if (Math.abs(delta) === 1) assert.equal(Math.floor(target / 5), Math.floor(index / 5));
+      if (Math.abs(delta) === 1)
+        assert.equal(Math.floor(target / 5), Math.floor(index / 5));
       else assert.equal(target % 5, index % 5);
     }
   }
