@@ -98,7 +98,7 @@ export function Records({ records }: { records: Record[] }) {
               className="h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw]"
             />
           </div>,
-          document.body,
+          listRef.current?.closest("#content") ?? document.body,
         )}
       {line && (
         <div

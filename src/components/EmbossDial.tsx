@@ -1,7 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDialKitController, DialRoot, DialStore, type DialValue } from "dialkit";
-import { embossDefaults, type EmbossParams, type EmbossVersion } from "@/presets/emboss";
-import { EmbossedGlyph } from "./EmbossedGlyph";
+import { embossDefaults, type EmbossVersion } from "@/presets/emboss";
 
 const PANEL_ID = "emboss";
 
@@ -31,7 +30,14 @@ function fromDialValues(values: Record<string, DialValue>): EmbossVersion {
   };
 }
 
-export function EmbossDial() {
+export function EmbossDial({
+  initialVersion,
+  onChange,
+}: {
+  initialVersion: EmbossVersion;
+  onChange: (version: EmbossVersion) => void;
+}) {
+  const initialVersionRef = useRef(initialVersion);
   const dial = useDialKitController(
     "Bevel & Emboss",
     {
@@ -79,11 +85,35 @@ export function EmbossDial() {
   );
 
   useEffect(() => {
-    const presets = DialStore.getPresets(PANEL_ID);
-    if (presets.length === 0) return;
-    DialStore.loadPreset(PANEL_ID, presets[Math.floor(Math.random() * presets.length)].id);
+    // Reopening the controls edits the visit's existing logo rather than picking
+    // a new preset during the page's exit or entrance animation.
+    const version = initialVersionRef.current;
+    // DialKit writes edits into the active saved preset. Select the base values
+    // first so initializing a visit never overwrites a user's preset.
+    DialStore.clearActivePreset(PANEL_ID);
+    DialStore.updateValues(PANEL_ID, {
+      glyph: version.glyph,
+      "structure.style": version.style,
+      "structure.technique": version.technique,
+      "structure.depth": version.depth,
+      "structure.direction": version.direction,
+      "structure.size": version.size,
+      "structure.soften": version.soften,
+      "shading.angle": version.angle,
+      "shading.altitude": version.altitude,
+      "highlight.color": version.highlight.color,
+      "highlight.opacity": version.highlight.opacity,
+      "shadow.color": version.shadow.color,
+      "shadow.opacity": version.shadow.opacity,
+      fill: version.fill,
+    });
   }, []);
   const p = dial.values;
+
+  useEffect(() => {
+    // Read after initialization so stale persisted values cannot flash the logo.
+    onChange(fromDialValues(DialStore.getValues(PANEL_ID)));
+  }, [onChange, p]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -102,24 +132,5 @@ export function EmbossDial() {
     return () => window.removeEventListener("keydown", onKey);
   }, [dial]);
 
-  const params: EmbossParams = {
-    style: p.structure.style as EmbossParams["style"],
-    technique: p.structure.technique as EmbossParams["technique"],
-    depth: p.structure.depth,
-    direction: p.structure.direction as EmbossParams["direction"],
-    size: p.structure.size,
-    soften: p.structure.soften,
-    angle: p.shading.angle,
-    altitude: p.shading.altitude,
-    highlight: { color: p.highlight.color, opacity: p.highlight.opacity },
-    shadow: { color: p.shadow.color, opacity: p.shadow.opacity },
-    fill: p.fill,
-  };
-
-  return (
-    <>
-      <EmbossedGlyph glyph={p.glyph} params={params} />
-      <DialRoot position="bottom-right" />
-    </>
-  );
+  return <DialRoot position="bottom-right" />;
 }

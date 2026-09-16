@@ -1,0 +1,477 @@
+.page {
+  --paper: #ffffff;
+  --ink: #262626;
+  --grid-size: min(360px, calc(100vw - 44px));
+  display: flex;
+  min-height: 100svh;
+  height: 100dvh;
+  overflow-y: auto;
+  background: var(--paper);
+  color: var(--ink);
+  padding: clamp(20px, 4svh, 40px) 22px;
+  font-family: var(--font-sans);
+}
+
+.newspaper {
+  position: relative;
+  isolation: isolate;
+  background: var(--paper);
+  width: min(100%, 520px);
+  flex-shrink: 0;
+  margin: auto;
+}
+
+.filterDefinitions {
+  position: absolute;
+  pointer-events: none;
+}
+
+.entering .gridColumn,
+.exiting .gridColumn {
+  -webkit-mask-image: radial-gradient(
+    circle,
+    #000 max(0px, calc(var(--crossword-dot-radius) - 0.3px)),
+    transparent var(--crossword-dot-radius)
+  );
+  mask-image: radial-gradient(
+    circle,
+    #000 max(0px, calc(var(--crossword-dot-radius) - 0.3px)),
+    transparent var(--crossword-dot-radius)
+  );
+  -webkit-mask-size: 6px 6px;
+  mask-size: 6px 6px;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  pointer-events: none;
+}
+
+.entering,
+.exiting {
+  pointer-events: none;
+}
+
+.entering .clues,
+.exiting .clues,
+.entering .controls,
+.exiting .controls {
+  opacity: 0;
+}
+
+.entering {
+  animation: halftoneIn var(--crossword-enter-duration, 1000ms) cubic-bezier(0.22, 0.61, 0.36, 1)
+    var(--crossword-enter-delay, 400ms) both;
+}
+
+.exiting {
+  animation: halftoneOut var(--crossword-exit-duration, 850ms) cubic-bezier(0.64, 0, 0.78, 0) both;
+}
+
+.ready,
+.holding {
+  --crossword-dot-radius: 4.6px;
+}
+
+.complete {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@keyframes halftoneIn {
+  from {
+    --crossword-dot-radius: var(--crossword-from-radius, 0px);
+  }
+  to {
+    --crossword-dot-radius: 4.6px;
+  }
+}
+
+@keyframes halftoneOut {
+  from {
+    --crossword-dot-radius: var(--crossword-from-radius, 4.6px);
+  }
+  to {
+    --crossword-dot-radius: 0px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entering,
+  .exiting {
+    animation-duration: 1ms;
+    animation-delay: 0ms;
+  }
+
+  .entering .gridColumn,
+  .exiting .gridColumn {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .page .clues,
+  .page .controls {
+    transition: none;
+  }
+}
+
+.halftone {
+  position: absolute;
+  inset: -2px;
+  z-index: 2;
+  overflow: hidden;
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  pointer-events: none;
+  user-select: none;
+}
+
+.halftone::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background-image: url("/assets/textures/crossword-halftone.jpg");
+  background-repeat: repeat;
+  background-size: var(--halftone-scale) auto;
+  background-position: var(--halftone-x) var(--halftone-y);
+  filter: contrast(var(--halftone-contrast));
+  transform: rotate(var(--halftone-rotation));
+}
+
+.clues .printedText,
+.clues .clueNumber {
+  position: relative;
+  isolation: isolate;
+  color: var(--text-source-color, #000);
+  filter: var(--text-stroke-filter, none);
+}
+
+.printedText::after,
+.clueNumber::after {
+  content: attr(data-ink-text);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: var(--text-source-width, 0px) #0000ff;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  user-select: none;
+}
+
+.printedText {
+  display: block;
+}
+
+.puzzle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+}
+
+.gridColumn {
+  display: grid;
+  place-items: center;
+  width: var(--grid-size);
+  max-width: 100%;
+  aspect-ratio: 1;
+  padding: 1px;
+  margin-inline: auto;
+}
+
+.grid {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+
+  width: calc(
+    (100% - (var(--grid-extent) - 1) * 1px) / var(--grid-extent) * var(--grid-columns) +
+      (var(--grid-columns) - 1) * 1px
+  );
+  border: 2px solid var(--ink);
+  background: var(--ink);
+  gap: 1px;
+}
+
+.freeform {
+  border: 0;
+  background: transparent;
+  container-type: inline-size;
+}
+
+.freeform .cell {
+  outline: 1px solid var(--ink);
+}
+
+.freeform .cell input {
+  font-size: clamp(14px, calc(58cqw / var(--grid-columns)), 30px);
+}
+
+.freeform .number {
+  top: 2px;
+  left: 3px;
+  font-size: clamp(8px, calc(24cqw / var(--grid-columns)), 11px);
+}
+
+.cell,
+.block {
+  position: relative;
+  aspect-ratio: 1;
+  min-width: 0;
+}
+
+.cell {
+  background: var(--paper);
+}
+
+.inWord {
+  background: #ebebeb;
+}
+
+.selected {
+  background: #d4d4d4;
+}
+
+.cell:focus-within {
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.cell input {
+  width: 100%;
+  height: 100%;
+  padding: 10% 0 0;
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: clamp(24px, 4vw, 34px);
+  font-weight: 400;
+  text-align: center;
+  caret-color: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.cell input::selection {
+  background: transparent;
+}
+
+.incorrect::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 141.421356%;
+  height: 1px;
+  background: #c62828;
+  opacity: 0.8;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  pointer-events: none;
+}
+
+.number {
+  position: absolute;
+  top: 4px;
+  left: 5px;
+  font-size: 12px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.clues {
+  opacity: 1;
+  transition: opacity 300ms ease;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding-top: 1px;
+}
+
+.clues h2 {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding-bottom: 8px;
+  margin-bottom: 6px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.clues ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.directionArrow {
+  display: block;
+  overflow: visible;
+  color: #000;
+  filter: var(--arrow-stroke-filter, none);
+  width: 32px;
+  height: 32px;
+  flex: none;
+}
+
+.downArrow {
+  width: 20px;
+  height: 20px;
+  margin-inline: 6px;
+  transform: scale(1.3);
+}
+
+.clues button {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  width: 100%;
+  border-left: 2px solid transparent;
+  padding: 5px 6px;
+  margin-left: -8px;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.clueNumber {
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.clues button:hover {
+  background: #f0f0f0;
+}
+
+.clues button.activeClue {
+  border-left-color: var(--ink);
+  background: #ebebeb;
+}
+
+.clues button:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(4px, 1.5vw, 12px);
+  margin-bottom: 24px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: opacity 300ms ease;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 12px);
+}
+
+.controls a,
+.controls button {
+  padding-block: 6px;
+  color: inherit;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.controls button[aria-pressed="true"],
+.controls a:hover,
+.controls button:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.controls a:focus-visible,
+.controls button:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.controls button:disabled {
+  cursor: default;
+}
+
+@media (max-width: 640px) {
+  .newspaper {
+    width: 100%;
+    max-width: none;
+  }
+
+  .puzzle {
+    gap: 24px;
+  }
+
+  .clues {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .clues button {
+    font-size: 14px;
+    padding-block: 7px;
+  }
+}
+
+@media print {
+  .controls {
+    display: none;
+  }
+  .newspaper {
+    animation: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+    visibility: visible;
+  }
+
+  .newspaper .gridColumn {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .newspaper .clues {
+    opacity: 1;
+    transition: none;
+  }
+  .page {
+    height: auto;
+    padding: 0;
+    overflow: visible;
+    --paper: #fff;
+  }
+
+  .grid {
+    print-color-adjust: exact;
+  }
+
+  .newspaper {
+    print-color-adjust: exact;
+  }
+
+  .cell {
+    background: #fff;
+  }
+
+  .clues button.activeClue {
+    border-color: transparent;
+    background: transparent;
+  }
+}

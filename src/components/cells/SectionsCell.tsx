@@ -1,9 +1,14 @@
 import { sections } from "@/presets/content";
 import { handleSectionLinkClick } from "@/lib/scrollToHeading";
+import type { MouseEventHandler } from "react";
 
 const ITEM_CLASS = "font-heading text-[13px] text-black opacity-80 transition-opacity hover:opacity-100";
 
-export function SectionsCell() {
+export function SectionsCell({
+  onCrosswordClick,
+}: {
+  onCrosswordClick: MouseEventHandler<HTMLAnchorElement>;
+}) {
   const titledSections = sections.filter((section) => section.heading);
 
   return (
@@ -16,6 +21,13 @@ export function SectionsCell() {
             </a>
           </li>
         ))}
+        <li>
+          <h2>
+            <a href="#crossword" onClick={onCrosswordClick} className={ITEM_CLASS}>
+              Crossword
+            </a>
+          </h2>
+        </li>
         <li className="md:hidden">
           <a href="#about" className={ITEM_CLASS}>
             Top

@@ -10,6 +10,12 @@
   font-display: swap;
 }
 
+@property --crossword-dot-radius {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 :root {
   --font-heading: "ABC Schengen A", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "ABC Schengen A", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -41,4 +47,55 @@ body {
   display: none;
   width: 0;
   height: 0;
+}
+
+.portfolio-content {
+  display: none;
+}
+
+.home-views[data-content-visible]:not([data-crossword-exiting]) .portfolio-content,
+.home-views:not([data-crossword-exiting]):has(.portfolio-content:target, .portfolio-content :target)
+  .portfolio-content {
+  display: block;
+}
+
+@keyframes portfolioFadeIn {
+  from {
+    opacity: var(--portfolio-fade-from, 0);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes portfolioFadeOut {
+  from {
+    opacity: var(--portfolio-fade-from, 1);
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  .home-views .portfolio-content {
+    animation: portfolioFadeIn 500ms ease-out var(--portfolio-enter-delay, 400ms) backwards;
+  }
+}
+
+.home-views[data-content-exiting] .portfolio-content {
+  animation: portfolioFadeOut 350ms ease-in both;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-views[data-content-exiting] .portfolio-content {
+    animation-duration: 1ms;
+  }
+}
+
+.home-views[data-content-visible]:not([data-crossword-exiting]) .crossword-landing,
+.home-views:not([data-crossword-exiting]):has(.portfolio-content:target, .portfolio-content :target)
+  .crossword-landing {
+  display: none;
 }
