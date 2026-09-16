@@ -3,6 +3,7 @@ import {
   useEffect,
   useId,
   useLayoutEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -29,11 +30,20 @@ import styles from "@/styles/crossword.module.css";
 import { crosswordAppearanceDefaults } from "@/presets/crosswordAppearance";
 import { getNativeStrokeWidth } from "@/lib/crosswordAppearance";
 import { CrosswordHalftone, CrosswordStrokeFilter } from "./CrosswordPrintEffects";
+import { applyCrosswordInput, parseCrosswordLetters } from "@/lib/crosswordInput";
 
 const CrosswordDial =
   process.env.NODE_ENV === "development" ? dynamic(() => import("./CrosswordDial"), { ssr: false }) : null;
 
 const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+
+function withLocalStorage<T>(operation: (storage: Storage | null) => T): T {
+  try {
+    return operation(window.localStorage);
+  } catch {
+    return operation(null);
+  }
+}
 
 export function Crossword({ contentVisible = false }: { contentVisible?: boolean }) {
   const [selection, setSelection] = useState<CrosswordSelection | null>(null);
@@ -43,20 +53,12 @@ export function Crossword({ contentVisible = false }: { contentVisible?: boolean
   useEffect(() => {
     if (selectedForVisit.current) return;
     selectedForVisit.current = true;
-    try {
-      setSelection(selectCrossword(window.localStorage, crosswordPermutations));
-    } catch {
-      setSelection(selectCrossword(null, crosswordPermutations));
-    }
+    setSelection(withLocalStorage((storage) => selectCrossword(storage, crosswordPermutations)));
   }, []);
 
   const nextSelection = useCallback(() => {
     if (!selection) return null;
-    try {
-      return advanceCrossword(window.localStorage, selection, crosswordPermutations);
-    } catch {
-      return advanceCrossword(null, selection, crosswordPermutations);
-    }
+    return withLocalStorage((storage) => advanceCrossword(storage, selection, crosswordPermutations));
   }, [selection]);
   const onRefresh = useCallback(() => {
     setSelection(nextSelection());
@@ -91,7 +93,13 @@ function CrosswordGame({
   contentVisible: boolean;
 }) {
   const [puzzle] = useState(() => buildCrossword(definition));
-  const storageKey = progressKey;
+  const entriesByDirection = useMemo(
+    () => ({
+      across: puzzle.entries.filter((item) => item.direction === "across"),
+      down: puzzle.entries.filter((item) => item.direction === "down"),
+    }),
+    [puzzle],
+  );
   const [appearance, setAppearance] = useState(crosswordAppearanceDefaults);
   const animationStart = useRef(0);
   const strokeId = `crossword-stroke-${useId().replace(/:/g, "")}`;
@@ -133,6 +141,7 @@ function CrosswordGame({
   const entry =
     puzzle.entries.find((item) => item.direction === direction && item.cells.includes(active)) ??
     puzzle.entries.find((item) => item.cells.includes(active))!;
+  const entryCells = useMemo(() => new Set(entry.cells), [entry]);
 
   const captureAnimation = useCallback(() => {
     const value = articleRef.current
@@ -179,24 +188,20 @@ function CrosswordGame({
 
   useEffect(() => {
     try {
-      const saved: unknown = JSON.parse(localStorage.getItem(storageKey) ?? "null");
-      if (
-        Array.isArray(saved) &&
-        saved.length === puzzle.cells.length &&
-        saved.every((value) => typeof value === "string" && /^[A-Z]?$/.test(value))
-      ) {
+      const saved = parseCrosswordLetters(localStorage.getItem(progressKey), puzzle.cells.length);
+      if (saved) {
         setLetters(saved);
       }
     } catch {}
     setRestored(true);
-  }, [puzzle, storageKey]);
+  }, [puzzle, progressKey]);
 
   useEffect(() => {
     if (!restored) return;
     try {
-      localStorage.setItem(storageKey, JSON.stringify(letters));
+      localStorage.setItem(progressKey, JSON.stringify(letters));
     } catch {}
-  }, [letters, restored, storageKey]);
+  }, [letters, progressKey, restored]);
 
   useEffect(() => {
     if (!restored) return;
@@ -295,16 +300,10 @@ function CrosswordGame({
   }
 
   function enterLetters(index: number, value: string) {
-    const text = value.toUpperCase().replace(/[^A-Z]/g, "");
-    if (!text) return;
-    const run = entry.cells.slice(entry.cells.indexOf(index));
-    const next = [...letters];
-    for (let offset = 0; offset < Math.min(text.length, run.length); offset++) {
-      next[run[offset]] = text[offset];
-    }
-    setLetters(next);
-    const lastEntered = run[Math.min(text.length, run.length) - 1];
-    focusSquare(nextUnfinishedSquare(entry, lastEntered, next));
+    const result = applyCrosswordInput(letters, entry, index, value);
+    if (!result) return;
+    setLetters(result.letters);
+    focusSquare(nextUnfinishedSquare(entry, result.lastEntered, result.letters));
   }
 
   function clearLetters() {
@@ -437,7 +436,7 @@ function CrosswordGame({
               {puzzle.cells.map((solution, index) => {
                 if (solution === "#") return <div key={index} className={styles.block} aria-hidden="true" />;
                 const selected = interacting && active === index;
-                const inWord = interacting && entry.cells.includes(index);
+                const inWord = interacting && entryCells.has(index);
                 const incorrect = autoCheck && letters[index] !== "" && letters[index] !== solution;
                 return (
                   <div
@@ -527,32 +526,30 @@ function CrosswordGame({
                   <span className="sr-only">{clueDirection === "across" ? "Across" : "Down"}</span>
                 </h2>
                 <ol>
-                  {puzzle.entries
-                    .filter((item) => item.direction === clueDirection)
-                    .map((item) => (
-                      <li key={item.number}>
-                        <button
-                          id={`clue-${item.direction}-${item.number}`}
-                          className={interacting && entry === item ? styles.activeClue : ""}
-                          aria-label={`${item.number} ${item.direction}: ${item.clue}`}
-                          aria-pressed={interacting && entry === item}
-                          disabled={locked}
-                          onClick={() =>
-                            focusSquare(
-                              item.cells.find((cell) => !letters[cell]) ?? item.cells[0],
-                              item.direction,
-                            )
-                          }
-                        >
-                          <span className={styles.clueNumber} data-ink-text={item.number}>
-                            {item.number}
-                          </span>
-                          <span className={styles.printedText} data-ink-text={item.clue}>
-                            {item.clue}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
+                  {entriesByDirection[clueDirection].map((item) => (
+                    <li key={item.number}>
+                      <button
+                        id={`clue-${item.direction}-${item.number}`}
+                        className={interacting && entry === item ? styles.activeClue : ""}
+                        aria-label={`${item.number} ${item.direction}: ${item.clue}`}
+                        aria-pressed={interacting && entry === item}
+                        disabled={locked}
+                        onClick={() =>
+                          focusSquare(
+                            item.cells.find((cell) => !letters[cell]) ?? item.cells[0],
+                            item.direction,
+                          )
+                        }
+                      >
+                        <span className={styles.clueNumber} data-ink-text={item.number}>
+                          {item.number}
+                        </span>
+                        <span className={styles.printedText} data-ink-text={item.clue}>
+                          {item.clue}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
                 </ol>
               </section>
             ))}

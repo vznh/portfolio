@@ -24,6 +24,7 @@ export function CrosswordStrokeFilter({
     () => (stroke.style === "scatter" ? createScatterTile(stroke.scatter, stroke.brush.seed) : null),
     [stroke.style, stroke.scatter, stroke.brush.seed],
   );
+  const strokeInput = scatterTile ? "scattered-outline" : textured ? "brush-outline" : "outline";
 
   return (
     <svg className={styles.filterDefinitions} width="0" height="0" aria-hidden="true" focusable="false">
@@ -95,15 +96,10 @@ export function CrosswordStrokeFilter({
             </>
           )}
           {stroke.position === "center" ? (
-            <feOffset
-              in={scatterTile ? "scattered-outline" : textured ? "brush-outline" : "outline"}
-              dx="0"
-              dy="0"
-              result="stroke-mask"
-            />
+            <feOffset in={strokeInput} dx="0" dy="0" result="stroke-mask" />
           ) : (
             <feComposite
-              in={scatterTile ? "scattered-outline" : textured ? "brush-outline" : "outline"}
+              in={strokeInput}
               in2="glyph-alpha"
               operator={stroke.position === "inside" ? "in" : "out"}
               result="stroke-mask"
