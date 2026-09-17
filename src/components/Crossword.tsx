@@ -369,11 +369,13 @@ function CrosswordGame({
       <article
         ref={articleRef}
         className={`${styles.newspaper} ${styles[transition.phase]}`}
-        style={{
-          ...appearanceStyle,
-          animationPlayState:
-            restored && !(transition.phase === "entering" && contentVisible) ? "running" : "paused",
-        }}
+        style={
+          {
+            ...appearanceStyle,
+            "--crossword-animation-play-state":
+              restored && !(transition.phase === "entering" && contentVisible) ? "running" : "paused",
+          } as CSSProperties
+        }
         aria-label="Crossword"
         aria-hidden={transition.phase === "complete" || undefined}
       >
