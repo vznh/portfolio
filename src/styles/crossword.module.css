@@ -436,23 +436,6 @@
   }
 }
 
-@media screen and (max-width: 640px) and (prefers-reduced-motion: no-preference) {
-  .entering .clues,
-  .entering .controls {
-    animation: detailsIn var(--crossword-enter-duration, 1000ms) ease var(--crossword-enter-delay, 400ms) both;
-    animation-play-state: var(--crossword-animation-play-state, running);
-  }
-}
-
-@keyframes detailsIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @media print {
   .controls {
     display: none;
