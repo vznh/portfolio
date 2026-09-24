@@ -50,11 +50,15 @@
   pointer-events: none;
 }
 
-.entering .clues,
 .exiting .clues,
-.entering .controls,
 .exiting .controls {
   opacity: 0;
+}
+
+/* Non-zero so filtered text paints before the fade starts. */
+.entering .clues,
+.entering .controls {
+  opacity: 0.001;
 }
 
 .entering {
@@ -291,6 +295,7 @@
 .clues {
   opacity: 1;
   transition: opacity 300ms ease;
+  will-change: opacity;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 24px;
@@ -374,6 +379,7 @@
   line-height: 1.4;
   white-space: nowrap;
   transition: opacity 300ms ease;
+  will-change: opacity;
 }
 
 .identity {
