@@ -45,6 +45,29 @@ function withLocalStorage<T>(operation: (storage: Storage | null) => T): T {
   }
 }
 
+function ClueNavigationInput({
+  step,
+  disabled,
+  onNavigate,
+}: {
+  step: 1 | -1;
+  disabled: boolean;
+  onNavigate: (step: 1 | -1) => void;
+}) {
+  return (
+    <input
+      className={styles.clueNavigationInput}
+      style={{ left: step === -1 ? 0 : "auto", right: step === 1 ? 0 : "auto" }}
+      aria-label={`${step === -1 ? "Previous" : "Next"} unfinished clue`}
+      autoComplete="off"
+      inputMode="text"
+      disabled={disabled}
+      onPointerDown={(event) => event.preventDefault()}
+      onFocus={() => onNavigate(step)}
+    />
+  );
+}
+
 export function Crossword({ contentVisible = false }: { contentVisible?: boolean }) {
   const [selection, setSelection] = useState<CrosswordSelection | null>(null);
   const [autoCheck, setAutoCheck] = useState(true);
@@ -137,7 +160,7 @@ function CrosswordGame({
   const locked = transition.phase !== "ready";
   const inputs = useRef<Array<HTMLInputElement | null>>([]);
   const repeatClick = useRef(false);
-  const cycleClues = useRef(true);
+  const [cycleClues, setCycleClues] = useState(false);
   const entry =
     puzzle.entries.find((item) => item.direction === direction && item.cells.includes(active)) ??
     puzzle.entries.find((item) => item.cells.includes(active))!;
@@ -291,7 +314,7 @@ function CrosswordGame({
   }
 
   function focusSquare(index: number, nextDirection = entry.direction) {
-    cycleClues.current = true;
+    setCycleClues(true);
     setActive(index);
     setDirection(nextDirection);
     setInteracting(true);
@@ -304,6 +327,18 @@ function CrosswordGame({
     if (!result) return;
     setLetters(result.letters);
     focusSquare(nextUnfinishedSquare(entry, result.lastEntered, result.letters));
+  }
+
+  function focusClue(step: 1 | -1) {
+    const next = nextClue(puzzle.entries, entry, step, letters);
+    if (!next) {
+      focusSquare(active);
+      return;
+    }
+    focusSquare(
+      next.cells.find((cell, position) => letters[cell] !== next.answer[position]) ?? next.cells[0],
+      next.direction,
+    );
   }
 
   function clearLetters() {
@@ -325,17 +360,12 @@ function CrosswordGame({
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>, index: number) {
     if (event.metaKey || event.ctrlKey || event.altKey || event.nativeEvent.isComposing) return;
     if (event.key === "Tab") {
-      if (!cycleClues.current) return;
-      const next = nextClue(puzzle.entries, entry, event.shiftKey ? -1 : 1, letters);
-      if (!next) return;
+      if (!cycleClues) return;
       event.preventDefault();
-      focusSquare(
-        next.cells.find((cell, position) => letters[cell] !== next.answer[position]) ?? next.cells[0],
-        next.direction,
-      );
+      focusClue(event.shiftKey ? -1 : 1);
     } else if (event.key === "Escape") {
       event.preventDefault();
-      cycleClues.current = false;
+      setCycleClues(false);
     } else if (event.key === " " || event.key === "Enter") {
       event.preventDefault();
       setDirection(entry.direction === "across" ? "down" : "across");
@@ -423,10 +453,11 @@ function CrosswordGame({
             <p id="crossword-instructions" className="sr-only">
               Type to fill a square and advance past correct letters. Tab selects the next unfinished clue;
               Shift+Tab selects the previous unfinished clue, cycling through Across, then Down and skipping
-              correct answers. Click a completed clue or square to edit it. Left and Right move across; Up and
-              Down move down. Enter or Space switches direction at a crossing. Backspace erases. Press Escape,
-              then Tab to leave the grid. Select a clue to fill its answer. When Auto-check is on, incorrect
-              letters are marked with a red line.
+              correct answers. The onscreen keyboard’s Previous and Next controls also select unfinished
+              clues. Click a completed clue or square to edit it. Left and Right move across; Up and Down move
+              down. Enter or Space switches direction at a crossing. Backspace erases. Press Escape, then Tab
+              to leave the grid. Select a clue to fill its answer. When Auto-check is on, incorrect letters
+              are marked with a red line.
             </p>
             <div
               className={`${styles.grid} ${definition.layout === "freeform" ? styles.freeform : ""}`}
@@ -434,6 +465,9 @@ function CrosswordGame({
               aria-label={`${puzzle.width} by ${puzzle.height} crossword`}
               aria-describedby="crossword-instructions"
               style={{ gridTemplateColumns: `repeat(${puzzle.width}, 1fr)` }}
+              onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setCycleClues(false);
+              }}
             >
               {puzzle.cells.map((solution, index) => {
                 if (solution === "#") return <div key={index} className={styles.block} aria-hidden="true" />;
@@ -450,6 +484,13 @@ function CrosswordGame({
                       <span className={styles.number} aria-hidden="true">
                         {puzzle.numbers[index]}
                       </span>
+                    )}
+                    {active === index && (
+                      <ClueNavigationInput
+                        step={-1}
+                        disabled={locked || !cycleClues}
+                        onNavigate={focusClue}
+                      />
                     )}
                     <input
                       ref={(element) => {
@@ -469,13 +510,13 @@ function CrosswordGame({
                       tabIndex={active === index ? 0 : -1}
                       value={letters[index]}
                       onFocus={(event) => {
-                        cycleClues.current = true;
+                        setCycleClues(true);
                         setActive(index);
                         setInteracting(true);
                         event.currentTarget.select();
                       }}
                       onPointerDown={() => {
-                        cycleClues.current = true;
+                        setCycleClues(true);
                         repeatClick.current =
                           interacting && active === index && document.activeElement === inputs.current[index];
                       }}
@@ -497,6 +538,9 @@ function CrosswordGame({
                         enterLetters(index, event.clipboardData.getData("text"));
                       }}
                     />
+                    {active === index && (
+                      <ClueNavigationInput step={1} disabled={locked || !cycleClues} onNavigate={focusClue} />
+                    )}
                   </div>
                 );
               })}
