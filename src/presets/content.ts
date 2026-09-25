@@ -68,7 +68,7 @@ export const sections: Section[] = [
         image: { src: "/assets/records/britnie.jpg", width: 1200, height: 1200 },
       },
       { date: "08 2026", title: "5f", category: "Venture", url: "https://5f.hobin.dev" },
-      { date: "08 2026", title: "Monarch", category: "Commission" },
+      { date: "08 2026", title: "Monarch Capital", category: "Commission" },
       { date: "07 2026", title: "노래 (Norae)", category: "Personal" },
       { date: "07 2026", title: "Portmanteau", category: "Personal" },
       {
