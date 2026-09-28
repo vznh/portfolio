@@ -11,3 +11,5 @@ bun dev
 
 Run `bun run format:check` for formatting and `bun run check` for type checking,
 linting, and a production build.
+
+Refresh the Publications list from Substack with `bun run sync:publications`. The saved list is rendered with the site, so page loads do not depend on Substack availability.

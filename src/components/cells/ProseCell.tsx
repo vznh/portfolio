@@ -89,8 +89,18 @@ function Prose({ section }: { section: Section }) {
         {section.records && <Records records={section.records} />}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
-            <span className="block">{renderInline(project.name)}</span>
-            <span className="block opacity-80">{renderInline(project.description)}</span>
+            <span className="block">
+              {project.url ? (
+                <a href={project.url} target="_blank" rel="noreferrer" className={LINK_CLASS}>
+                  {project.name}
+                </a>
+              ) : (
+                renderInline(project.name)
+              )}
+            </span>
+            {project.description && (
+              <span className="block opacity-80">{renderInline(project.description)}</span>
+            )}
             {project.pullRequests && (
               <span className="block opacity-80">{renderInline(project.pullRequests)}</span>
             )}

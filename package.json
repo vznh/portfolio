@@ -11,13 +11,15 @@
     "check": "bun run typecheck && bun run lint && NEXT_DIST_DIR=.next-build bun run build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "doctor": "react-doctor . --yes --no-supply-chain"
+    "doctor": "react-doctor . --yes --no-supply-chain",
+    "sync:publications": "bun scripts/sync-publications.ts"
   },
   "engines": {
     "node": ">=22"
   },
   "packageManager": "bun@1.4.1",
   "dependencies": {
+    "@vznh/substack": "^0.2.2",
     "dialkit": "^2.0.0",
     "motion": "^13.2.0",
     "next": "^15.1.6",
