@@ -1,6 +1,7 @@
 export interface Project {
   name: string;
   description: string;
+  pullRequests?: string;
 }
 
 export type Block = string | { list: string[] };
@@ -149,6 +150,44 @@ export const sections: Section[] = [
       {
         name: "Tokn",
         description: "Trade, track, and chat coins in one app.",
+      },
+    ],
+  },
+  {
+    id: "engagements",
+    heading: "Engagements",
+    body: [],
+    projects: [
+      {
+        name: "[Repomix](https://github.com/yamadashy/repomix)",
+        description: "Codebases packaged for AI.",
+      },
+      {
+        name: "[Ghostfolio](https://ghostfol.io/en)",
+        description: "Investment portfolio tracking.",
+      },
+      {
+        name: "[biome](https://github.com/biomejs/biome)",
+        description: "Code formatting and linting.",
+        pullRequests:
+          "[#11143](https://github.com/biomejs/biome/pull/11143) [#11846](https://github.com/biomejs/biome/pull/11846)",
+      },
+      {
+        name: "[Zed Editor](https://github.com/zed-industries/zed)",
+        description: "Collaborative code editor.",
+        pullRequests: "[#63224](https://github.com/zed-industries/zed/pull/63224)",
+      },
+      {
+        name: "[bb Editor](https://github.com/get-bb/bb)",
+        description: "IDE for coding agents.",
+        pullRequests:
+          "[#3108](https://github.com/get-bb/bb/pull/3108) [#3813](https://github.com/get-bb/bb/pull/3813) [#3922](https://github.com/get-bb/bb/pull/3922) [#3924](https://github.com/get-bb/bb/pull/3924) [#4092](https://github.com/get-bb/bb/pull/4092) [#4085](https://github.com/get-bb/bb/pull/4085) [#4288](https://github.com/get-bb/bb/pull/4288) [#4299](https://github.com/get-bb/bb/pull/4299)",
+      },
+      {
+        name: "[LiveKit](https://github.com/livekit/agents)",
+        description: "Framework for voice AI agents.",
+        pullRequests:
+          "[#7385](https://github.com/livekit/agents/pull/7385) [#2568](https://github.com/livekit/agents-js/pull/2568)",
       },
     ],
   },

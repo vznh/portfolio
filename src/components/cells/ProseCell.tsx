@@ -89,8 +89,11 @@ function Prose({ section }: { section: Section }) {
         {section.records && <Records records={section.records} />}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
-            <span className="block">{project.name}</span>
-            <span className="block opacity-80">{project.description}</span>
+            <span className="block">{renderInline(project.name)}</span>
+            <span className="block opacity-80">{renderInline(project.description)}</span>
+            {project.pullRequests && (
+              <span className="block opacity-80">{renderInline(project.pullRequests)}</span>
+            )}
           </p>
         ))}
       </div>
