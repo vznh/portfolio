@@ -95,7 +95,7 @@ export const sections: Section[] = [
       },
       {
         date: "07 2026",
-        title: "Custom karaoke machine to sing every song",
+        title: "Karaoke for any song",
         name: "노래 (Norae)",
         category: "Personal",
       },
