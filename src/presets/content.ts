@@ -187,6 +187,20 @@ export const sections: Section[] = [
     body: [],
     projects: [
       {
+        name: "5f",
+        url: "https://5f.hobin.dev",
+        description:
+          "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets.",
+      },
+      {
+        name: "5th Floor",
+        description: "Avant-garde brand. Our first sample releases November 2026 for Winter.",
+      },
+      {
+        name: "Agamemnon",
+        description: "High-level software workbench.",
+      },
+      {
         name: "Polyglot",
         description:
           "Learn languages through bite-sized modules that mimic assimilation. We teach reading, writing, typing, and verbal conversation.",
@@ -194,6 +208,11 @@ export const sections: Section[] = [
       {
         name: "Tokn",
         description: "Trade, track, and chat coins in one app.",
+      },
+      {
+        name: "Preme",
+        description:
+          "Be the fastest to buy Supreme. Sold on OGUsers, cracked.io with 200+ purchases at $24.99 each.",
       },
     ],
   },
