@@ -117,7 +117,7 @@ export const sections: Section[] = [
       { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
       {
         date: "10 2025",
-        title: "NPM pkg to reduce token and tool call usage",
+        title: "Cut agent token usage",
         name: "Axiom",
         category: "Personal",
       },
