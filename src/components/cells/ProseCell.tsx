@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { sections, type Block, type Section } from "@/presets/content";
 import { Records } from "./Records";
 import { handleSectionLinkClick } from "@/lib/scrollToHeading";
@@ -67,9 +68,24 @@ function renderBlock(block: Block) {
 }
 
 function Prose({ section }: { section: Section }) {
+  const [showNames, setShowNames] = useState(false);
   return (
     <section id={section.id} className="mb-[3.75rem] last:mb-0">
-      {section.heading && <PanelLabel>{section.heading}</PanelLabel>}
+      {section.heading && section.records ? (
+        <div className="flex items-baseline gap-3">
+          <PanelLabel>{section.heading}</PanelLabel>
+          <button
+            type="button"
+            aria-pressed={showNames}
+            onClick={() => setShowNames((shown) => !shown)}
+            className={`font-heading text-[13px] text-black transition-opacity ${showNames ? "opacity-80" : "opacity-40"}`}
+          >
+            Identifiers
+          </button>
+        </div>
+      ) : (
+        section.heading && <PanelLabel>{section.heading}</PanelLabel>
+      )}
       <div className={`flex flex-col gap-3 ${section.heading ? "mt-3" : ""}`}>
         {section.body.map((paragraph) => (
           <p key={paragraph} className={BODY_CLASS}>
@@ -86,7 +102,7 @@ function Prose({ section }: { section: Section }) {
             ))}
           </div>
         )}
-        {section.records && <Records records={section.records} />}
+        {section.records && <Records records={section.records} showNames={showNames} />}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
             <span className="block">

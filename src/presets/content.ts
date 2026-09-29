@@ -23,6 +23,7 @@ export interface RecordImage {
 export interface Record {
   date: string;
   title: string;
+  name?: string;
   category: string;
   url?: string;
   image?: RecordImage;
@@ -55,21 +56,23 @@ export const sections: Section[] = [
     body: [],
     records: [
       { date: "09 2026", title: "Little Saigon Beauty Salon", category: "Commission" },
-      { date: "09 2026", title: "Find restaurants you really like", category: "Personal" },
+      { date: "09 2026", title: "Find restaurants you really like", name: "Famish", category: "Personal" },
       {
         date: "08 2026",
         title: "Generate captions live on-machine",
+        name: "Capt",
         category: "Personal",
         url: "https://github.com/vznh/capt",
       },
       {
         date: "08 2026",
         title: "A richer converter for unreleased music",
+        name: "Transmute",
         category: "Personal",
         url: "https://github.com/vznh/transmute",
       },
-      { date: "08 2026", title: "An IDE for higher-level creation", category: "Venture" },
-      { date: "08 2026", title: "Blends but each song mixes well", category: "Personal" },
+      { date: "08 2026", title: "An IDE for higher-level creation", name: "Agamemnon", category: "Venture" },
+      { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Personal" },
       {
         date: "08 2026",
         title: "Corgi",
@@ -90,8 +93,18 @@ export const sections: Section[] = [
         url: "https://monarch-cap.vercel.app",
         image: { src: "/assets/records/monarch-capital.jpg", width: 1600, height: 955 },
       },
-      { date: "07 2026", title: "Custom karaoke machine to sing every song", category: "Personal" },
-      { date: "07 2026", title: "Utility tool on-machine for agents", category: "Personal" },
+      {
+        date: "07 2026",
+        title: "Custom karaoke machine to sing every song",
+        name: "노래 (Norae)",
+        category: "Personal",
+      },
+      {
+        date: "07 2026",
+        title: "Utility tool on-machine for agents",
+        name: "Portmanteau",
+        category: "Personal",
+      },
       {
         date: "07 2026",
         title: "A business card",
@@ -102,17 +115,24 @@ export const sections: Section[] = [
       { date: "05 2026", title: "Komune", category: "Advisory", url: "https://komune.space" },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
       { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
-      { date: "10 2025", title: "NPM pkg to reduce token and tool call usage", category: "Personal" },
+      {
+        date: "10 2025",
+        title: "NPM pkg to reduce token and tool call usage",
+        name: "Axiom",
+        category: "Personal",
+      },
       {
         date: "09 2025",
         title: "SDK for Substack",
+        name: "Substack, SDK",
         category: "Personal",
         url: "https://github.com/vznh/substack",
       },
-      { date: "09 2025", title: "Discord bot for hard 75 submissions", category: "Personal" },
+      { date: "09 2025", title: "Discord bot for hard 75 submissions", name: "75", category: "Personal" },
       {
         date: "08 2025",
         title: "In-depth Spotify relationships",
+        name: "Chordal",
         category: "Personal",
         image: { src: "/assets/records/chordal.jpg", width: 1314, height: 894 },
       },
@@ -128,29 +148,42 @@ export const sections: Section[] = [
         category: "Personal",
         image: { src: "/assets/records/chronolex.jpg", width: 2186, height: 1440 },
       },
-      { date: "02 2025", title: "An interaction component library for React", category: "Personal" },
+      {
+        date: "02 2025",
+        title: "An interaction component library for React",
+        name: "Devour",
+        category: "Personal",
+      },
       {
         date: "01 2025",
         title: "Better map for Santa Cruz",
+        name: "Pathfinder",
         category: "Academia",
         image: { src: "/assets/records/pathfinder.jpg", width: 2444, height: 1334 },
       },
       {
         date: "01 2025",
         title: "Test to see if you're performative",
+        name: "Grandiose",
         category: "Personal",
         image: { src: "/assets/records/grandiose.jpg", width: 1648, height: 818 },
       },
-      { date: "01 2025", title: "Visual camera test for interactivity on websites", category: "Personal" },
-      { date: "01 2025", title: "Self-healing quant", category: "Academia" },
-      { date: "01 2025", title: "In-depth bug assessment for Python", category: "Personal" },
+      {
+        date: "01 2025",
+        title: "Visual camera test for interactivity on websites",
+        name: "Permanence",
+        category: "Personal",
+      },
+      { date: "01 2025", title: "Self-healing quant", name: "Veil", category: "Academia" },
+      { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Personal" },
       {
         date: "07 2024",
         title: "Transcribe and preserve old documents",
+        name: "Relic",
         category: "Personal",
         image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
       },
-      { date: "02 2021", title: "Jukebox that plays songs from RFiD", category: "Personal" },
+      { date: "02 2021", title: "Jukebox that plays songs from RFiD", name: "Jukebox", category: "Personal" },
       { date: "07 2019", title: "Preme", category: "Venture" },
     ],
   },

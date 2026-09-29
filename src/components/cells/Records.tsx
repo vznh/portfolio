@@ -8,11 +8,21 @@ import { useRecordsScrollSpace } from "@/hooks/useRecordsScrollSpace";
 const ROW_CLASS =
   "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
 
-function RecordRow({ record, dimmed, onHover }: { record: Record; dimmed: boolean; onHover: () => void }) {
+function RecordRow({
+  record,
+  dimmed,
+  showName,
+  onHover,
+}: {
+  record: Record;
+  dimmed: boolean;
+  showName: boolean;
+  onHover: () => void;
+}) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
-      <span>{record.title}</span>
+      <span>{showName ? (record.name ?? record.title) : record.title}</span>
       <span className="text-right opacity-[0.55]">{record.category}</span>
     </>
   );
@@ -43,7 +53,7 @@ function RecordRow({ record, dimmed, onHover }: { record: Record; dimmed: boolea
   );
 }
 
-export function Records({ records }: { records: Record[] }) {
+export function Records({ records, showNames }: { records: Record[]; showNames: boolean }) {
   const listRef = useRef<HTMLUListElement>(null);
   useRecordsScrollSpace(listRef);
   const [hovered, setHovered] = useState<Record | null>(null);
@@ -63,6 +73,7 @@ export function Records({ records }: { records: Record[] }) {
             key={`${record.date} ${record.title}`}
             record={record}
             dimmed={active !== null && active !== record}
+            showName={showNames}
             onHover={() => setHovered(record)}
           />
         ))}
