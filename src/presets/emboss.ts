@@ -33,6 +33,4 @@ export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }
 
-export const embossVersions: EmbossVersion[] = [
-  { glyph: "/icons/safety-pins.svg", ...embossDefaults },
-];
+export const embossVersions: EmbossVersion[] = [{ glyph: "/icons/safety-pins.svg", ...embossDefaults }];
