@@ -136,7 +136,8 @@ export const sections: Section[] = [
       },
       {
         date: "0N 2025",
-        title: "081x",
+        title: "Co-working experiments",
+        name: "081x",
         category: "Personal",
         image: { src: "/assets/records/081x.jpg", width: 800, height: 800 },
       },
