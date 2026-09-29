@@ -150,7 +150,7 @@ export const sections: Section[] = [
       },
       {
         date: "02 2025",
-        title: "An interaction component library for React",
+        title: "React interaction components",
         name: "Devour",
         category: "Personal",
       },
