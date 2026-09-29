@@ -118,7 +118,6 @@ export const sections: Section[] = [
         category: "Personal",
         image: { src: "/assets/records/chronolex.jpg", width: 2186, height: 1440 },
       },
-      { date: "03 2025", title: "Newtor", category: "Personal" },
       { date: "02 2025", title: "Devour", category: "Personal" },
       {
         date: "01 2025",
@@ -135,8 +134,6 @@ export const sections: Section[] = [
       { date: "01 2025", title: "Permanence", category: "Personal" },
       { date: "01 2025", title: "Veil", category: "Academia" },
       { date: "01 2025", title: "Splat", category: "Personal" },
-      { date: "12 2024", title: "Sovereign", category: "Personal" },
-      { date: "12 2024", title: "Fullauto", category: "Personal" },
       {
         date: "07 2024",
         title: "Relic",
