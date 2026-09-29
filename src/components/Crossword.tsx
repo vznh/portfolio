@@ -31,6 +31,7 @@ import { crosswordAppearanceDefaults } from "@/presets/crosswordAppearance";
 import { getNativeStrokeWidth } from "@/lib/crosswordAppearance";
 import { CrosswordHalftone, CrosswordStrokeFilter } from "./CrosswordPrintEffects";
 import { applyCrosswordInput, parseCrosswordLetters } from "@/lib/crosswordInput";
+import { CrosswordCluePanel } from "./CrosswordCluePanel";
 
 const CrosswordDial =
   process.env.NODE_ENV === "development" ? dynamic(() => import("./CrosswordDial"), { ssr: false }) : null;
@@ -142,6 +143,7 @@ function CrosswordGame({
   const [active, setActive] = useState(puzzle.entries[0].cells[0]);
   const [direction, setDirection] = useState<Direction>(puzzle.entries[0].direction);
   const [interacting, setInteracting] = useState(false);
+  const [gridFocused, setGridFocused] = useState(false);
   const [restored, setRestored] = useState(false);
   const [transition, dispatchTransition] = useReducer(crosswordTransition, {
     phase: "entering",
@@ -465,8 +467,12 @@ function CrosswordGame({
               aria-label={`${puzzle.width} by ${puzzle.height} crossword`}
               aria-describedby="crossword-instructions"
               style={{ gridTemplateColumns: `repeat(${puzzle.width}, 1fr)` }}
+              onFocus={() => setGridFocused(true)}
               onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setCycleClues(false);
+                if (!event.currentTarget.contains(event.relatedTarget)) {
+                  setCycleClues(false);
+                  setGridFocused(false);
+                }
               }}
             >
               {puzzle.cells.map((solution, index) => {
@@ -602,6 +608,7 @@ function CrosswordGame({
           </div>
         </div>
       </article>
+      {gridFocused && !locked && <CrosswordCluePanel entry={entry} />}
       <p className="sr-only" role="status">
         {solved &&
         (transition.phase === "holding" || transition.phase === "exiting" || transition.phase === "complete")

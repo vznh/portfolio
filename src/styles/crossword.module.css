@@ -428,7 +428,54 @@
   cursor: default;
 }
 
+.cluePanel {
+  display: none;
+}
+
 @media (max-width: 640px) {
+  .cluePanel {
+    display: grid;
+    place-items: center;
+    position: fixed;
+    top: var(--clue-viewport-bottom, 100dvh);
+    left: var(--clue-viewport-center, 50%);
+    z-index: 30;
+    width: min(360px, calc(var(--clue-viewport-width, 100vw) - 32px));
+    padding: 14px 18px;
+    transform: translate(-50%, calc(-100% - 12px));
+    border: 1px solid rgb(255 255 255 / 45%);
+    border-radius: 14px;
+    background: rgb(225 227 230 / 65%);
+    box-shadow: 0 4px 24px rgb(0 0 0 / 8%);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    pointer-events: none;
+  }
+
+  .cluePanelContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: center;
+    text-wrap: pretty;
+    opacity: 0.6;
+  }
+
+  .cluePanelArrow,
+  .cluePanelNumber {
+    flex: none;
+    font-weight: 600;
+  }
+
+  .cluePanelArrow {
+    font-size: 20px;
+    line-height: 1;
+  }
+
   .newspaper {
     width: 100%;
     max-width: none;
@@ -450,7 +497,8 @@
 }
 
 @media print {
-  .controls {
+  .controls,
+  .cluePanel {
     display: none;
   }
   .newspaper {
