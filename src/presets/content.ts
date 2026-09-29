@@ -168,12 +168,6 @@ export const sections: Section[] = [
         category: "Personal",
         image: { src: "/assets/records/grandiose.jpg", width: 1648, height: 818 },
       },
-      {
-        date: "01 2025",
-        title: "Visual camera test for interactivity on websites",
-        name: "Permanence",
-        category: "Personal",
-      },
       { date: "01 2025", title: "Self-healing quant", name: "Veil", category: "Academia" },
       { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Personal" },
       {
