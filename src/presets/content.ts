@@ -71,7 +71,6 @@ export const sections: Section[] = [
         category: "Personal",
         url: "https://github.com/vznh/transmute",
       },
-      { date: "08 2026", title: "An IDE for higher-level creation", name: "Agamemnon", category: "Venture" },
       { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Personal" },
       {
         date: "08 2026",
@@ -85,7 +84,6 @@ export const sections: Section[] = [
         category: "Commission",
         image: { src: "/assets/records/britnie.jpg", width: 1200, height: 1200 },
       },
-      { date: "08 2026", title: "5f", category: "Venture", url: "https://5f.hobin.dev" },
       {
         date: "08 2026",
         title: "Monarch Capital",
@@ -178,7 +176,6 @@ export const sections: Section[] = [
         image: { src: "/assets/records/relic.jpg", width: 1148, height: 734 },
       },
       { date: "02 2021", title: "Jukebox that plays songs from RFiD", name: "Jukebox", category: "Personal" },
-      { date: "07 2019", title: "Preme", category: "Venture" },
     ],
   },
   {
