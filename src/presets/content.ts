@@ -54,6 +54,7 @@ export const sections: Section[] = [
     heading: "Records",
     body: [],
     records: [
+      { date: "09 2026", title: "Little Saigon Beauty Salon", category: "Commission" },
       { date: "09 2026", title: "Famish", category: "Personal" },
       { date: "08 2026", title: "Capt", category: "Personal", url: "https://github.com/vznh/capt" },
       { date: "08 2026", title: "Transmute", category: "Personal", url: "https://github.com/vznh/transmute" },
