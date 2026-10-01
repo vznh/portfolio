@@ -55,13 +55,6 @@ export const sections: Section[] = [
     heading: "Records",
     body: [],
     records: [
-      {
-        date: "10 2026",
-        title: "Terminal 27",
-        category: "Commission",
-        url: "https://instagram.com/terminal27",
-        image: { src: "/assets/records/terminal-27.webp", width: 1244, height: 562 },
-      },
       { date: "09 2026", title: "Nine Vicious", category: "Commission" },
       {
         date: "09 2026",
@@ -146,6 +139,13 @@ export const sections: Section[] = [
         category: "Advisory",
         url: "https://agmnt.space",
         image: { src: "/assets/records/augment.webp", width: 1600, height: 770 },
+      },
+      {
+        date: "11 2025",
+        title: "Terminal 27",
+        category: "Commission",
+        url: "https://instagram.com/terminal27",
+        image: { src: "/assets/records/terminal-27.webp", width: 1244, height: 562 },
       },
       {
         date: "10 2025",
