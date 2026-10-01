@@ -56,7 +56,12 @@ export const sections: Section[] = [
     body: [],
     records: [
       { date: "09 2026", title: "Nine Vicious", category: "Commission" },
-      { date: "09 2026", title: "Little Saigon Beauty Salon", category: "Commission" },
+      {
+        date: "09 2026",
+        title: "Little Saigon Beauty Salon",
+        category: "Commission",
+        url: "https://dukes-ruby.vercel.app",
+      },
       { date: "09 2026", title: "Find restaurants you really like", name: "Famish", category: "Personal" },
       {
         date: "08 2026",
