@@ -55,6 +55,13 @@ export const sections: Section[] = [
     heading: "Records",
     body: [],
     records: [
+      {
+        date: "10 2026",
+        title: "Terminal 27",
+        category: "Commission",
+        url: "https://instagram.com/terminal27",
+        image: { src: "/assets/records/terminal-27.jpg", width: 1244, height: 562 },
+      },
       { date: "09 2026", title: "Nine Vicious", category: "Commission" },
       {
         date: "09 2026",
