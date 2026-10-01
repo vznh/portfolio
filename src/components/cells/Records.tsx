@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ReadingGuide } from "./ReadingGuide";
 import Image from "next/image";
 import { createPortal } from "react-dom";
@@ -59,11 +59,23 @@ export function Records({ records, showNames }: { records: Record[]; showNames: 
   const [hovered, setHovered] = useState<Record | null>(null);
   const [readingIndex, setReadingIndex] = useState<number | null>(null);
   const active = readingIndex !== null ? records[readingIndex] : hovered;
+  // Mount every hover image once the page is idle so hovering only toggles visibility.
+  const [preload, setPreload] = useState(false);
+  useEffect(() => {
+    if (typeof window.requestIdleCallback === "function") {
+      const id = window.requestIdleCallback(() => setPreload(true), { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(() => setPreload(true), 1000);
+    return () => window.clearTimeout(id);
+  }, []);
+  const imaged = records.flatMap((record) => (record.image ? [{ record, image: record.image }] : []));
   return (
     <>
       <ul
         ref={listRef}
         className="flex max-w-[52ch] flex-col"
+        onPointerEnter={() => setPreload(true)}
         onPointerLeave={(e) => {
           if (e.pointerType === "mouse") setHovered(null);
         }}
@@ -79,21 +91,25 @@ export function Records({ records, showNames }: { records: Record[]; showNames: 
         ))}
       </ul>
       <ReadingGuide listRef={listRef} onActiveRowChange={setReadingIndex} />
-      {active?.image &&
+      {(preload || active?.image) &&
         createPortal(
-          <div
-            aria-hidden
-            className="pointer-events-none fixed bottom-[8dvh] left-1/2 z-0 -translate-x-1/2 md:bottom-auto md:top-1/2 md:-translate-y-1/2"
-          >
-            <Image
-              src={active.image.src}
-              alt=""
-              width={active.image.width}
-              height={active.image.height}
-              sizes="(max-width: 767px) 78vw, 47.5vw"
-              className="h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw]"
-            />
-          </div>,
+          imaged.map(({ record, image }) => (
+            <div
+              key={image.src}
+              aria-hidden
+              className={`pointer-events-none fixed bottom-[8dvh] left-1/2 z-0 -translate-x-1/2 md:bottom-auto md:top-1/2 md:-translate-y-1/2 ${record === active ? "" : "invisible"}`}
+            >
+              <Image
+                src={image.src}
+                alt=""
+                width={image.width}
+                height={image.height}
+                loading="eager"
+                sizes="(max-width: 767px) 78vw, 47.5vw"
+                className="h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw]"
+              />
+            </div>
+          )),
           listRef.current?.closest("#content") ?? document.body,
         )}
     </>
