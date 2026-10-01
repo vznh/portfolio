@@ -173,7 +173,7 @@ export const sections: Section[] = [
         date: "04 2025",
         title: "Chronolex",
         category: "Personal",
-        image: { src: "/assets/records/chronolex.jpg", width: 2186, height: 1440 },
+        image: { src: "/assets/records/chronolex.jpg", width: 1236, height: 818 },
       },
       {
         date: "02 2025",
