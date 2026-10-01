@@ -181,6 +181,7 @@ export const sections: Section[] = [
         title: "React interaction components",
         name: "Devour",
         url: "https://www.npmjs.com/package/@vznh/components",
+        image: { src: "/assets/records/components.jpg", width: 1128, height: 452 },
         category: "Personal",
       },
       {
