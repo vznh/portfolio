@@ -213,6 +213,12 @@ export const sections: Section[] = [
       { date: "01 2025", title: "Self-healing quant", name: "Veil", category: "Academia" },
       { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Personal" },
       {
+        date: "10 2024",
+        title: "Mad Yolks",
+        category: "Commission",
+        image: { src: "/assets/records/mad-yolks.webp", width: 1600, height: 986 },
+      },
+      {
         date: "07 2024",
         title: "Transcribe and preserve old documents",
         name: "Relic",
