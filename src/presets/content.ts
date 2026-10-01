@@ -133,7 +133,13 @@ export const sections: Section[] = [
         image: { src: "/assets/records/komune.jpg", width: 1600, height: 968 },
       },
       { date: "04 2026", title: "Paradigm", category: "Commission" },
-      { date: "01 2026", title: "Augment", category: "Advisory", url: "https://agmnt.space" },
+      {
+        date: "01 2026",
+        title: "Augment",
+        category: "Advisory",
+        url: "https://agmnt.space",
+        image: { src: "/assets/records/augment.jpg", width: 1600, height: 770 },
+      },
       {
         date: "10 2025",
         title: "Cut agent token usage",
