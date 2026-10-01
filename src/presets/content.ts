@@ -61,6 +61,7 @@ export const sections: Section[] = [
         title: "Little Saigon Beauty Salon",
         category: "Commission",
         url: "https://dukes-ruby.vercel.app",
+        image: { src: "/assets/records/little-saigon-beauty-salon.jpg", width: 1600, height: 1015 },
       },
       { date: "09 2026", title: "Find restaurants you really like", name: "Famish", category: "Personal" },
       {
