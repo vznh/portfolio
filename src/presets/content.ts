@@ -180,6 +180,7 @@ export const sections: Section[] = [
         date: "02 2025",
         title: "React interaction components",
         name: "Devour",
+        url: "https://www.npmjs.com/package/@vznh/components",
         category: "Personal",
       },
       {
