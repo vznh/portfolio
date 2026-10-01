@@ -77,6 +77,7 @@ export const sections: Section[] = [
         name: "Capt",
         category: "Personal",
         url: "https://github.com/vznh/capt",
+        image: { src: "/assets/records/capt.jpg", width: 1240, height: 712 },
       },
       {
         date: "08 2026",
