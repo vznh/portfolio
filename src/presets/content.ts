@@ -171,7 +171,8 @@ export const sections: Section[] = [
       },
       {
         date: "04 2025",
-        title: "Chronolex",
+        title: "Natural language for calendars",
+        name: "Chronolex",
         category: "Personal",
         image: { src: "/assets/records/chronolex.jpg", width: 1236, height: 818 },
       },
