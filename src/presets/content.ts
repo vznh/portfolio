@@ -77,6 +77,7 @@ export const sections: Section[] = [
         name: "Transmute",
         category: "Personal",
         url: "https://github.com/vznh/transmute",
+        image: { src: "/assets/records/transmute.jpg", width: 1432, height: 954 },
       },
       { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Personal" },
       {
