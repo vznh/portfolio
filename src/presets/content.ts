@@ -133,7 +133,12 @@ export const sections: Section[] = [
         url: "https://komune.space",
         image: { src: "/assets/records/komune.jpg", width: 1600, height: 968 },
       },
-      { date: "04 2026", title: "Paradigm", category: "Commission" },
+      {
+        date: "04 2026",
+        title: "Paradigm",
+        category: "Commission",
+        image: { src: "/assets/records/paradigm.jpg", width: 1600, height: 774 },
+      },
       {
         date: "01 2026",
         title: "Augment",
