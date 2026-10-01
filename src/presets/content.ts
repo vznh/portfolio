@@ -160,7 +160,13 @@ export const sections: Section[] = [
         category: "Personal",
         url: "https://github.com/vznh/substack",
       },
-      { date: "09 2025", title: "Discord bot for hard 75 submissions", name: "75", category: "Personal" },
+      {
+        date: "09 2025",
+        title: "Discord bot for hard 75 submissions",
+        name: "75",
+        category: "Personal",
+        image: { src: "/assets/records/75.jpg", width: 528, height: 530 },
+      },
       {
         date: "08 2025",
         title: "In-depth Spotify relationships",
