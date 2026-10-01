@@ -225,7 +225,13 @@ export const sections: Section[] = [
         category: "Personal",
         image: { src: "/assets/records/relic.webp", width: 1148, height: 734 },
       },
-      { date: "02 2021", title: "Jukebox that plays songs from RFiD", name: "Jukebox", category: "Personal" },
+      {
+        date: "02 2021",
+        title: "Jukebox that plays songs from RFiD",
+        name: "Jukebox",
+        category: "Personal",
+        image: { src: "/assets/records/jukebox.webp", width: 1236, height: 864 },
+      },
     ],
   },
   {
