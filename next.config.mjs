@@ -16,6 +16,10 @@ const nextConfig = {
   reactStrictMode: true,
 
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 31536000,
+  },
   env: {
     NEXT_PUBLIC_COMMIT_SHA: commitSha(),
   },
