@@ -55,7 +55,12 @@ export const sections: Section[] = [
     heading: "Records",
     body: [],
     records: [
-      { date: "10 2026", title: "Corgi", category: "Commission" },
+      {
+        date: "10 2026",
+        title: "Corgi",
+        category: "Commission",
+        image: { src: "/assets/records/corgi-2.webp", width: 1067, height: 1600 },
+      },
       {
         date: "09 2026",
         title: "Little Saigon Beauty Salon",
