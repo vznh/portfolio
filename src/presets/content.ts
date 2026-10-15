@@ -97,7 +97,7 @@ export const sections: Section[] = [
         date: "08 2026",
         title: "Monarch Capital",
         category: "Commission",
-        url: "https://monarch-cap.vercel.app",
+        url: "https://www.monarchs.vc/",
         image: { src: "/assets/records/monarch-capital.webp", width: 1600, height: 955 },
       },
       {
