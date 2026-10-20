@@ -23,8 +23,8 @@ in `rel="me"` links and the Person node's `sameAs` property. These links describ
 identity; they do not constitute platform account verification.
 
 The share images are the crossword grid, JASON down and SON across, on white.
-`public/og-1920x1080.png` (about 60 KB) is the Open Graph and JSON-LD image;
-`public/og-1280x720.png` (about 35 KB) is the X card image. Both are 16:9, so
+`public/og-1920x1080.png` (about 26 KB) is the Open Graph and JSON-LD image;
+`public/og-1280x720.png` (about 16 KB) is the X card image. Both are 16:9, so
 1.91:1 and 2:1 previews crop only the empty top and bottom margins. Their alt
 text describes the actual graphic; the structured data does not present it as a
 photograph of Jason.
