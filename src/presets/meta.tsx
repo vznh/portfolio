@@ -123,7 +123,7 @@ export function Meta() {
         <meta name={name} content={content} key={name} />
       ))}
 
-      <link rel="icon" type="image/png" sizes="500x500" href="/favicon.png?v=3" />
+      <link rel="icon" type="image/png" sizes="500x500" href="/favicon.png?v=4" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/site.webmanifest" />
       <meta name="theme-color" content={THEME_COLOR} key="theme-color" />
