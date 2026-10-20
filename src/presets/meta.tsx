@@ -5,8 +5,9 @@ export const SITE_URL = "https://www.hobin.dev";
 const NAME = profile.name;
 const TITLE = NAME;
 const DESCRIPTION = "Jason Son does engineering, research, and design in New York.";
-const OG_IMAGE = `${SITE_URL}/og.png`;
-const OG_IMAGE_ALT = "Klein-blue background for Jason Son’s portfolio.";
+const OG_IMAGE = `${SITE_URL}/og-1920x1080.png`;
+const TWITTER_IMAGE = `${SITE_URL}/og-1280x720.png`;
+const OG_IMAGE_ALT = "Crossword grid spelling JASON down and SON across, sharing the O.";
 const THEME_COLOR = "#002FA7";
 const TWITTER = "@jasonvinhson";
 const CANONICAL_URL = `${SITE_URL}/`;
@@ -29,8 +30,8 @@ const openGraph = {
   "og:image": OG_IMAGE,
   "og:image:secure_url": OG_IMAGE,
   "og:image:type": "image/png",
-  "og:image:width": "1200",
-  "og:image:height": "630",
+  "og:image:width": "1920",
+  "og:image:height": "1080",
   "og:image:alt": OG_IMAGE_ALT,
 };
 
@@ -40,7 +41,7 @@ const twitterCard = {
   "twitter:creator": TWITTER,
   "twitter:title": TITLE,
   "twitter:description": DESCRIPTION,
-  "twitter:image": OG_IMAGE,
+  "twitter:image": TWITTER_IMAGE,
   "twitter:image:alt": OG_IMAGE_ALT,
 };
 
@@ -78,8 +79,8 @@ const structuredData = {
       contentUrl: OG_IMAGE,
       description: OG_IMAGE_ALT,
       encodingFormat: "image/png",
-      width: 1200,
-      height: 630,
+      width: 1920,
+      height: 1080,
     },
     {
       "@type": "Person",
