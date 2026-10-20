@@ -73,7 +73,7 @@ export function ReadingGuide({
       ref={guideRef}
       aria-hidden="true"
       data-active="false"
-      className="pointer-events-none fixed inset-x-0 z-20 bg-[#002fa7]/5 opacity-0 transition-opacity duration-200 data-[active=true]:opacity-100 motion-reduce:transition-none md:hidden"
+      className="pointer-events-none fixed inset-x-0 z-20 bg-[#002fa7]/[0.025] opacity-0 transition-opacity duration-200 data-[active=true]:opacity-100 motion-reduce:transition-none md:hidden"
     >
       <span className="absolute inset-x-0 top-0 h-[var(--reading-guide-line,0.5px)] bg-black" />
       <span className="absolute inset-x-0 top-full h-[var(--reading-guide-line,0.5px)] bg-black" />
