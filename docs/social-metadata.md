@@ -11,7 +11,7 @@ page and its `#content` and section fragments share one canonical URL:
 | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | Facebook and Open Graph consumers                                              | Website type, site name, title, description, canonical URL, locale, HTTPS image URL, MIME type, dimensions, and image description              |
 | X / Twitter                                                                    | Large image card, site and creator account `@jasonvinhson`, title, description, image, and image description                                   |
-| LinkedIn                                                                       | Open Graph title, description, URL, and 1200 × 630 PNG image                                                                                   |
+| LinkedIn                                                                       | Open Graph title, description, URL, and 1920 × 1080 PNG image                                                                                  |
 | Apple Messages                                                                 | Open Graph title and image, favicon, and high-resolution Apple touch icon                                                                      |
 | Slack                                                                          | Open Graph and Twitter Card metadata available to its link-expanding crawler                                                                   |
 | Other link preview clients, including WhatsApp, Discord, Telegram, and Bluesky | The same public Open Graph metadata; each client controls whether and how previews appear, and these clients have not been individually tested |
@@ -22,9 +22,12 @@ JSON-LD author/publisher relationships. Existing public profile URLs are listed
 in `rel="me"` links and the Person node's `sameAs` property. These links describe
 identity; they do not constitute platform account verification.
 
-The share image is `public/og.png`, a solid cobalt-blue graphic. It is 1200 × 630
-and about 20 KB. Its alt text describes the actual graphic; the structured data
-does not present it as a photograph of Jason.
+The share images are the crossword grid, JASON down and SON across, on white.
+`public/og-1920x1080.png` (about 60 KB) is the Open Graph and JSON-LD image;
+`public/og-1280x720.png` (about 35 KB) is the X card image. Both are 16:9, so
+1.91:1 and 2:1 previews crop only the empty top and bottom margins. Their alt
+text describes the actual graphic; the structured data does not present it as a
+photograph of Jason.
 
 Pinterest article, product, and recipe Rich Pin markup is not applicable to this
 portfolio homepage. Facebook App IDs, Facebook Page IDs, Pinterest verification,
