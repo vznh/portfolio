@@ -35,8 +35,11 @@ export function ReadingGuide({
         viewport?.offsetTop ?? 0,
       );
 
-      guide.style.top = `${top}px`;
-      guide.style.height = `${height}px`;
+      const scale = window.devicePixelRatio * (viewport?.scale ?? 1);
+      const snap = (value: number) => Math.round(value * scale) / scale;
+      guide.style.top = `${snap(top)}px`;
+      guide.style.height = `${snap(height)}px`;
+      guide.style.setProperty("--reading-guide-line", `${Math.max(1, Math.round(0.5 * scale)) / scale}px`);
       guide.dataset.active = String(index !== null);
       onActiveRowChange(index);
     };
@@ -70,10 +73,10 @@ export function ReadingGuide({
       ref={guideRef}
       aria-hidden="true"
       data-active="false"
-      className="pointer-events-none fixed inset-x-0 z-20 opacity-0 transition-opacity duration-200 data-[active=true]:opacity-100 motion-reduce:transition-none md:hidden"
+      className="pointer-events-none fixed inset-x-0 z-20 bg-[#002fa7]/5 opacity-0 transition-opacity duration-200 data-[active=true]:opacity-100 motion-reduce:transition-none md:hidden"
     >
-      <span className="absolute inset-x-0 top-0 h-[0.5px] bg-[#002fa7]" />
-      <span className="absolute inset-x-0 top-full h-[0.5px] bg-[#002fa7]" />
+      <span className="absolute inset-x-0 top-0 h-[var(--reading-guide-line,0.5px)] bg-black" />
+      <span className="absolute inset-x-0 top-full h-[var(--reading-guide-line,0.5px)] bg-black" />
     </div>
   );
 }
