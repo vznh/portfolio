@@ -38,7 +38,9 @@ body {
   background: var(--edge-bottom-background);
 }
 
-@media screen {
+@media screen and (hover: none) and (pointer: coarse) {
+  .edge-top::before,
+  .edge-bottom::before,
   .edge-top::after,
   .edge-bottom::after {
     content: "";
@@ -50,15 +52,30 @@ body {
   }
 
   .edge-top::after {
-    top: 0;
+    top: -7px;
     height: max(12px, env(safe-area-inset-top));
     background: var(--edge-top-background);
   }
 
   .edge-bottom::after {
-    bottom: 0;
+    bottom: -7px;
     height: max(12px, env(safe-area-inset-bottom));
     background: var(--edge-bottom-background);
+  }
+
+  .edge-top::before,
+  .edge-bottom::before {
+    height: 24px;
+  }
+
+  .edge-top::before {
+    top: calc(max(12px, env(safe-area-inset-top)) - 7px);
+    background: linear-gradient(to bottom, var(--edge-top-background), transparent);
+  }
+
+  .edge-bottom::before {
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) - 7px);
+    background: linear-gradient(to top, var(--edge-bottom-background), transparent);
   }
 }
 
