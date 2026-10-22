@@ -36,18 +36,17 @@ html {
 
 body {
   background: var(--edge-bottom-background);
+  isolation: isolate;
 }
 
 @media screen and (hover: none) and (pointer: coarse) {
-  .edge-top::before,
-  .edge-bottom::before,
   .edge-top::after,
   .edge-bottom::after {
     content: "";
     position: fixed;
     left: 0;
     right: 0;
-    z-index: 40;
+    z-index: -1;
     pointer-events: none;
   }
 
@@ -61,21 +60,6 @@ body {
     bottom: -7px;
     height: max(12px, env(safe-area-inset-bottom));
     background: var(--edge-bottom-background);
-  }
-
-  .edge-top::before,
-  .edge-bottom::before {
-    height: 24px;
-  }
-
-  .edge-top::before {
-    top: calc(max(12px, env(safe-area-inset-top)) - 7px);
-    background: linear-gradient(to bottom, var(--edge-top-background), transparent);
-  }
-
-  .edge-bottom::before {
-    bottom: calc(max(12px, env(safe-area-inset-bottom)) - 7px);
-    background: linear-gradient(to top, var(--edge-bottom-background), transparent);
   }
 }
 
