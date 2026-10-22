@@ -43,7 +43,7 @@ export const sections: Section[] = [
     id: "about",
     body: [
       "My name is Jason. I’m an engineer first, designer second. I’m based in New York City. I graduated Santa Cruz at 20, and worked previously in San Francisco, Seoul, Pennsylvania, and Santa Cruz.",
-      "Access my [works](+records).",
+      "Access my [work](+work).",
       "I do engineering, research, [technical and fashion design](https://5f.hobin.dev) work in New York. I contribute to [open-source software](https://github.com/vznh) I often use. I used to do systems and interfacing at Apple. I started two [start-ups](+antecedents) and sold one. Then machine learning at Carnegie Mellon, Seoul National, Santa Cruz. Leading up to and in university, full-stack engineering for an urban engineering start-up as one of two interns.",
       "I can tell a further tale about my [provenance](+provenance).",
       "I’m #39,098 on Beli right now. I join runs for basketball near Lower East Side often. I play tennis and pickleball socially. My closet is compiled from Acne Studios, Enfants Riches Déprimés, COS, Our Legacy, No Maintenance, Blackmerle, Chrome Hearts, and more. I model commercial rarely. I enjoy playing with fabrics through repair or experiment. I also like conceptually designing for my favorite artists and things. I watch a lot of [anime](https://anilist.co/user/vznh) and read a lot of manga and manhwa. I [write when I feel like it](https://venh.substack.com), and I read when I can. I'm pretty new to both though. I host events with my friends, from home cafes to DJ sets. I play games recreationally, but used to be #479 on VALORANT for a brief amount of time, and Exalted on Wizard101 as a fire, death player. I used to do a mix of thirst traps and computer science. I garnered 223K followers and 7.2M likes.",
@@ -51,8 +51,8 @@ export const sections: Section[] = [
     ],
   },
   {
-    id: "records",
-    heading: "Records",
+    id: "work",
+    heading: "Work",
     body: [],
     records: [
       {
