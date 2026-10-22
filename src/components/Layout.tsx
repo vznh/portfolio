@@ -71,7 +71,7 @@ export function Shell({ left, middle, right }: ShellProps) {
   const edge = `transition-colors duration-300 ease-out ${revealed ? "md:border-gray-200" : "md:border-transparent"}`;
 
   return (
-    <div className="overflow-x-clip md:grid md:h-screen md:w-screen md:grid-cols-[1fr_2fr_1fr] md:overflow-hidden">
+    <div className="portfolio-shell overflow-x-clip md:grid md:grid-cols-[1fr_2fr_1fr] md:overflow-hidden">
       <SideColumn side="left" edge={edge} below={left.below}>
         {left.content}
       </SideColumn>

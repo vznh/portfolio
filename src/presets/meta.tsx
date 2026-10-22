@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { profile } from "@/presets/profile";
+import { PAGE_BACKGROUND } from "@/presets/theme";
 
 export const SITE_URL = "https://www.hobin.dev";
 const NAME = profile.name;
@@ -8,7 +9,6 @@ const DESCRIPTION = "Jason Son does engineering, research, and design in New Yor
 const OG_IMAGE = `${SITE_URL}/og-1920x1080.png`;
 const TWITTER_IMAGE = `${SITE_URL}/og-1280x720.png`;
 const OG_IMAGE_ALT = "Crossword grid spelling JASON down and SON across, sharing the O.";
-const THEME_COLOR = "#ffffff";
 const TWITTER = "@jasonvinhson";
 const CANONICAL_URL = `${SITE_URL}/`;
 const PERSON_ID = `${SITE_URL}/#person`;
@@ -109,7 +109,11 @@ export function Meta() {
       <meta name="author" content={NAME} key="author" />
       <meta name="application-name" content={NAME} key="application-name" />
       <meta name="robots" content="index, follow, max-image-preview:large" key="robots" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+        key="viewport"
+      />
       <link rel="canonical" href={CANONICAL_URL} key="canonical" />
       <link rel="author" href={`${SITE_URL}/#content`} key="author-link" />
       {PROFILES.map((url) => (
@@ -126,7 +130,7 @@ export function Meta() {
       <link rel="icon" type="image/png" sizes="500x500" href="/favicon.png?v=5" />
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
       <link rel="manifest" href="/site.webmanifest" />
-      <meta name="theme-color" content={THEME_COLOR} key="theme-color" />
+      <meta name="theme-color" content={PAGE_BACKGROUND} key="theme-color" />
 
       <script
         key="structured-data"

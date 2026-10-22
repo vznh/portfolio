@@ -17,6 +17,8 @@
 }
 
 :root {
+  --edge-top-background: var(--page-background);
+  --edge-bottom-background: var(--page-background);
   --font-heading: "ABC Schengen A", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "ABC Schengen A", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
@@ -24,9 +26,40 @@
 
 html,
 body {
-  background: #ffffff;
   color: #111111;
   font-size: 13px;
+}
+
+html {
+  background: var(--edge-top-background);
+}
+
+body {
+  background: var(--edge-bottom-background);
+}
+
+@media screen {
+  .edge-top::after,
+  .edge-bottom::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 40;
+    pointer-events: none;
+  }
+
+  .edge-top::after {
+    top: 0;
+    height: max(12px, env(safe-area-inset-top));
+    background: var(--edge-top-background);
+  }
+
+  .edge-bottom::after {
+    bottom: 0;
+    height: max(12px, env(safe-area-inset-bottom));
+    background: var(--edge-bottom-background);
+  }
 }
 
 @media (min-width: 768px) {
@@ -35,6 +68,10 @@ body {
     overflow: hidden;
     height: 100%;
     overscroll-behavior: none;
+  }
+
+  .portfolio-shell {
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   }
 }
 
@@ -51,6 +88,9 @@ body {
 
 .portfolio-content {
   display: none;
+  background: var(--page-background);
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
 }
 
 .home-views[data-content-visible]:not([data-crossword-exiting]) .portfolio-content,
