@@ -4,28 +4,22 @@ import { Records } from "./Records";
 import { handleSectionLinkClick } from "@/lib/scrollToHeading";
 
 const LINK_CLASS =
-  "underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
+  "cursor-pointer underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
   return <h2 className="font-heading text-[13px] text-black opacity-80">{children}</h2>;
 }
 
-const INLINE = /\[([^\]]+)\]\(([^)]+)\)|\^([^\^]+)\^/g;
+const INLINE = /\[([^\]]+)\]\(([^)]+)\)/g;
 
 function renderInline(paragraph: string) {
   const nodes: React.ReactNode[] = [];
   let last = 0;
   for (const match of paragraph.matchAll(INLINE)) {
-    const [raw, text, target, superscript] = match;
+    const [raw, text, target] = match;
     const start = match.index ?? 0;
     if (start > last) nodes.push(paragraph.slice(last, start));
-    if (superscript) {
-      nodes.push(
-        <sup key={start} className="ml-0.5 text-[0.7em]">
-          {superscript}
-        </sup>,
-      );
-    } else if (target.startsWith("+")) {
+    if (target.startsWith("+")) {
       const id = target.slice(1);
       nodes.push(
         <a key={start} href={`#${id}`} onClick={handleSectionLinkClick} className={LINK_CLASS}>
