@@ -5,7 +5,7 @@ import { handleSectionLinkClick } from "@/lib/scrollToHeading";
 
 const LINK_CLASS =
   "cursor-pointer underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-black";
-const WORK_LINK_CLASS =
+const BOX_LINK_CLASS =
   "inline-block cursor-pointer bg-black px-1.5 py-0.5 text-white no-underline focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-black";
 
 function PanelLabel({ children }: { children: React.ReactNode }) {
@@ -28,7 +28,7 @@ function renderInline(paragraph: string) {
           key={start}
           href={`#${id}`}
           onClick={handleSectionLinkClick}
-          className={id === "work" ? WORK_LINK_CLASS : LINK_CLASS}
+          className={id === "work" || id === "provenance" ? BOX_LINK_CLASS : LINK_CLASS}
         >
           {text}
         </a>,
