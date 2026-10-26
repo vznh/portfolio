@@ -20,7 +20,7 @@ export interface RecordImage {
   height: number;
 }
 
-export const workCategories = ["Personal", "Advising", "Work"] as const;
+export const workCategories = ["Work", "Personal", "Advising"] as const;
 export type WorkCategory = (typeof workCategories)[number];
 
 export interface Record {

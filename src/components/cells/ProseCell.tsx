@@ -81,22 +81,19 @@ function Prose({ section }: { section: Section }) {
   return (
     <section id={section.id} className="mb-[3.75rem] last:mb-0">
       {section.heading && section.records ? (
-        <div className="flex items-baseline gap-3">
-          <PanelLabel>{section.heading}</PanelLabel>
-          <div role="group" aria-label="Work categories" className="flex items-baseline gap-3">
-            {workCategories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                aria-pressed={workCategory === category}
-                aria-controls="work-list"
-                onClick={() => setWorkCategory(category)}
-                className={`cursor-pointer font-heading text-[13px] text-black transition-opacity ${workCategory === category ? "opacity-80" : "opacity-40"}`}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
+        <div role="group" aria-label="Work categories" className="flex items-baseline gap-3">
+          {workCategories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              aria-pressed={workCategory === category}
+              aria-controls="work-list"
+              onClick={() => setWorkCategory(category)}
+              className={`cursor-pointer font-heading text-[13px] text-black transition-opacity ${workCategory === category ? "opacity-80" : "opacity-40"}`}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       ) : (
         section.heading && <PanelLabel>{section.heading}</PanelLabel>
