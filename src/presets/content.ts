@@ -122,7 +122,7 @@ export const sections: Section[] = [
       },
       {
         date: "07 2026",
-        title: "A business card",
+        title: "David Kim",
         category: "Work",
         url: "https://www.davidkimjs.space/",
         image: { src: "/assets/records/a-business-card.webp", width: 1128, height: 646 },
