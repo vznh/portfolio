@@ -8,11 +8,11 @@ import { useRecordsScrollSpace } from "@/hooks/useRecordsScrollSpace";
 const ROW_CLASS =
   "grid cursor-pointer grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
 
-function RecordRow({ record, dimmed, showName }: { record: Record; dimmed: boolean; showName: boolean }) {
+function RecordRow({ record, dimmed }: { record: Record; dimmed: boolean }) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
-      <span>{showName ? (record.name ?? record.title) : record.title}</span>
+      <span>{record.title}</span>
       <span className="text-right opacity-[0.55]">{record.category}</span>
     </>
   );
@@ -59,7 +59,7 @@ function RecordPreview({ record }: { record: Record }) {
   );
 }
 
-export function Records({ records, showNames }: { records: Record[]; showNames: boolean }) {
+export function Records({ records }: { records: Record[] }) {
   const listRef = useRef<HTMLUListElement>(null);
   useRecordsScrollSpace(listRef);
   const [hovered, setHovered] = useState<Record | null>(null);
@@ -85,6 +85,7 @@ export function Records({ records, showNames }: { records: Record[]; showNames: 
   return (
     <>
       <ul
+        id="work-list"
         ref={listRef}
         className="flex max-w-[52ch] cursor-pointer flex-col"
         onPointerEnter={handlePointer}
@@ -98,7 +99,6 @@ export function Records({ records, showNames }: { records: Record[]; showNames: 
             key={`${record.date} ${record.title}`}
             record={record}
             dimmed={active !== null && active !== record}
-            showName={showNames}
           />
         ))}
       </ul>

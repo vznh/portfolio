@@ -20,11 +20,14 @@ export interface RecordImage {
   height: number;
 }
 
+export const workCategories = ["Personal", "Advising", "Work"] as const;
+export type WorkCategory = (typeof workCategories)[number];
+
 export interface Record {
   date: string;
   title: string;
   name?: string;
-  category: string;
+  category: WorkCategory;
   url?: string;
   image?: RecordImage;
 }
@@ -58,13 +61,13 @@ export const sections: Section[] = [
       {
         date: "10 2026",
         title: "Corgi",
-        category: "Commission",
+        category: "Work",
         image: { src: "/assets/records/corgi-2.webp", width: 1067, height: 1600 },
       },
       {
         date: "09 2026",
         title: "Little Saigon Beauty Salon",
-        category: "Commission",
+        category: "Work",
         url: "https://dukes-ruby.vercel.app",
         image: { src: "/assets/records/little-saigon-beauty-salon.webp", width: 1600, height: 1015 },
       },
@@ -89,19 +92,19 @@ export const sections: Section[] = [
       {
         date: "08 2026",
         title: "Corgi",
-        category: "Commission",
+        category: "Work",
         image: { src: "/assets/records/corgi.webp", width: 800, height: 800 },
       },
       {
         date: "08 2026",
         title: "Britnie",
-        category: "Commission",
+        category: "Work",
         image: { src: "/assets/records/britnie.webp", width: 1200, height: 1200 },
       },
       {
         date: "08 2026",
         title: "Monarch Capital",
-        category: "Commission",
+        category: "Work",
         url: "https://www.monarchs.vc/",
         image: { src: "/assets/records/monarch-capital.webp", width: 1600, height: 955 },
       },
@@ -120,35 +123,35 @@ export const sections: Section[] = [
       {
         date: "07 2026",
         title: "A business card",
-        category: "Commission",
+        category: "Work",
         url: "https://www.davidkimjs.space/",
         image: { src: "/assets/records/a-business-card.webp", width: 1128, height: 646 },
       },
-      { date: "07 2026", title: "Stake", category: "Commission" },
+      { date: "07 2026", title: "Stake", category: "Work" },
       {
         date: "05 2026",
         title: "Komune",
-        category: "Advisory",
+        category: "Advising",
         url: "https://komune.space",
         image: { src: "/assets/records/komune.webp", width: 1600, height: 968 },
       },
       {
         date: "04 2026",
         title: "Paradigm",
-        category: "Commission",
+        category: "Work",
         image: { src: "/assets/records/paradigm.webp", width: 1600, height: 774 },
       },
       {
         date: "01 2026",
         title: "Augment",
-        category: "Advisory",
+        category: "Advising",
         url: "https://agmnt.space",
         image: { src: "/assets/records/augment.webp", width: 1600, height: 770 },
       },
       {
         date: "11 2025",
         title: "Terminal 27",
-        category: "Commission",
+        category: "Work",
         url: "https://instagram.com/terminal27",
         image: { src: "/assets/records/terminal-27.webp", width: 1244, height: 562 },
       },
@@ -203,24 +206,16 @@ export const sections: Section[] = [
       },
       {
         date: "01 2025",
-        title: "Better map for Santa Cruz",
-        name: "Pathfinder",
-        category: "Academia",
-        image: { src: "/assets/records/pathfinder.webp", width: 2444, height: 1334 },
-      },
-      {
-        date: "01 2025",
         title: "Test to see if you're performative",
         name: "Grandiose",
         category: "Personal",
         image: { src: "/assets/records/grandiose.webp", width: 1648, height: 818 },
       },
-      { date: "01 2025", title: "Self-healing quant", name: "Veil", category: "Academia" },
       { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Personal" },
       {
         date: "10 2024",
         title: "Mad Yolks",
-        category: "Commission",
+        category: "Work",
         image: { src: "/assets/records/mad-yolks.webp", width: 1600, height: 986 },
       },
       {

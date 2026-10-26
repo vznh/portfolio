@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { sections, type Block, type Section } from "@/presets/content";
+import { sections, workCategories, type Block, type Section, type WorkCategory } from "@/presets/content";
 import { Records } from "./Records";
 import { handleSectionLinkClick } from "@/lib/scrollToHeading";
 
@@ -77,20 +77,26 @@ function renderBlock(block: Block) {
 }
 
 function Prose({ section }: { section: Section }) {
-  const [showNames, setShowNames] = useState(false);
+  const [workCategory, setWorkCategory] = useState<WorkCategory>("Work");
   return (
     <section id={section.id} className="mb-[3.75rem] last:mb-0">
       {section.heading && section.records ? (
         <div className="flex items-baseline gap-3">
           <PanelLabel>{section.heading}</PanelLabel>
-          <button
-            type="button"
-            aria-pressed={showNames}
-            onClick={() => setShowNames((shown) => !shown)}
-            className={`font-heading text-[13px] text-black transition-opacity ${showNames ? "opacity-80" : "opacity-40"}`}
-          >
-            Identifiers
-          </button>
+          <div role="group" aria-label="Work categories" className="flex items-baseline gap-3">
+            {workCategories.map((category) => (
+              <button
+                key={category}
+                type="button"
+                aria-pressed={workCategory === category}
+                aria-controls="work-list"
+                onClick={() => setWorkCategory(category)}
+                className={`cursor-pointer font-heading text-[13px] text-black transition-opacity ${workCategory === category ? "opacity-80" : "opacity-40"}`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
       ) : (
         section.heading && <PanelLabel>{section.heading}</PanelLabel>
@@ -111,7 +117,12 @@ function Prose({ section }: { section: Section }) {
             ))}
           </div>
         )}
-        {section.records && <Records records={section.records} showNames={showNames} />}
+        {section.records && (
+          <Records
+            key={workCategory}
+            records={section.records.filter((record) => record.category === workCategory)}
+          />
+        )}
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
             <span className="block">
