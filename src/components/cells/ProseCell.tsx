@@ -28,7 +28,13 @@ function renderInline(paragraph: string) {
           key={start}
           href={`#${id}`}
           onClick={handleSectionLinkClick}
-          className={id === "work" || id === "provenance" ? BOX_LINK_CLASS : LINK_CLASS}
+          className={
+            id === "work"
+              ? "cursor-pointer text-inherit no-underline opacity-60"
+              : id === "provenance"
+                ? BOX_LINK_CLASS
+                : LINK_CLASS
+          }
         >
           {text}
         </a>,
