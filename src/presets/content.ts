@@ -127,7 +127,13 @@ export const sections: Section[] = [
         url: "https://www.davidkimjs.space/",
         image: { src: "/assets/records/a-business-card.webp", width: 1128, height: 646 },
       },
-      { date: "07 2026", title: "Stake", category: "Work" },
+      {
+        date: "07 2026",
+        title: "Stake",
+        category: "Work",
+        url: "https://stake.us",
+        image: { src: "/assets/records/stake.webp", width: 1254, height: 1254 },
+      },
       {
         date: "05 2026",
         title: "Komune",
