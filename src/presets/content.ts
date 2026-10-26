@@ -60,9 +60,9 @@ export const sections: Section[] = [
     records: [
       {
         date: "10 2026",
-        title: "Corgi",
+        title: "Corgi: Sidewalk Sign",
         category: "Work",
-        image: { src: "/assets/records/corgi-2.webp", width: 1067, height: 1600 },
+        image: { src: "/assets/records/corgi-sidewalk-sign.webp", width: 1536, height: 2048 },
       },
       {
         date: "09 2026",
@@ -91,7 +91,7 @@ export const sections: Section[] = [
       { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Personal" },
       {
         date: "08 2026",
-        title: "Corgi",
+        title: "Corgi: Pitch and Roast",
         category: "Work",
         image: { src: "/assets/records/corgi.webp", width: 800, height: 800 },
       },
