@@ -4,7 +4,7 @@ import { embossDefaults, type EmbossVersion } from "@/presets/emboss";
 
 const PANEL_ID = "emboss";
 
-const DIAL_GLYPH = "♰";
+const DIAL_GLYPH = "/icons/buttons-v2.svg";
 
 function fromDialValues(values: Record<string, DialValue>): EmbossVersion {
   const pick = <T,>(key: string, fallback: T) => (values[key] === undefined ? fallback : (values[key] as T));
@@ -45,7 +45,7 @@ export function EmbossDial({
       structure: {
         style: {
           type: "select",
-          options: ["inner-bevel", "outer-bevel", "emboss", "pillow-emboss"],
+          options: ["inner-bevel", "outer-bevel", "emboss", "pillow-emboss", "flat"],
           default: embossDefaults.style,
         },
         technique: {
