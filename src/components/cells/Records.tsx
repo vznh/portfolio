@@ -6,17 +6,42 @@ import type { Record } from "@/presets/content";
 import { useRecordsScrollSpace } from "@/hooks/useRecordsScrollSpace";
 
 const ROW_CLASS =
-  "grid cursor-pointer grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
+  "grid grid-cols-[9ch_1fr_auto] text-[13px] leading-relaxed tracking-[-0.0125em] text-black transition-opacity";
+
+function LockIcon() {
+  return (
+    <svg
+      width="12.75"
+      height="12.75"
+      viewBox="0 0 15 15"
+      fill="none"
+      role="img"
+      aria-label="Details unavailable"
+    >
+      <path
+        d="M4.5 6.5V4.75a3 3 0 0 1 6 0V6.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <rect x="2.5" y="6" width="10" height="7.5" rx="1.75" fill="currentColor" />
+    </svg>
+  );
+}
 
 function RecordRow({ record, dimmed }: { record: Record; dimmed: boolean }) {
   const cells = (
     <>
       <span className="tabular-nums">{record.date}</span>
       <span>{record.title}</span>
-      <span className="text-right opacity-[0.55]">{record.category}</span>
+      <span className="flex items-center justify-end pl-3 opacity-[0.55]">
+        {!record.url && !record.image && <LockIcon />}
+      </span>
     </>
   );
-  const className = `${ROW_CLASS} ${dimmed ? "opacity-40" : ""}`;
+  const cursorClass = record.url || record.image ? "cursor-pointer" : "cursor-not-allowed";
+  const className = `${ROW_CLASS} ${cursorClass} ${dimmed ? "opacity-40" : ""}`;
   if (record.url) {
     return (
       <li>

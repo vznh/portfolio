@@ -134,9 +134,11 @@ function Prose({ section }: { section: Section }) {
                 {project.year && <span className="opacity-60">{project.year}</span>}
               </span>
             </span>
-            {project.description && (
-              <span className="block opacity-80">{renderInline(project.description)}</span>
-            )}
+            {project.description?.split("\n").map((line, index) => (
+              <span key={index} className="block opacity-80">
+                {renderInline(line)}
+              </span>
+            ))}
             {project.pullRequests && (
               <span className="block opacity-80">{renderInline(project.pullRequests)}</span>
             )}

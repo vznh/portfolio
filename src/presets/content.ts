@@ -44,11 +44,11 @@ export const sections: Section[] = [
   {
     id: "about",
     body: [
-      "My name is Jason. I’m an engineer first, designer second. I’m based in New York City. I graduated Santa Cruz at 20, and worked previously in San Francisco, Seoul, Pennsylvania, and Santa Cruz.",
+      "My name is Jason. I’m an engineer and designer based in New York City. I graduated Santa Cruz at 20, and worked previously in San Francisco, Seoul, Pennsylvania, and Santa Cruz.",
       "[Access my work.](+work)",
       "I do engineering, [technical and fashion design](https://5f.hobin.dev) work in New York. I contribute to [open-source software](https://github.com/vznh) I often use. I used to do systems and interfacing at Apple. I started two [start-ups](+ventures) and sold one. Earlier, I studied machine learning at Carnegie Mellon, Seoul National, and Santa Cruz. Before and during university, I worked in full-stack engineering for an urban engineering start-up as one of two interns.",
-      "[I can tell a further tale about my provenance.](+provenance)",
-      "I’m #39,098 on Beli right now. I join runs for basketball near Lower East Side often. I play tennis and pickleball socially. My closet is compiled from Acne Studios, Enfants Riches Déprimés, COS, Our Legacy, No Maintenance, Blackmerle, Chrome Hearts, and more. I model commercial rarely. I enjoy playing with fabrics through repair or experiment. I also like conceptually designing for my favorite artists and things. I watch a lot of [anime](https://anilist.co/user/vznh) and read a lot of manga and manhwa. I [write when I feel like it](https://venh.substack.com), and I read when I can. I'm pretty new to both though. I host events with my friends, from home cafes to DJ sets. I play games recreationally, but used to be #479 on VALORANT for a brief amount of time, and Exalted on Wizard101 as a fire, death player. I used to do a mix of thirst traps and computer science. I garnered 223K followers and 7.2M likes.",
+      "My most memorable hobby was content creation: I garnered 223,000 followers and 7,200,000 likes from thirst-trapping and computer science. I briefly ranked #479 on VALORANT and reached Exalted (#96) as a fire/death player in Wizard101. I’m #36,029 on Beli right now. I play tennis, basketball, volleyball and pickleball. I model commercial occasionally. I'm trying to get back into [anime, manga, and especially manhwa](https://anilist.co/user/vznh). I [write when I feel like it](https://venh.substack.com), and I read when I can. I'm pretty new to both though. I host events with my friends, from home cafes to DJ sets.",
+      "[Learn more about my background.](+provenance)",
       "The best ways to reach out are through my [e-mail](mailto:jasonvinhson@gmail.com), or through my [Twitter](https://x.com/jasonvinhson). I’m least accessible through my [LinkedIn](https://linkedin.com/in/vznh). I often create for myself and friends, or contribute to open-source on [GitHub](https://github.com/vznh).",
     ],
   },
@@ -249,7 +249,7 @@ export const sections: Section[] = [
         year: "Current",
         url: "https://5f.hobin.dev",
         description:
-          "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets. Clients include venture capital firms, fashion collectives, popular restaurants in New York City, start-ups, and individuals.",
+          "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets.\nClients include venture capital firms, fashion collectives, popular restaurants in New York City, start-ups, and individuals.",
       },
       {
         name: "5th Floor",
