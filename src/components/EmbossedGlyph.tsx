@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from "react";
 import type { EmbossParams } from "@/presets/emboss";
-import { GLYPH_BOX_CLASS, isSvgSource } from "@/lib/glyph";
+import { GLYPH_BOX_CLASS, isImageSource } from "@/lib/glyph";
 
 interface EmbossedGlyphProps {
   glyph: string;
@@ -19,7 +19,7 @@ const EM = 100;
 function useInkBox(glyph: string) {
   const [box, setBox] = useState<string | null>(null);
   useEffect(() => {
-    if (isSvgSource(glyph)) return;
+    if (isImageSource(glyph)) return;
     let cancelled = false;
     const measure = () => {
       const ctx = document.createElement("canvas").getContext("2d");
@@ -202,8 +202,13 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
         highlight={highlight}
         shadow={shadow}
       />
-      {isSvgSource(glyph) ? (
-        <div className="absolute inset-0" style={{ filter: `url(#${id})` }} role="img" aria-label="">
+      {isImageSource(glyph) ? (
+        <div
+          className="absolute inset-0"
+          style={{ filter: style === "flat" ? "none" : `url(#${id})` }}
+          role="img"
+          aria-label=""
+        >
           <div
             className="h-full w-full"
             style={{
@@ -224,7 +229,7 @@ export function EmbossedGlyph({ glyph, params, className }: EmbossedGlyphProps) 
           className="absolute inset-0 h-full w-full select-none"
           viewBox={inkBox ?? `0 0 ${EM} ${EM}`}
           preserveAspectRatio="xMinYMin meet"
-          style={{ filter: `url(#${id})`, opacity: inkBox ? 1 : 0 }}
+          style={{ filter: style === "flat" ? "none" : `url(#${id})`, opacity: inkBox ? 1 : 0 }}
           aria-label={glyph}
           role="img"
         >
