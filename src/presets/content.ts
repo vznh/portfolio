@@ -284,7 +284,7 @@ export const sections: Section[] = [
   },
   {
     id: "engagements",
-    heading: "Engagements",
+    heading: "Open-source",
     body: [],
     projects: [
       {
@@ -317,6 +317,16 @@ export const sections: Section[] = [
         description: "Framework for voice AI agents.",
         pullRequests:
           "[#7385](https://github.com/livekit/agents/pull/7385) [#2568](https://github.com/livekit/agents-js/pull/2568)",
+      },
+      {
+        name: "[AniList MCP](https://github.com/yuna0x0/anilist-mcp)",
+        description: "AniList MCP server for anime and manga data.",
+        pullRequests: "[#17](https://github.com/yuna0x0/anilist-mcp/pull/17)",
+      },
+      {
+        name: "[DialKit](https://github.com/joshpuckett/dialkit)",
+        description: "A library for dialing in interface parameters.",
+        pullRequests: "[#71](https://github.com/joshpuckett/dialkit/pull/71)",
       },
     ],
   },
