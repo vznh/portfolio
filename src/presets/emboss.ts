@@ -1,5 +1,5 @@
 export interface EmbossParams {
-  style: "inner-bevel" | "outer-bevel" | "emboss" | "pillow-emboss";
+  style: "inner-bevel" | "outer-bevel" | "emboss" | "pillow-emboss" | "flat";
   technique: "smooth" | "chisel-hard" | "chisel-soft";
   depth: number;
   direction: "up" | "down";
@@ -16,21 +16,45 @@ export interface EmbossParams {
 }
 
 export const embossDefaults: EmbossParams = {
-  style: "pillow-emboss",
-  technique: "chisel-soft",
-  depth: 556,
+  style: "inner-bevel",
+  technique: "chisel-hard",
+  depth: 1,
   direction: "up",
-  size: 4,
-  soften: 0,
-  angle: -78,
+  size: 0,
+  soften: 2.5,
+  angle: -180,
   altitude: 90,
-  highlight: { color: "#ffffff", opacity: 0 },
-  shadow: { color: "#6f6f6f", opacity: 1 },
-  fill: "#000000",
+  highlight: { color: "#000000", opacity: 1 },
+  shadow: { color: "#000000", opacity: 1 },
+  fill: "#020000",
 };
 
 export interface EmbossVersion extends EmbossParams {
   glyph: string;
 }
 
-export const embossVersions: EmbossVersion[] = [{ glyph: "/icons/safety-pins.svg", ...embossDefaults }];
+// Named snapshots keep the previous buttons and safety-pin treatments easy to restore.
+export const embossVersionArchive = {
+  buttons: { glyph: "/icons/buttons-mask.png", ...embossDefaults },
+  safetyPins: { glyph: "/icons/safety-pins.svg", ...embossDefaults },
+  softerButtons: {
+    glyph: "/icons/buttons-v2.svg",
+    ...embossDefaults,
+    depth: 320,
+    size: 3,
+    soften: 0.5,
+    shadow: { ...embossDefaults.shadow, opacity: 0.65 },
+  },
+  reliefButtons: {
+    glyph: "/icons/buttons-v2.svg",
+    ...embossDefaults,
+  },
+  matteButtons: {
+    glyph: "/icons/buttons-v2.svg",
+    ...embossDefaults,
+    style: "flat",
+    fill: "#999999",
+  },
+} satisfies Record<string, EmbossVersion>;
+
+export const embossVersions: EmbossVersion[] = [embossVersionArchive.reliefButtons];
