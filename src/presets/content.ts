@@ -20,7 +20,7 @@ export interface RecordImage {
   height: number;
 }
 
-export const workCategories = ["Work", "Personal", "Advising"] as const;
+export const workCategories = ["Work", "Passion", "Advising"] as const;
 export type WorkCategory = (typeof workCategories)[number];
 
 export interface Record {
@@ -71,12 +71,12 @@ export const sections: Section[] = [
         url: "https://dukes-ruby.vercel.app",
         image: { src: "/assets/records/little-saigon-beauty-salon.webp", width: 1600, height: 1015 },
       },
-      { date: "09 2026", title: "Find restaurants you really like", name: "Famish", category: "Personal" },
+      { date: "09 2026", title: "Find restaurants you really like", name: "Famish", category: "Passion" },
       {
         date: "08 2026",
         title: "Generate captions live on-machine",
         name: "Capt",
-        category: "Personal",
+        category: "Passion",
         url: "https://github.com/vznh/capt",
         image: { src: "/assets/records/capt.webp", width: 1240, height: 712 },
       },
@@ -84,11 +84,11 @@ export const sections: Section[] = [
         date: "08 2026",
         title: "A richer converter for unreleased music",
         name: "Transmute",
-        category: "Personal",
+        category: "Passion",
         url: "https://github.com/vznh/transmute",
         image: { src: "/assets/records/transmute.webp", width: 1432, height: 954 },
       },
-      { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Personal" },
+      { date: "08 2026", title: "Blends but each song mixes well", name: "Charms", category: "Passion" },
       {
         date: "08 2026",
         title: "Corgi: Pitch and Roast",
@@ -97,7 +97,7 @@ export const sections: Section[] = [
       },
       {
         date: "08 2026",
-        title: "Britnie",
+        title: "Britnie: Cafe",
         category: "Work",
         image: { src: "/assets/records/britnie.webp", width: 1200, height: 1200 },
       },
@@ -112,13 +112,13 @@ export const sections: Section[] = [
         date: "07 2026",
         title: "Karaoke for any song",
         name: "노래 (Norae)",
-        category: "Personal",
+        category: "Passion",
       },
       {
         date: "07 2026",
         title: "Utility tool on-machine for agents",
         name: "Portmanteau",
-        category: "Personal",
+        category: "Passion",
       },
       {
         date: "07 2026",
@@ -165,41 +165,41 @@ export const sections: Section[] = [
         date: "10 2025",
         title: "Cut agent token usage",
         name: "Axiom",
-        category: "Personal",
+        category: "Passion",
       },
       {
         date: "09 2025",
         title: "SDK for Substack",
         name: "Substack, SDK",
-        category: "Personal",
+        category: "Passion",
         url: "https://github.com/vznh/substack",
       },
       {
         date: "09 2025",
         title: "Discord bot for hard 75 submissions",
         name: "75",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/75.webp", width: 528, height: 530 },
       },
       {
         date: "08 2025",
         title: "In-depth Spotify relationships",
         name: "Chordal",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/chordal.webp", width: 1314, height: 894 },
       },
       {
         date: "0N 2025",
         title: "Co-working experiments",
         name: "081x",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/081x.webp", width: 800, height: 800 },
       },
       {
         date: "04 2025",
         title: "Natural language for calendars",
         name: "Chronolex",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/chronolex.webp", width: 1236, height: 818 },
       },
       {
@@ -208,16 +208,16 @@ export const sections: Section[] = [
         name: "Devour",
         url: "https://www.npmjs.com/package/@vznh/components",
         image: { src: "/assets/records/components.webp", width: 1128, height: 452 },
-        category: "Personal",
+        category: "Passion",
       },
       {
         date: "01 2025",
         title: "Test to see if you're performative",
         name: "Grandiose",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/grandiose.webp", width: 1648, height: 818 },
       },
-      { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Personal" },
+      { date: "01 2025", title: "In-depth bug assessment for Python", name: "Splat", category: "Passion" },
       {
         date: "10 2024",
         title: "Mad Yolks",
@@ -228,14 +228,14 @@ export const sections: Section[] = [
         date: "07 2024",
         title: "Transcribe and preserve old documents",
         name: "Relic",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/relic.webp", width: 1148, height: 734 },
       },
       {
         date: "02 2021",
         title: "Jukebox that plays songs from RFiD",
         name: "Jukebox",
-        category: "Personal",
+        category: "Passion",
         image: { src: "/assets/records/jukebox.webp", width: 1236, height: 864 },
       },
     ],
