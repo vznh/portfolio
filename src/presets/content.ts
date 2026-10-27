@@ -4,6 +4,7 @@ export interface Project {
   name: string;
   description?: string;
   url?: string;
+  year?: string;
   pullRequests?: string;
 }
 
@@ -47,7 +48,7 @@ export const sections: Section[] = [
     body: [
       "My name is Jason. I’m an engineer first, designer second. I’m based in New York City. I graduated Santa Cruz at 20, and worked previously in San Francisco, Seoul, Pennsylvania, and Santa Cruz.",
       "[Access my work.](+work)",
-      "I do engineering, research, [technical and fashion design](https://5f.hobin.dev) work in New York. I contribute to [open-source software](https://github.com/vznh) I often use. I used to do systems and interfacing at Apple. I started two [start-ups](+antecedents) and sold one. Then machine learning at Carnegie Mellon, Seoul National, Santa Cruz. Leading up to and in university, full-stack engineering for an urban engineering start-up as one of two interns.",
+      "I do engineering, research, [technical and fashion design](https://5f.hobin.dev) work in New York. I contribute to [open-source software](https://github.com/vznh) I often use. I used to do systems and interfacing at Apple. I started two [start-ups](+ventures) and sold one. Then machine learning at Carnegie Mellon, Seoul National, Santa Cruz. Leading up to and in university, full-stack engineering for an urban engineering start-up as one of two interns.",
       "[I can tell a further tale about my provenance.](+provenance)",
       "I’m #39,098 on Beli right now. I join runs for basketball near Lower East Side often. I play tennis and pickleball socially. My closet is compiled from Acne Studios, Enfants Riches Déprimés, COS, Our Legacy, No Maintenance, Blackmerle, Chrome Hearts, and more. I model commercial rarely. I enjoy playing with fabrics through repair or experiment. I also like conceptually designing for my favorite artists and things. I watch a lot of [anime](https://anilist.co/user/vznh) and read a lot of manga and manhwa. I [write when I feel like it](https://venh.substack.com), and I read when I can. I'm pretty new to both though. I host events with my friends, from home cafes to DJ sets. I play games recreationally, but used to be #479 on VALORANT for a brief amount of time, and Exalted on Wizard101 as a fire, death player. I used to do a mix of thirst traps and computer science. I garnered 223K followers and 7.2M likes.",
       "The best ways to reach out are through my [e-mail](mailto:jasonvinhson@gmail.com), or through my [Twitter](https://x.com/jasonvinhson). I’m least accessible through my [LinkedIn](https://linkedin.com/in/vznh). I often create for myself and friends, or contribute to open-source on [GitHub](https://github.com/vznh).",
@@ -241,35 +242,41 @@ export const sections: Section[] = [
     ],
   },
   {
-    id: "antecedents",
-    heading: "Antecedents",
+    id: "ventures",
+    heading: "Ventures",
     body: [],
     projects: [
       {
         name: "5f",
+        year: "Current",
         url: "https://5f.hobin.dev",
         description:
           "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets.",
       },
       {
         name: "5th Floor",
+        year: "Current",
         description: "Avant-garde brand. Our first sample releases November 2026 for Winter.",
       },
       {
         name: "Agamemnon",
+        year: "Current",
         description: "High-level software workbench.",
       },
       {
         name: "Polyglot",
+        year: "2024",
         description:
           "Learn languages through bite-sized modules that mimic assimilation. We teach reading, writing, typing, and verbal conversation.",
       },
       {
         name: "Tokn",
+        year: "2023",
         description: "Trade, track, and chat coins in one app.",
       },
       {
         name: "Preme",
+        year: "2019",
         description:
           "Be the fastest to buy Supreme. Sold on OGUsers, cracked.io with 200+ purchases at $24.99 each.",
       },

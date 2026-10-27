@@ -123,13 +123,16 @@ function Prose({ section }: { section: Section }) {
         {section.projects?.map((project) => (
           <p key={project.name} className={BODY_CLASS}>
             <span className="block">
-              {project.url ? (
-                <a href={project.url} target="_blank" rel="noreferrer" className={LINK_CLASS}>
-                  {project.name}
-                </a>
-              ) : (
-                renderInline(project.name)
-              )}
+              <span className="inline-flex items-baseline gap-1.5">
+                {project.url ? (
+                  <a href={project.url} target="_blank" rel="noreferrer" className={LINK_CLASS}>
+                    {project.name}
+                  </a>
+                ) : (
+                  renderInline(project.name)
+                )}
+                {project.year && <span className="opacity-60">{project.year}</span>}
+              </span>
             </span>
             {project.description && (
               <span className="block opacity-80">{renderInline(project.description)}</span>
