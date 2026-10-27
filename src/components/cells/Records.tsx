@@ -31,31 +31,19 @@ function RecordRow({ record, dimmed }: { record: Record; dimmed: boolean }) {
 
 function RecordPreview({ record }: { record: Record }) {
   const [loaded, setLoaded] = useState(false);
+  if (!record.image) return null;
   return (
-    <>
-      {record.image && (
-        <Image
-          src={record.image.src}
-          alt=""
-          width={record.image.width}
-          height={record.image.height}
-          loading="eager"
-          onLoad={() => setLoaded(true)}
-          onError={() => setLoaded(false)}
-          sizes="(max-width: 767px) 78vw, 47.5vw"
-          className={`h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw] ${loaded ? "" : "hidden"}`}
-        />
-      )}
-      {(!record.image || !loaded) && (
-        <div className="flex max-h-[36dvh] w-[78vw] max-w-sm flex-col items-center justify-center gap-4 bg-neutral-100 px-8 py-10 text-center text-black md:max-h-[42.8vh] md:py-16">
-          <p className="text-3xl leading-tight">{record.name ?? record.title}</p>
-          {record.name && <p className="text-[13px] opacity-60">{record.title}</p>}
-          <p className="text-[13px] opacity-40">
-            {record.category} · {record.date}
-          </p>
-        </div>
-      )}
-    </>
+    <Image
+      src={record.image.src}
+      alt=""
+      width={record.image.width}
+      height={record.image.height}
+      loading="eager"
+      onLoad={() => setLoaded(true)}
+      onError={() => setLoaded(false)}
+      sizes="(max-width: 767px) 78vw, 47.5vw"
+      className={`h-auto max-h-[36dvh] w-auto max-w-[78vw] object-contain md:max-h-[42.8vh] md:max-w-[47.5vw] ${loaded ? "" : "hidden"}`}
+    />
   );
 }
 
@@ -105,15 +93,17 @@ export function Records({ records }: { records: Record[] }) {
       <ReadingGuide listRef={listRef} onActiveRowChange={setReadingIndex} />
       {(preload || active) &&
         createPortal(
-          records.map((record) => (
-            <div
-              key={`${record.date} ${record.title}`}
-              aria-hidden
-              className={`pointer-events-none fixed bottom-[8dvh] left-1/2 z-0 -translate-x-1/2 md:bottom-auto md:top-1/2 md:-translate-y-1/2 ${record === active ? "" : "invisible"}`}
-            >
-              <RecordPreview record={record} />
-            </div>
-          )),
+          records
+            .filter((record) => record.image)
+            .map((record) => (
+              <div
+                key={`${record.date} ${record.title}`}
+                aria-hidden
+                className={`pointer-events-none fixed bottom-[8dvh] left-1/2 z-0 -translate-x-1/2 md:bottom-auto md:top-1/2 md:-translate-y-1/2 ${record === active ? "" : "invisible"}`}
+              >
+                <RecordPreview record={record} />
+              </div>
+            )),
           listRef.current?.closest("#content") ?? document.body,
         )}
     </>
