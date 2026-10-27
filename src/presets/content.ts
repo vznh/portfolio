@@ -251,7 +251,7 @@ export const sections: Section[] = [
         year: "Current",
         url: "https://5f.hobin.dev",
         description:
-          "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets.",
+          "A technical design studio. We design brand identities, create user experiences, and generate company-defining assets. Clients include venture capital firms, fashion collectives, popular restaurants in New York City, start-ups, and individuals.",
       },
       {
         name: "5th Floor",
