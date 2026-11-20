@@ -22,12 +22,7 @@ JSON-LD author/publisher relationships. Existing public profile URLs are listed
 in `rel="me"` links and the Person node's `sameAs` property. These links describe
 identity; they do not constitute platform account verification.
 
-The share images are the crossword grid, JASON down and SON across, on white.
-`public/og-1920x1080.png` (about 26 KB) is the Open Graph and JSON-LD image;
-`public/og-1280x720.png` (about 16 KB) is the X card image. Both are 16:9, so
-1.91:1 and 2:1 previews crop only the empty top and bottom margins. Their alt
-text describes the actual graphic; the structured data does not present it as a
-photograph of Jason.
+The 1280 × 720 `crossword-cover.mp4` supplies the animation via `og:video`. Clients that display an image get the original completed crossword: `og-1920x1080.png` for Open Graph and JSON-LD, or `og-1280x720.png` for X cards. `crossword-cover.gif` remains available for direct sharing.
 
 Pinterest article, product, and recipe Rich Pin markup is not applicable to this
 portfolio homepage. Facebook App IDs, Facebook Page IDs, Pinterest verification,
@@ -40,7 +35,7 @@ claimed for this page.
 Run `bun run check`, then inspect `.next-build/server/pages/index.html`. Confirm
 the initial head contains one of each Open Graph and Twitter property, one
 canonical URL, and valid JSON-LD with resolvable local node references. Check image
-dimensions against the PNG header, and confirm the sitemap and robots policy
+dimensions against the PNG headers, and confirm the sitemap and robots policy
 still reference the canonical origin. These checks verify generated output, not
 each platform's cached live preview.
 

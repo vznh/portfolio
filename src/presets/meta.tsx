@@ -7,7 +7,6 @@ const NAME = profile.name;
 const TITLE = NAME;
 const DESCRIPTION = "Jason Son does engineering, research, and design in New York.";
 const OG_IMAGE = `${SITE_URL}/og-1920x1080.png`;
-const TWITTER_IMAGE = `${SITE_URL}/og-1280x720.png`;
 const OG_IMAGE_ALT = "Crossword grid spelling JASON down and SON across, sharing the O.";
 const TWITTER = "@jasonvinhson";
 const CANONICAL_URL = `${SITE_URL}/`;
@@ -27,6 +26,10 @@ const openGraph = {
   "og:title": TITLE,
   "og:description": DESCRIPTION,
   "og:url": CANONICAL_URL,
+  "og:video": `${SITE_URL}/crossword-cover.mp4`,
+  "og:video:type": "video/mp4",
+  "og:video:width": "1280",
+  "og:video:height": "720",
   "og:image": OG_IMAGE,
   "og:image:secure_url": OG_IMAGE,
   "og:image:type": "image/png",
@@ -41,7 +44,7 @@ const twitterCard = {
   "twitter:creator": TWITTER,
   "twitter:title": TITLE,
   "twitter:description": DESCRIPTION,
-  "twitter:image": TWITTER_IMAGE,
+  "twitter:image": `${SITE_URL}/og-1280x720.png`,
   "twitter:image:alt": OG_IMAGE_ALT,
 };
 
